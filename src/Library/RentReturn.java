@@ -1,5 +1,6 @@
 package Library;
 
-public enum RentReturn {
-	대여, 반납
+public class RentReturn {
+	private String id;
+	private String rentReturn;
 }
