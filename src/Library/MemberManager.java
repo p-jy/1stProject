@@ -1,7 +1,29 @@
 package Library;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MemberManager {
-	//회원관리
+
+    private static Map<String, Member> memberList = new HashMap<>();
+
+	public static void addMember(String id, String pw, String name, String num) {
+		//아이디 중복 확인
+		if(memberList.containsKey(id)) {
+			System.out.println("이미 사용중인 아이디입니다.");
+		} else {
+			// 회원가입
+			Member newMember = new Member(id, pw, name ,num);
+			memberList.put(id, newMember);
+			System.out.println("회원가입이 완료되었습니다");
+		}
+	}
+
+	//아이디로 회원 찾기
+	public static Member getId(String id) {
+		return memberList.get(id);
+	}
+
 
 	/* 
 	 * 1. 로그인

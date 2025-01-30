@@ -1,16 +1,19 @@
 package Library;
 
+import java.util.Scanner;
+
 public class LibraryProgram implements ConsoleProgram {
+	Scanner scan = new Scanner(System.in);
 	//프로그램
 	/* 1. 로그인
 	   ㄴ 아이디, 비밀번호 입력하여 일치하면 로그인
 		- 어드민 계정인 경우 어드민 화면으로 이동
 		- 일반 회원 계정인 경우 회원 화면으로 이동 */
 		
-	/* 2. 회원가입 (regex 참고)
+	/* 2. 회원가입
 	   ㄴ 아이디, 비밀번호, 이름, 번호 입력받아 회원 등록
 		- 아이디
-		    - 영어 + 숫자 + 특수문자(`_`) 6~12 ⇒ 첫 글자 무조건 영어
+		    - 영어 + 숫자 ⇒ 첫 글자 무조건 영어
 		    - 중복 불가
 		- 비밀번호
 		    - 영어 + 숫자 + 특수문자 (`!` `@` `#`) 8~16 ⇒ 첫 글자 제한 없음
@@ -21,9 +24,32 @@ public class LibraryProgram implements ConsoleProgram {
 		    - 010-nnnn-nnnn 형식만 가능.
 		    - 중복 가능 */
 	
+	/* 구현해야 할 것
+	 * 1. 일반 회원 접속시 1.회원 탈퇴
+	 * 				  2.도서 검색
+	 * 				  3.도서 대여
+	 * 				  4.로그아웃
+	 * 
+	 * 2. admin 접속시  1.회원 관리
+	 * 				  2.도서 관리
+	 * 				  3.로그아웃  
+	 */
+	
 	@Override
 	public void run() {
+		while(true) {
+			
+			printMenu();
 		
+			int menu = scan.nextInt();
+			scan.nextLine();
+			
+			runMenu(menu);
+			
+			if(menu == 3) {
+				break;
+			}
+		}
 	}
 
 	@Override
@@ -31,6 +57,7 @@ public class LibraryProgram implements ConsoleProgram {
 		System.out.println("-----------");
 		System.out.println("1. 로그인");
 		System.out.println("2. 회원가입");
+		System.out.println("3. 종료");
 		System.out.println("-----------");
 	}
 
@@ -44,81 +71,94 @@ public class LibraryProgram implements ConsoleProgram {
 		case 2:
 			join();
 			break;
+		case 3:
+			System.out.println("프로그램 종료.");
+			break;
 		default:
 			System.out.println("[올바른 메뉴가 아닙니다.]");
 		}
 	}
 
 	private void login() {
-		/* ㅡ 로그인
-	   		ㄴ 아이디, 비밀번호 입력하여 일치하면 로그인
+		/*  - 아이디, 비밀번호 입력하여 일치하면 로그인
 			- 어드민 계정인 경우 어드민 화면으로 이동
 		 	- 일반 회원 계정인 경우 회원 화면으로 이동 */
 		//아이디 입력 받기
 		System.out.println("--------------");
 		System.out.println("아이디를 입력하세요.");
 		System.out.println("--------------");
+		String id = scan.nextLine();
 		
 		//비밀번호 입력 받기
 		System.out.println("---------------");
 		System.out.println("비밀번호를 입력하세요.");
 		System.out.println("---------------");
+		String pw = scan.nextLine();
 		
+		//회원 정보 확인
+	    Member member = MemberManager.getId(id);
+	    
 		//Id가 admin -> 어드민 화면
-		//나머지 -> 회원 화면
+	    if (member != null && member.getPw().equals(pw)) {
+	    	if(id.equals("admin")) {
+	    		System.out.println("관리자 메뉴로 이동합니다.");
+	    	}else {
+	    		System.out.println("로그인 완료!");
+	    	}
+	    }else {
+	    	System.out.println("아이디나 비밀번호가 일치하지 않습니다.");
+	    }
 	}
 
 	private void join() {
-	 /* - 아이디
-	    - 영어 + 숫자 + 특수문자(`_`) 6~12 ⇒ 첫 글자 무조건 영어
-	    - 중복 불가 */
+		String idPattern ="^[a-zA-Z][a-zA-Z0-9]{5,11}$"; //첫 글자 영어, 6~12자 
 		System.out.println("--------------");
-		System.out.println("아이디를 입력하세요.");
+		System.out.println("아이디를 입력하세요.(6~12자)");
 		System.out.println("--------------");
-		Id id = 
+		String id = scan.nextLine(); 
 				
 		//리스트에 있는지 확인해서 없으면 알림 후 종료 => indexOf
-		if(MemberManager.getId(id) == null ){
-			System.out.println("사용 가능한 아이디 입니다.");
+		if(MemberManager.getId(id) != null ){
+			System.out.println("이미 사용중인 아이디 입니다.");
 			return;
 		}
-		//중복
-			System.out.println("이미 사용중인 아이디 입니다.");
 		
-	 /* - 비밀번호 (regex101 참고)
-	    - 영어 + 숫자 + 특수문자 (`!` `@` `#`) 8~16 ⇒ 첫 글자 제한 없음
-	    - 중복 가능 */
+		if(!id.matches(idPattern)) {
+			System.out.println("아이디의 첫 글자는 영어, 6~12글자로 작성해주세요.");
+			return;
+		}
+		//"사용 가능한 아이디입니다."(넣을지 말지 고민)
+			
+		//8~16자, 영어, 숫자, 특수문자 조합
+		String pwPattern = "^[a-zA-Z0-9!@#]{8,16}$";
 		System.out.println("---------------");
-		System.out.println("비밀번호를 입력하세요.");
+		System.out.println("비밀번호를 입력하세요.(8~16자) 영어,숫자,!@# 가능");
 		System.out.println("---------------");
-		Pw pw = 
+		String pw = scan.nextLine();
+		
+		if(!pw.matches(pwPattern)) {
+			System.out.println("비밀번호는 영어, 숫자, !@#만 사용 가능합니다. (8~16자)");
+		}
 				
 		//이름(중복 가능)
 		System.out.println("-------------");
 		System.out.println("이름을 입력하세요.");
 		System.out.println("-------------");
-		Name name =
-				
-	/*- 번호 (regex101 참고)
-	    - 010-nnnn-nnnn 형식만 가능.
-	    - 중복 가능 */
-				
+		String name = scan.nextLine();
+		
+		//전화번호 (010-nnnn-nnnn)
+		 String numPattern = "^010-[0-9]{4}-[0-9]{4}$";
 	    System.out.println("-------------");
-		System.out.println("번호를 입력하세요.");
+		System.out.println("번호를 입력하세요.(010-xxxx-xxxx)");
 		System.out.println("-------------");
-	    Num num =
-		 
+	    String num = scan.nextLine();
+	    
+	    if(!num.matches(numPattern)) {
+	    	System.out.println("010-xxxx-xxxx 형식으로 입력해주세요.");
+	    	return;
+	    }
+	    MemberManager.addMember(id, pw, name, num);
+	    System.out.println("회원가입이 완료되었습니다.");
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-

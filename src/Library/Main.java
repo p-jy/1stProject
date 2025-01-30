@@ -7,6 +7,5 @@ public class Main {
 		LibraryProgram libProgram = new LibraryProgram();
 		libProgram.run();
 		
-	}
-	
+	}	
 }
