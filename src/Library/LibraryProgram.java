@@ -1,12 +1,15 @@
 package Library;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class LibraryProgram implements ConsoleProgram {
 	//프로그램
 	
-	static Scanner scan = new Scanner(System.in);
+	private Scanner scan = new Scanner(System.in);
+	
+	private BookManager bm = new BookManager();
 	
 	@Override
 	public void run() {
@@ -23,7 +26,7 @@ public class LibraryProgram implements ConsoleProgram {
 				runMenu(menu);
 				
 			} catch (InputMismatchException e) {
-				System.out.println("올바른 입력이 아닙니다.");
+				System.out.println("[올바른 입력이 아닙니다.]");
 				scan.nextLine();
 			}
 			
@@ -179,9 +182,15 @@ public class LibraryProgram implements ConsoleProgram {
 
 	private void registBook() {
 		Book book = inputBook();
+		
+		bm.registBook(book);
+		
 	}
 
 	private Book inputBook() {
+		System.out.print("카테고리 : ");
+		String category = scan.next();
+		scan.nextLine();
 		System.out.print("도서명 : ");
 		String title = scan.nextLine();
 		System.out.print("작가명 : ");
@@ -189,7 +198,10 @@ public class LibraryProgram implements ConsoleProgram {
 		System.out.print("출판사 : ");
 		String publisher = scan.nextLine();
 		
-		return new Book(title, author, publisher);
+		String codePrefix = Book.getCodePrefix(category);
+		int count = bm.getLastNum(codePrefix);
+		
+		return new Book(count, category, title, author, publisher);
 	}
 
 	private void updateBook() {
@@ -201,7 +213,118 @@ public class LibraryProgram implements ConsoleProgram {
 	}
 
 	private void searchBook() {
+		int menu;
+		do {
+			
+			printSearchMenu();
+			menu = scan.nextInt();
+			scan.nextLine();
+			
+			runSearchMenu(menu);
+			
+			
+		} while(menu != 5);
 		
+	}
+
+	private void printSearchMenu() {
+		System.out.println("-------------------");
+		System.out.println("도서 검색");
+		System.out.println("1. 도서명으로 검색");
+		System.out.println("2. 작가명으로 검색");
+		System.out.println("3. 출판사로 검색");
+		System.out.println("4. 도서 번호로 검색");
+		System.out.println("5. 이전으로");
+		System.out.println("-------------------");
+		System.out.println("메뉴 입력 : ");
+	}
+
+	private void runSearchMenu(int menu) {
+		switch(menu) {
+		case 1:
+			searchTitle();
+			break;
+		case 2:
+			searchAuthor();
+			break;
+		case 3:
+			searchPublisher();
+			break;
+		case 4:
+			searchBookCode();
+			break;
+		case 5:
+			System.out.println("[이전 메뉴로 돌아갑니다.]");
+			break;
+		default:
+			System.out.println("[잘못된 입력입니다.]");
+		}
+	}
+
+	private void searchTitle() {
+		
+		System.out.print("도서명 : ");
+		String title = scan.next();
+		scan.nextLine();
+		
+		List<Book> tmpList = bm.getBookList(new Book("", title, "", ""));
+		
+		if(tmpList.isEmpty()) {
+			System.out.println("[일치하는 도서가 없습니다.]");
+			return;
+		}
+		
+		bm.print(tmpList);
+		
+	}
+
+	private void searchAuthor() {
+		
+		System.out.print("작가명 : ");
+		String author = scan.next();
+		scan.nextLine();
+		
+		List<Book> tmpList = bm.getBookList(new Book("", "", author, ""));
+		
+		if(tmpList.isEmpty()) {
+			System.out.println("[일치하는 도서가 없습니다.]");
+			return;
+		}
+		
+		bm.print(tmpList);
+		
+	}
+
+	private void searchPublisher() {
+		
+		System.out.print("출판사 : ");
+		String publisher = scan.next();
+		scan.nextLine();
+		
+		List<Book> tmpList = bm.getBookList(new Book("", "", "", publisher));
+		
+		if(tmpList.isEmpty()) {
+			System.out.println("[일치하는 도서가 없습니다.]");
+			return;
+		}
+		
+		bm.print(tmpList);
+		
+	}
+
+	private void searchBookCode() {
+		System.out.print("도서코드 : ");
+		String bookCode = scan.next();
+		scan.nextLine();
+		
+		List<Book> tmpList = bm.getBookList(new Book(bookCode, "", "", ""));
+		
+		if(tmpList.isEmpty()) {
+			System.out.println("[일치하는 도서가 없습니다.]");
+			return;
+		}
+		
+		bm.print(tmpList);
 	}
 
 	private void runMember() {
