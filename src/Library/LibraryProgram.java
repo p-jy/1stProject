@@ -94,7 +94,7 @@ public class LibraryProgram implements ConsoleProgram {
 	    Member member = MemberManager.getId(id);
 	    
 	    //할 일 : admin 파일을 미리 만들어놓기(매번 회원가입으로 테스트 하는 게 너무 불편함)
-		//id가 admin -> 어드민 화면
+		//id와 pw가 admin -> 어드민 화면
 	    if (member != null && member.getPw().equals(pw)) {
 	    	if(id.equals("admin")) {
 	    		System.out.println("관리자 메뉴로 이동합니다.");
@@ -178,6 +178,7 @@ public class LibraryProgram implements ConsoleProgram {
 	private void deleteUser() {
 		System.out.println("[회원 탈퇴를 하시겠습니까? y/n]");
 		//if y
+		//n =? printAdminMenu로 돌아가기
 		System.out.print("삭제할 아이디를 입력하세요.");
 		String id = scan.nextLine();
 		scan.nextLine();
