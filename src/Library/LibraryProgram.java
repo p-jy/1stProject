@@ -168,11 +168,19 @@ public class LibraryProgram implements ConsoleProgram {
 			bookSearch();
 			break;
 		case 3:
-			//????(); 로그아웃 구현 필요
+			bookRental();
+			break;
+		case 4:
+			System.out.println("[이전으로 돌아갑니다.]");
 			break;
 		default:
 			System.out.println("[잘못된 메뉴입니다.]");
 		}
+		
+	}
+
+	private void bookRental() {
+		// TODO Auto-generated method stub
 		
 	}
 
@@ -196,7 +204,7 @@ public class LibraryProgram implements ConsoleProgram {
 			bookManager();
 			break;
 		case 3:
-			//????(); 로그아웃 구현 필요
+			System.out.println("[이전으로 돌아갑니다.]");
 			break;
 		default:
 			System.out.println("[잘못된 메뉴입니다.]");
@@ -250,7 +258,7 @@ public class LibraryProgram implements ConsoleProgram {
 		System.out.println("-------------");
 		String name = scan.nextLine();
 		
-		//전화번호 (010-nnnn-nnnn)
+		//전화번호 (010-nnnn-nnnn) =>010을 굳이 입력할 필요없이 nnnn-nnnn으로 입력하게끔 하기 고민중
 		 String numPattern = "^010-[0-9]{4}-[0-9]{4}$";
 	    System.out.println("-------------");
 		System.out.println("번호를 입력하세요.(010-xxxx-xxxx)");
