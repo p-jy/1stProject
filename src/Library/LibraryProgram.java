@@ -102,12 +102,116 @@ public class LibraryProgram implements ConsoleProgram {
 	    if (member != null && member.getPw().equals(pw)) {
 	    	if(id.equals("admin")) {
 	    		System.out.println("관리자 메뉴로 이동합니다.");
+	    		runAdmin();
 	    	}else {
-	    		System.out.println("로그인 완료!");
+	    		System.out.println("사용자 메뉴로 이동합니다.");
+	    		runUser();
 	    	}
 	    }else {
 	    	System.out.println("아이디나 비밀번호가 일치하지 않습니다.");
 	    }
+	}
+
+	private void runAdmin() {
+		while(true) {
+			
+			printAdminMenu();
+			int menu = scan.nextInt();
+			scan.nextLine();
+			
+			runAdminMenu(menu);
+			
+			if(menu == 3) {
+				break;
+			}
+		}
+	}
+
+	private void runUser() {
+		while(true) {
+			
+			printUserMenu();
+			int menu = scan.nextInt();
+			scan.nextLine();
+			
+			runUserMenu(menu);
+			
+			if(menu == 3) {
+				break;
+			}
+		}
+	}
+
+	private void printAdminMenu() {
+		System.out.println("---------------");
+		System.out.println("1. 회원 관리");
+		System.out.println("2. 도서 관리");
+		System.out.println("3. 로그아웃 ");
+		System.out.println("---------------");
+	}
+
+	private void printUserMenu() {
+		System.out.println("---------------");
+		System.out.println("1. 회원 탈퇴");
+		System.out.println("2. 도서 검색");
+		System.out.println("3. 도서 대여");
+		System.out.println("4. 로그아웃 ");
+	}
+
+	private void runUserMenu(int menu) {
+		System.out.println("---------------");
+		switch(menu) {
+		case 1:
+			deleteUser();
+			break;
+		case 2:
+			bookSearch();
+			break;
+		case 3:
+			//????(); 로그아웃 구현 필요
+			break;
+		default:
+			System.out.println("[잘못된 메뉴입니다.]");
+		}
+		
+	}
+
+	private void deleteUser() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void bookSearch() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void runAdminMenu(int menu) {
+		System.out.println("------------------");
+		switch(menu) {
+		case 1:
+			userManager();
+			break;
+		case 2:
+			bookManager();
+			break;
+		case 3:
+			//????(); 로그아웃 구현 필요
+			break;
+		default:
+			System.out.println("[잘못된 메뉴입니다.]");
+		}
+		
+	}
+
+	private void userManager() {
+		//회원 탈퇴 구현 필요
+		
+	}
+
+	private void bookManager() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	private void join() {
@@ -158,7 +262,6 @@ public class LibraryProgram implements ConsoleProgram {
 	    	return;
 	    }
 	    MemberManager.addMember(id, pw, name, num);
-	    System.out.println("회원가입이 완료되었습니다.");
 	}
 
 }
