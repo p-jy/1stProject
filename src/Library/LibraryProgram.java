@@ -24,15 +24,10 @@ public class LibraryProgram implements ConsoleProgram {
 		    - 010-nnnn-nnnn 형식만 가능.
 		    - 중복 가능 */
 	
-	/* 구현해야 할 것
-	 * 1. 일반 회원 접속시 1.회원 탈퇴
-	 * 				  2.도서 검색
-	 * 				  3.도서 대여
-	 * 				  4.로그아웃
-	 * 
-	 * 2. admin 접속시  1.회원 관리
-	 * 				  2.도서 관리
-	 * 				  3.로그아웃  
+	/* 해야 될 것
+	 * 1. admin 파일을 미리 만들어놓기(매번 회원가입으로 테스트 하는 게 너무 불편함)
+	 * 2. 로그아웃 제대로 안 됨
+	 * 3. 나머지 기능 구현(회원관리, 회원탈퇴)
 	 */
 	
 	@Override
@@ -98,7 +93,8 @@ public class LibraryProgram implements ConsoleProgram {
 		//회원 정보 확인
 	    Member member = MemberManager.getId(id);
 	    
-		//Id가 admin -> 어드민 화면
+	    //할 일 : admin 파일을 미리 만들어놓기(매번 회원가입으로 테스트 하는 게 너무 불편함)
+		//id가 admin -> 어드민 화면
 	    if (member != null && member.getPw().equals(pw)) {
 	    	if(id.equals("admin")) {
 	    		System.out.println("관리자 메뉴로 이동합니다.");
@@ -171,7 +167,7 @@ public class LibraryProgram implements ConsoleProgram {
 			bookRental();
 			break;
 		case 4:
-			System.out.println("[이전으로 돌아갑니다.]");
+			System.out.println("[이전으로 돌아갑니다.]");//로그아웃 수정 필요
 			break;
 		default:
 			System.out.println("[잘못된 메뉴입니다.]");
@@ -204,7 +200,7 @@ public class LibraryProgram implements ConsoleProgram {
 			bookManager();
 			break;
 		case 3:
-			System.out.println("[이전으로 돌아갑니다.]");
+			System.out.println("[이전으로 돌아갑니다.]");//로그아웃 수정 필요
 			break;
 		default:
 			System.out.println("[잘못된 메뉴입니다.]");
@@ -223,7 +219,7 @@ public class LibraryProgram implements ConsoleProgram {
 	}
 
 	private void join() {
-		String idPattern ="^[a-zA-Z][a-zA-Z0-9]{5,11}$"; //첫 글자 영어, 6~12자 
+		String idPattern ="^[a-zA-Z][a-zA-Z0-9]{4,11}$"; //첫 글자 영어, 6~12자 //admin 5글자라 임시로 5글자로 변경 
 		System.out.println("--------------");
 		System.out.println("아이디를 입력하세요.(6~12자)");
 		System.out.println("--------------");
@@ -259,9 +255,10 @@ public class LibraryProgram implements ConsoleProgram {
 		String name = scan.nextLine();
 		
 		//전화번호 (010-nnnn-nnnn) =>010을 굳이 입력할 필요없이 nnnn-nnnn으로 입력하게끔 하기 고민중
-		 String numPattern = "^010-[0-9]{4}-[0-9]{4}$";
+		//String numPattern = "^010-[0-9]{4}-[0-9]{4}$";
+		String numPattern = "[0-9]{4}-[0-9]{4}$";
 	    System.out.println("-------------");
-		System.out.println("번호를 입력하세요.(010-xxxx-xxxx)");
+		System.out.println("번호를 입력하세요.(010-xxxx-xxxx) x만");
 		System.out.println("-------------");
 	    String num = scan.nextLine();
 	    
