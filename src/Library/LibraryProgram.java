@@ -175,17 +175,26 @@ public class LibraryProgram implements ConsoleProgram {
 		
 	}
 
-	private void bookRental() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	private void deleteUser() {
-		// TODO Auto-generated method stub
+		System.out.println("[회원 탈퇴를 하시겠습니까? y/n]");
+		//if y
+		System.out.print("삭제할 아이디를 입력하세요.");
+		String id = scan.nextLine();
+		scan.nextLine();
+		
+		//if
+		System.out.println("[아이디를 삭제했습니다.]");
+		//else
+		System.out.println("[일치하는 아이디가 없습니다.");
 		
 	}
 
 	private void bookSearch() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void bookRental() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -209,7 +218,8 @@ public class LibraryProgram implements ConsoleProgram {
 	}
 
 	private void userManager() {
-		//회원 탈퇴 구현 필요
+		//회원 관리 구현 필요
+		//리스트가 뜨게 -> 숫자 1,2,3으로 선택 => 회원 탈퇴를 진행하시겠습니까? y/n
 		
 	}
 
