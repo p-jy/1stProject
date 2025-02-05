@@ -18,13 +18,14 @@ public class Book implements Serializable{
 	private String title; //책 제목
 	private String author; //작가명
 	private String publisher; //출판사
-	private List<RentReturn> rentReturn;
+	private boolean rentReturn;
 	
 	public Book(String bookCode, String title, String author, String publisher) {
 		this.bookCode = bookCode;
 		this.title = title;
 		this.author = author;
 		this.publisher = publisher;
+		this.rentReturn = true;
 	}
 	
 	public Book(int max, String category, String title, String author, String publisher) {
@@ -99,7 +100,7 @@ public class Book implements Serializable{
 
 	@Override
 	public String toString() {
-		return "[" + bookCode + "] " + title + " " + author + " " + publisher + " : " + rentReturn;
+		return "[" + bookCode + "] " + title + " " + author + " " + publisher + " : " + (rentReturn? "대여 가능" : "대여 불가");
 	}
 
 	public void update(Book book) {
@@ -107,8 +108,5 @@ public class Book implements Serializable{
 		this.author = book.author;
 		this.publisher = book.publisher;
 	}
-	
-	
-
 	
 }
