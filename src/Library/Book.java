@@ -95,6 +95,12 @@ public class Book implements Serializable{
 	public String toString() {
 		return "[" + bookCode + "] " + title + " " + author + " " + publisher + " : " + rentReturn;
 	}
+
+	public void update(Book book) {
+		this.title = book.title;
+		this.author = book.author;
+		this.publisher = book.publisher;
+	}
 	
 	
 

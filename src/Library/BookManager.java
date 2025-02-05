@@ -78,13 +78,18 @@ public class BookManager {
 		
 	}
 
-	public void print(List<Book> tmpList) {
+	public void print(List<Book> tmpList, boolean isBook) {
 		if(tmpList == null || tmpList.isEmpty()) {
 			System.out.println("[일치하는 도서가 없습니다.]");
 			return;
 		}
 		
-		tmpList.stream().forEach(b-> System.out.println(b));
+		for(int i = 0; i < tmpList.size(); i++) {
+			if(isBook == true) {
+				System.out.print(i+1 + ". ");
+			}
+			System.out.println(tmpList.get(i));
+		}
 	}
 
 	public int getLastNum(String codePrefix) {
@@ -104,5 +109,20 @@ public class BookManager {
 			}
 		}
 		return max;
+	}
+
+	public boolean update(Book book, Book bookObj) {
+		
+		if(book == null || bookObj == null) {
+			return false;
+		}
+		
+		book.update(bookObj);
+		
+		return true;
+	}
+
+	public boolean delete(Book book) {
+		return list.remove(book);
 	}
 }
