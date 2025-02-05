@@ -29,7 +29,13 @@ public class Book implements Serializable{
 	
 	public Book(int max, String category, String title, String author, String publisher) {
 		this("", title, author, publisher);
-		String prefix = Book.getCodePrefix(category);
+		String prefix;
+		try {
+			prefix = Book.getCodePrefix(category);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return;
+		}
 		DecimalFormat format = new DecimalFormat("000");
 		String suffix = format.format(max + 1);
 		this.bookCode = prefix + suffix;
@@ -37,7 +43,7 @@ public class Book implements Serializable{
 
 	
 
-	static String getCodePrefix(String category) {
+	static String getCodePrefix(String category) throws Exception {
 		switch(category) {
 		case "총류":
 			return "000";
@@ -60,7 +66,7 @@ public class Book implements Serializable{
 		case "역사":
 			return "900";
 		default:
-			return null;
+			throw new Exception("[잘못된 카테고리입니다.]");
 		}
 	}
 	

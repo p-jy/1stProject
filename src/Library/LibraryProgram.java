@@ -3,7 +3,6 @@ package Library;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
-import java.util.function.Predicate;
 
 public class LibraryProgram implements ConsoleProgram {
 	//프로그램
@@ -199,7 +198,15 @@ public class LibraryProgram implements ConsoleProgram {
 		System.out.print("출판사 : ");
 		String publisher = scan.nextLine();
 		
-		String codePrefix = Book.getCodePrefix(category);
+		String codePrefix;
+		try {
+			codePrefix = Book.getCodePrefix(category);
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+		
 		int count = bm.getLastNum(codePrefix);
 		
 		return new Book(count, category, title, author, publisher);
@@ -232,6 +239,11 @@ public class LibraryProgram implements ConsoleProgram {
 			
 			tmpList = bm.getBookList(new Book("", title, "", ""));
 			
+			if(tmpList == null || tmpList.isEmpty()) {
+				System.out.println("[일치하는 도서가 없습니다.]");
+				return;
+			}
+			
 			search(tmpList, true);
 
 			System.out.print("선택 : ");
@@ -247,6 +259,11 @@ public class LibraryProgram implements ConsoleProgram {
 			scan.nextLine();
 			
 			tmpList = bm.getBookList(new Book("", "", author, ""));
+			
+			if(tmpList == null || tmpList.isEmpty()) {
+				System.out.println("[일치하는 도서가 없습니다.]");
+				return;
+			}
 			
 			search(tmpList, true);
 
@@ -264,6 +281,11 @@ public class LibraryProgram implements ConsoleProgram {
 			
 			tmpList = bm.getBookList(new Book("", "", "", publisher));
 			
+			if(tmpList == null || tmpList.isEmpty()) {
+				System.out.println("[일치하는 도서가 없습니다.]");
+				return;
+			}
+			
 			search(tmpList, true);
 
 			System.out.print("선택 : ");
@@ -279,6 +301,11 @@ public class LibraryProgram implements ConsoleProgram {
 			scan.nextLine();
 			
 			tmpList = bm.getBookList(new Book(bookCode, "", "", ""));
+			
+			if(tmpList == null || tmpList.isEmpty()) {
+				System.out.println("[일치하는 도서가 없습니다.]");
+				return;
+			}
 			
 			search(tmpList, true);
 
@@ -340,6 +367,11 @@ public class LibraryProgram implements ConsoleProgram {
 			
 			tmpList = bm.getBookList(new Book("", title, "", ""));
 			
+			if(tmpList == null || tmpList.isEmpty()) {
+				System.out.println("[일치하는 도서가 없습니다.]");
+				return;
+			}
+			
 			search(tmpList, true);
 
 			System.out.print("선택 : ");
@@ -355,6 +387,11 @@ public class LibraryProgram implements ConsoleProgram {
 			scan.nextLine();
 			
 			tmpList = bm.getBookList(new Book("", "", author, ""));
+			
+			if(tmpList == null || tmpList.isEmpty()) {
+				System.out.println("[일치하는 도서가 없습니다.]");
+				return;
+			}
 			
 			search(tmpList, true);
 
@@ -372,6 +409,11 @@ public class LibraryProgram implements ConsoleProgram {
 			
 			tmpList = bm.getBookList(new Book("", "", "", publisher));
 			
+			if(tmpList == null || tmpList.isEmpty()) {
+				System.out.println("[일치하는 도서가 없습니다.]");
+				return;
+			}
+			
 			search(tmpList, true);
 
 			System.out.print("선택 : ");
@@ -387,6 +429,11 @@ public class LibraryProgram implements ConsoleProgram {
 			scan.nextLine();
 			
 			tmpList = bm.getBookList(new Book(bookCode, "", "", ""));
+			
+			if(tmpList == null || tmpList.isEmpty()) {
+				System.out.println("[일치하는 도서가 없습니다.]");
+				return;
+			}
 			
 			search(tmpList, true);
 
@@ -438,7 +485,7 @@ public class LibraryProgram implements ConsoleProgram {
 		System.out.println("4. 도서 번호로 검색");
 		System.out.println("5. 이전으로");
 		System.out.println("-------------------");
-		System.out.println("메뉴 입력 : ");
+		System.out.print("메뉴 입력 : ");
 	}
 
 	private void runSearchMenu(int menu) {
@@ -452,6 +499,11 @@ public class LibraryProgram implements ConsoleProgram {
 			
 			tmpList = bm.getBookList(new Book("", title, "", ""));
 			
+			if(tmpList == null || tmpList.isEmpty()) {
+				System.out.println("[일치하는 도서가 없습니다.]");
+				return;
+			}
+			
 			search(tmpList, false);
 			break;
 		case 2:
@@ -460,6 +512,11 @@ public class LibraryProgram implements ConsoleProgram {
 			scan.nextLine();
 			
 			tmpList = bm.getBookList(new Book("", "", author, ""));
+			
+			if(tmpList == null || tmpList.isEmpty()) {
+				System.out.println("[일치하는 도서가 없습니다.]");
+				return;
+			}
 			
 			search(tmpList, false);
 			break;
@@ -470,6 +527,11 @@ public class LibraryProgram implements ConsoleProgram {
 			
 			tmpList = bm.getBookList(new Book("", "", "", publisher));
 			
+			if(tmpList == null || tmpList.isEmpty()) {
+				System.out.println("[일치하는 도서가 없습니다.]");
+				return;
+			}
+			
 			search(tmpList, false);
 			break;
 		case 4:
@@ -478,6 +540,11 @@ public class LibraryProgram implements ConsoleProgram {
 			scan.nextLine();
 			
 			tmpList = bm.getBookList(new Book(bookCode, "", "", ""));
+			
+			if(tmpList == null || tmpList.isEmpty()) {
+				System.out.println("[일치하는 도서가 없습니다.]");
+				return;
+			}
 			
 			search(tmpList, false);
 			break;
@@ -492,7 +559,7 @@ public class LibraryProgram implements ConsoleProgram {
 	private void search(List<Book> tmpList, boolean isBook) {
 		
 		
-		if(tmpList.isEmpty()) {
+		if(tmpList.isEmpty() || tmpList == null) {
 			System.out.println("[일치하는 도서가 없습니다.]");
 			return;
 		}
