@@ -1,5 +1,6 @@
 package Library;
 
+import java.util.Map;
 import java.util.Scanner;
 
 public class LibraryProgram implements ConsoleProgram {
@@ -25,9 +26,7 @@ public class LibraryProgram implements ConsoleProgram {
 		    - 중복 가능 */
 	
 	/* 해야 될 것
-	 * 1. admin 파일을 미리 만들어놓기(매번 회원가입으로 테스트 하는 게 너무 불편함)
-	 * 2. 로그아웃 제대로 안 됨
-	 * 3. 나머지 기능 구현(회원관리, 회원탈퇴)
+	 * 회원 탈퇴 메뉴 admin 입력시 관리자는 탈퇴할 수 없습니다. 출력
 	 */
 	
 	@Override
@@ -84,17 +83,26 @@ public class LibraryProgram implements ConsoleProgram {
 		System.out.println("--------------");
 		String id = scan.nextLine();
 		
+		//존재하는 아이디인지 확인
+		Member member = MemberManager.getId(id);
+		if (member == null) {
+			System.out.println("[아이디가 존재하지 않습니다.]");
+			return;
+		}
+				
 		//비밀번호 입력 받기
 		System.out.println("---------------");
 		System.out.println("비밀번호를 입력하세요.");
 		System.out.println("---------------");
 		String pw = scan.nextLine();
 		
-		//회원 정보 확인
-	    Member member = MemberManager.getId(id);
-	    
-	    //할 일 : admin 파일을 미리 만들어놓기(매번 회원가입으로 테스트 하는 게 너무 불편함)
-		//id와 pw가 admin -> 어드민 화면
+		//비밀번호 확인
+		if (!member.getPw().equals(pw)) {
+	        System.out.println("[비밀번호가 일치하지 않습니다.]");
+	        return;
+	    }
+		
+		//id가 admin -> 어드민 화면
 	    if (member != null && member.getPw().equals(pw)) {
 	    	if(id.equals("admin")) {
 	    		System.out.println("관리자 메뉴로 이동합니다.");
@@ -132,7 +140,7 @@ public class LibraryProgram implements ConsoleProgram {
 			
 			runUserMenu(menu);
 			
-			if(menu == 3) {
+			if(menu == 4) {
 				break;
 			}
 		}
@@ -152,6 +160,7 @@ public class LibraryProgram implements ConsoleProgram {
 		System.out.println("2. 도서 검색");
 		System.out.println("3. 도서 대여");
 		System.out.println("4. 로그아웃 ");
+		System.out.println("---------------");
 	}
 
 	private void runUserMenu(int menu) {
@@ -167,8 +176,8 @@ public class LibraryProgram implements ConsoleProgram {
 			bookRental();
 			break;
 		case 4:
-			System.out.println("[이전으로 돌아갑니다.]");//로그아웃 수정 필요
-			break;
+			System.out.println("[이전으로 돌아갑니다.]");
+			return;
 		default:
 			System.out.println("[잘못된 메뉴입니다.]");
 		}
@@ -176,18 +185,36 @@ public class LibraryProgram implements ConsoleProgram {
 	}
 
 	private void deleteUser() {
-		System.out.println("[회원 탈퇴를 하시겠습니까? y/n]");
-		//if y
-		//n =? printAdminMenu로 돌아가기
-		System.out.print("삭제할 아이디를 입력하세요.");
+		System.out.println("[삭제할 아이디를 입력하세요: ]");
 		String id = scan.nextLine();
-		scan.nextLine();
 		
-		//if
-		System.out.println("[아이디를 삭제했습니다.]");
-		//else
-		System.out.println("[일치하는 아이디가 없습니다.");
+		//존재하는 아이디인지 확인
+		Member member = MemberManager.getId(id);
+		if (member == null) {
+	        System.out.println("[존재하지 않는 아이디입니다.]");
+	        return;
+		}
 		
+		System.out.println("[비밀번호를 입력하세요: ]");
+		String pw = scan.nextLine();
+		
+		//비밀번호 일치 확인
+		if (!member.getPw().equals(pw)) {
+	        System.out.println("[비밀번호가 일치하지 않습니다.]");
+	        return;
+	    }
+		
+		System.out.println("[회원 탈퇴를 하시겠습니까?] y 입력시 탈퇴");
+		String confirm = scan.nextLine();
+		
+		if(confirm.equalsIgnoreCase("y")) {
+			MemberManager.removerMember(id);
+			System.out.println("[회원 탈퇴가 완료되었습니다.]");
+			run();
+		} else {
+			System.out.println("[회원 탈퇴가 취소되었습니다.]");
+			return;
+		}
 	}
 
 	private void bookSearch() {
@@ -210,8 +237,8 @@ public class LibraryProgram implements ConsoleProgram {
 			bookManager();
 			break;
 		case 3:
-			System.out.println("[이전으로 돌아갑니다.]");//로그아웃 수정 필요
-			break;
+			System.out.println("[이전으로 돌아갑니다.]");
+			return;
 		default:
 			System.out.println("[잘못된 메뉴입니다.]");
 		}
@@ -219,9 +246,42 @@ public class LibraryProgram implements ConsoleProgram {
 	}
 
 	private void userManager() {
-		//회원 관리 구현 필요
-		//리스트가 뜨게 -> 숫자 1,2,3으로 선택 => 회원 탈퇴를 진행하시겠습니까? y/n
+		System.out.println("----------------");
+		int index = 1;
 		
+		for (Map.Entry<String, Member> entry : MemberManager.getMemberList().entrySet()) {
+		    System.out.println(index + ". 아이디: " + entry.getKey() + ", 이름: " + entry.getValue().getName() + ", 핸드폰 번호: " + entry.getValue().getNum());
+		    index++;
+		}
+		
+	    //탈퇴할 아이디 입력 받기
+	    System.out.println("[탈퇴할 회원의 아이디를 입력하세요.]");
+	    String targetId = scan.nextLine();
+	    
+	    //존재하는 회원인지 확인
+	    Member member = MemberManager.getId(targetId);
+	    if (member == null) {
+	        System.out.println("[존재하지 않는 아이디입니다.]");
+	        return;
+	    }
+	    
+	    //관리자 확인
+	    if ("admin".equals(targetId)) {
+	        System.out.println("[관리자는 탈퇴할 수 없습니다.]");
+	        return;
+	    }
+	    
+	    //탈퇴 확인
+	    System.out.println("[정말 탈퇴를 시키겠습니까? y 입력시 탈퇴]");
+	    String confirm = scan.nextLine();
+	    
+	    if (confirm.equalsIgnoreCase("y")) {
+	        //회원 탈퇴 처리
+	        MemberManager.removerMember(targetId);
+	        System.out.println("[회원 탈퇴가 완료되었습니다.]");
+	    } else {
+	        System.out.println("[회원 탈퇴가 취소되었습니다.]");
+		}
 	}
 
 	private void bookManager() {

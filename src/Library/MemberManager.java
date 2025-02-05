@@ -23,7 +23,27 @@ public class MemberManager {
 	public static Member getId(String id) {
 		return memberList.get(id);
 	}
+	
+	//admin, user(테스트용) 사전 등록
+	static {
+	    memberList.put("admin", new Member("admin", "admin", "관리자", "010-0000-0000"));
+	    memberList.put("user", new Member("user", "user", "유저", "010-0000-0000"));
+	    memberList.put("a", new Member("a", "a", "유저", "010-0000-0000"));
+	}
 
+	public static void removerMember(String id) {
+		Member memberRemove = getId(id);
+		if (memberRemove !=	null) {
+			memberList.remove(id);
+			System.out.println("[회원을 탈퇴했습니다.]");
+		} else {
+			System.out.println("[일치하는 아이디가 없습니다.]");			
+		}
+	}
+
+	public static Map<String, Member> getMemberList() {
+	    return memberList;
+	}
 
 	/* 
 	 * 1. 로그인
