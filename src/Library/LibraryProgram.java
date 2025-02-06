@@ -1,13 +1,12 @@
 package Library;
 
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Scanner;
+
 public class LibraryProgram implements ConsoleProgram {
 	//프로그램
 	
-<<<<<<< Updated upstream
-	@Override
-	public void run() {
-		
-=======
 	private Scanner scan = new Scanner(System.in);
 	
 	private BookManager bm = new BookManager();
@@ -38,18 +37,18 @@ public class LibraryProgram implements ConsoleProgram {
 			}
 			
 		} while(menu != 3);
->>>>>>> Stashed changes
 	}
 
 	@Override
 	public void printMenu() {
-		
+		System.out.println("1. 로그인");
+		System.out.println("2. 회원가입");
+		System.out.println("3. 종료");
+		System.out.print("메뉴 입력 : ");
 	}
 
 	@Override
 	public void runMenu(int menu) {
-<<<<<<< Updated upstream
-=======
 		switch(menu) {
 		case 1:
 			login();
@@ -1012,7 +1011,6 @@ public class LibraryProgram implements ConsoleProgram {
 			return;
 		}
 		System.out.println("[회원 가입 완료]");
->>>>>>> Stashed changes
 		
 	}
 
