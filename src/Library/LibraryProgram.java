@@ -329,7 +329,7 @@ public class LibraryProgram implements ConsoleProgram {
 		//String numPattern = "^010-[0-9]{4}-[0-9]{4}$";
 		String numPattern = "[0-9]{4}-[0-9]{4}$";
 	    System.out.println("-------------");
-		System.out.println("번호를 입력하세요.(010-xxxx-xxxx) x만");
+		System.out.println("번호를 입력하세요.(010-xxxx-xxxx) xxxx-xxxx만");
 		System.out.println("-------------");
 	    String num = scan.nextLine();
 	    
