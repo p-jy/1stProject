@@ -1,10 +1,17 @@
 package Library;
 
-public class Book {
+import java.io.Serializable;
+import java.text.DecimalFormat;
+import java.util.List;
+
+import lombok.Data;
+
+@Data
+public class Book implements Serializable{
+	
+	private static final long serialVersionUID = 9055960272294860934L;
+	
 	//도서
-<<<<<<< Updated upstream
-		//도서번호, 도서명, 작가명, 출판사, 대여/반납상태
-=======
 		//도서코드, 도서명, 작가명, 출판사, 대여/반납상태
 	private String bookCode; //도서코드
 	private String category;
@@ -106,5 +113,4 @@ public class Book {
 		
 	}
 	
->>>>>>> Stashed changes
 }

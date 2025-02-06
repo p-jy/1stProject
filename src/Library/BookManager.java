@@ -1,10 +1,12 @@
 package Library;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class BookManager {
 	//도서관리
 	
-<<<<<<< Updated upstream
-=======
 	private List<Book> list;
 	
 	public BookManager(List<Book> list) {
@@ -131,5 +133,4 @@ public class BookManager {
 		registBook(new Book("사회과학", "수익 분배의 경제학", "오정석", "삼성경제연구소"));
 		
 	}
->>>>>>> Stashed changes
 }
