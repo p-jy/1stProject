@@ -179,14 +179,4 @@ public class MemberManager {
 	public void addAdmin() {
 		members.add(new Member("admin", "admin", "관리자", "관리자"));
 	}
-
-	public void printBookList(Member user) {
-		List<rentBookList> bookList = user.getRentList();
-		
-		for(int i = 0; i < bookList.size(); i++) {
-			System.out.print(i + 1 + ". ");
-			System.out.println(bookList.get(i));
-		}
-	}
-
 }

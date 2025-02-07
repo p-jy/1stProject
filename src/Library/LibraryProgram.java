@@ -2,6 +2,7 @@ package Library;
 
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class LibraryProgram implements ConsoleProgram {
@@ -11,7 +12,10 @@ public class LibraryProgram implements ConsoleProgram {
 	
 	private BookManager bm = new BookManager();
 	private MemberManager mm = new MemberManager();
+	private Map<String, List<Book>> rentList;
+	private RentReturn rr = new RentReturn(rentList);
 	private Member user = null;
+	
 	
 	@Override
 	public void run() {
@@ -1001,26 +1005,144 @@ public class LibraryProgram implements ConsoleProgram {
 	}
 	
 	private void rentBook() {
-		System.out.print("도서 코드 : ");
-		String code = scan.next();
-		scan.nextLine();
+		int menu;
+		do {
+			printSearchBookMenu();
+			menu = scan.nextInt();
+			
+			runRentBookMenu(menu);
+			
+		} while(menu!=5);
 		
-		List<Book> bookList = bm.getBookList(new Book(code, "", "", ""));
 		
-		for(int i = 0; i < bookList.size(); i++) {
-			System.out.print(i+1 + ". ");
-			System.out.println(bookList.get(i));
+		
+		
+		
+	}
+
+	private void runRentBookMenu(int menu) {
+		List<Book> tmpList;
+		int index;
+		Book book;
+		
+		switch(menu) {
+		case 1:
+			System.out.print("도서명 : ");
+			String title = scan.next();
+			scan.nextLine();
+			
+			tmpList = bm.getBookList(new Book("", title, "", ""));
+			
+			if(tmpList.isEmpty()) {
+				System.out.println("[일치하는 도서가 없습니다.]");
+				return;
+			}
+			
+			bm.print(tmpList, true);
+			
+			System.out.print("대여할 도서 선택 : ");
+			index = scan.nextInt() - 1;
+			
+			book = tmpList.get(index);
+			
+			rentBook(book);
+			
+			break;
+		case 2:
+			System.out.print("작가명 : ");
+			String author = scan.next();
+			scan.nextLine();
+			
+			tmpList = bm.getBookList(new Book("", "", author, ""));
+			
+			if(tmpList.isEmpty()) {
+				System.out.println("[일치하는 도서가 없습니다.]");
+				return;
+			}
+			
+			bm.print(tmpList, true);
+			
+			System.out.print("대여할 도서 선택 : ");
+			index = scan.nextInt() - 1;
+			
+			book = tmpList.get(index);
+			
+			rentBook(book);
+			
+			break;
+		case 3:
+			System.out.print("출판사 : ");
+			String publisher = scan.next();
+			scan.nextLine();
+			
+			tmpList = bm.getBookList(new Book("", "", "", publisher));
+			
+			if(tmpList.isEmpty()) {
+				System.out.println("[일치하는 도서가 없습니다.]");
+				return;
+			}
+			
+			bm.print(tmpList, true);
+			
+			System.out.print("대여할 도서 선택 : ");
+			index = scan.nextInt() - 1;
+			
+			book = tmpList.get(index);
+			
+			rentBook(book);
+			
+			break;
+		case 4:
+			System.out.print("도서 코드 : ");
+			String code = scan.next();
+			scan.nextLine();
+			
+			tmpList = bm.getBookList(new Book(code, "", "", ""));
+			
+			if(tmpList.isEmpty()) {
+				System.out.println("[일치하는 도서가 없습니다.]");
+				return;
+			}
+			
+			bm.print(tmpList, true);
+			
+			System.out.print("대여할 도서 선택 : ");
+			index = scan.nextInt() - 1;
+			
+			book = tmpList.get(index);
+			System.out.println(book);
+			rentBook(book);
+			
+			break;
+		case 5:
+			System.out.println("[이전 메뉴로 돌아갑니다.]");
+			break;
+		default:
+			System.out.println("[올바른 메뉴가 아닙니다.]");
+		}
+		
+	}
+
+	private void rentBook(Book book) {
+		
+		if(!book.isRentReturn()) {
+			System.out.println("[이미 대여중인 도서입니다.]");
+			return;
+		}
+		
+		String id = user.getId();
+		
+		if(rr.rentBook(id, book)) {
+			System.out.println("[도서를 대여했습니다.]");
+		} else {
+			System.out.println("[도서 대여에 실패했습니다.]");
 		}
 		
 	}
 
 	private void returnBook() {
-		if(user.getRentList() == null || user.getRentList().isEmpty()) {
-			System.out.println("[대여중인 도서가 없습니다.]");
-			return;
-		}
 		
-		mm.printBookList(user);
+		
 	}
 
 }

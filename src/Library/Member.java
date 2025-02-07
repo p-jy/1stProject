@@ -22,8 +22,6 @@ public class Member {
 	@NonNull
 	private String num; //연락처
 	
-	private List<rentBookList> rentList;
-	
 	public Member(String id) {
 		this.id = id;
 		this.pw = pw;
