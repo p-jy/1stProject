@@ -108,9 +108,5 @@ public class Book implements Serializable{
 		this.author = book.author;
 		this.publisher = book.publisher;
 	}
-
-	public void setCount(int count) {
-		
-	}
 	
 }
