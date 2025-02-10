@@ -487,7 +487,7 @@ public class LibraryProgram implements ConsoleProgram {
 		String name = scan.next();
 		scan.nextLine();
 		
-		String numPattern = "[0-9]{4}-[0-9]{4}$";
+		String numPattern = "[0-9]{4}-[0-9]{4}$"; //010-nnnn-nnnn
 		String num = "";
 		while (true) {
 	        System.out.print("번호 : 010(생략) xxxx-xxxx");
