@@ -13,14 +13,16 @@ public class LibraryProgram implements ConsoleProgram {
 	
 	private List<Member> memberList;
 	private List<Book> bookList;
-	private BookManager bm;
-	private MemberManager mm;
+	private BookManager bm = new BookManager();
+	private MemberManager mm = new MemberManager();
 	private Member user = null;
 	Map<String, List<Book>> rentList = new HashMap<String, List<Book>>();
 	private RentReturn rr = new RentReturn(rentList);
 	
 	@Override
 	public void run() {
+		mm.addAdmin();
+		bm.addSampleBookData();
 		
 		if(bookList == null) {
 			bm.addSampleBookData();
@@ -29,9 +31,6 @@ public class LibraryProgram implements ConsoleProgram {
 		if(memberList == null) {
 			mm.addAdmin();
 		}
-		
-		bm = new BookManager(bookList);
-		mm = new MemberManager(memberList);
 		
 		int menu = 0;
 		do {

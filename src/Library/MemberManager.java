@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
 public class MemberManager {
 	
 	/* 
@@ -33,7 +32,19 @@ public class MemberManager {
 	
 	//회원관리
 	
-	private List<Member> members;
+	private static List<Member> members;
+	
+	public MemberManager(List<Member> members) {
+		if(members == null) {
+			this.members = new ArrayList<Member>();
+		} else {
+			this.members = members;
+		}
+	}
+	
+	public MemberManager() {
+		this.members = new ArrayList<Member>();
+	}
 	
 	public boolean insertMember(Member member) {
 		if(member == null || members == null) {
