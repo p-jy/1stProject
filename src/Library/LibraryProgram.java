@@ -24,14 +24,6 @@ public class LibraryProgram implements ConsoleProgram {
 		mm.addAdmin();
 		bm.addSampleBookData();
 		
-		if(bookList == null) {
-			bm.addSampleBookData();
-		}
-		
-		if(memberList == null) {
-			mm.addAdmin();
-		}
-		
 		int menu = 0;
 		do {
 			
