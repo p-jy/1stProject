@@ -139,4 +139,8 @@ public class BookManager {
 		registBook(new Book(getLastNum("900"), "역사", "미술로 보는 우리 역사", "전국역사교사모임", "푸른나무"));
 		registBook(new Book(getLastNum("900"), "역사", "유배인과 배수첩들의 뒤안길", "전웅", "소나기"));
 	}
+
+	public void setRentReturn(Book book, boolean b) {
+		book.setRentReturn(b);
+	}
 }

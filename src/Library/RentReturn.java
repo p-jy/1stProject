@@ -47,7 +47,6 @@ public class RentReturn {
 		}
 		
 		list.add(book);
-		book.setRentReturn(false);
 		
 		return false;
 	}

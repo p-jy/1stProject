@@ -1121,9 +1121,13 @@ public class LibraryProgram implements ConsoleProgram {
 	}
 
 	private void rentBook(Book book) {
-		
+		if(!book.isRentReturn()) {
+			System.out.println("[이미 대여 중인 도서입니다.]");
+			return;
+		}
 		if(rr.rentBook(user.getId(), book)) {
 			System.out.println("[도서 대여 완료]");
+			bm.setRentReturn(book, false);
 		} else {
 			System.out.println("[도서 대여 실패]");
 		}
@@ -1135,6 +1139,11 @@ public class LibraryProgram implements ConsoleProgram {
 		List<Book> rentList;
 		
 		rentList = rr.print(user.getId());
+		
+		if(rentList == null) {
+			return;
+		}
+		
 		System.out.print("반납할 도서 선택 : ");
 		int index = scan.nextInt() - 1;
 		
@@ -1147,6 +1156,7 @@ public class LibraryProgram implements ConsoleProgram {
 		
 		if(rr.returnBook(book, user.getId())) {
 			System.out.println("[도서 반납 완료]");
+			bm.setRentReturn(book, true);
 		} else {
 			System.out.println("[도서 반납 실패]");
 		}
