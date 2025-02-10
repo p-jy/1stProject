@@ -14,15 +14,19 @@ public class RentReturn {
 		this.rentReturn = rentReturn;
 	}
 	
-	public void print(String id) {
+	public List<Book> print(String id) {
 		List<Book> list = rentReturn.get(id);
 		
 		if(list == null) {
 			System.out.println("[대여 중인 도서가 없습니다.]");
-			return;
+			return null;
 		}
 		
-		list.stream().forEach(b-> System.out.println(b.getBookCode()));
+		for(int i = 0; i < list.size(); i++) {
+			System.out.print(i+ 1 + ". ");
+			System.out.println(list.get(i).getBookCode() + " " + list.get(i).getTitle());
+		}
+		return list;
 	}
 
 	public boolean rentBook(String id, Book book) {	
@@ -47,4 +51,21 @@ public class RentReturn {
 		
 		return false;
 	}
+
+	public boolean returnBook(Book book, String id) {
+		
+		List<Book> list = rentReturn.get(id);
+		
+		if(book == null || list == null) {
+			System.out.println("[대여 중인 도서가 없습니다.]");
+			return false;
+		}
+		
+		list.remove(book);
+		book.setRentReturn(true);
+		
+		return true;
+	}
+
+	
 }

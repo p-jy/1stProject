@@ -1,5 +1,6 @@
 package Library;
 
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Map;
@@ -12,9 +13,9 @@ public class LibraryProgram implements ConsoleProgram {
 	
 	private BookManager bm = new BookManager();
 	private MemberManager mm = new MemberManager();
-	private Map<String, List<Book>> rentList;
-	private RentReturn rr = new RentReturn(rentList);
 	private Member user = null;
+	Map<String, List<Book>> rentList = new HashMap<String, List<Book>>();
+	private RentReturn rr = new RentReturn(rentList);
 	
 	
 	@Override
@@ -1014,10 +1015,6 @@ public class LibraryProgram implements ConsoleProgram {
 			
 		} while(menu!=5);
 		
-		
-		
-		
-		
 	}
 
 	private void runRentBookMenu(int menu) {
@@ -1110,7 +1107,7 @@ public class LibraryProgram implements ConsoleProgram {
 			index = scan.nextInt() - 1;
 			
 			book = tmpList.get(index);
-			System.out.println(book);
+			
 			rentBook(book);
 			
 			break;
@@ -1125,24 +1122,34 @@ public class LibraryProgram implements ConsoleProgram {
 
 	private void rentBook(Book book) {
 		
-		if(!book.isRentReturn()) {
-			System.out.println("[이미 대여중인 도서입니다.]");
-			return;
-		}
-		
-		String id = user.getId();
-		
-		if(rr.rentBook(id, book)) {
-			System.out.println("[도서를 대여했습니다.]");
+		if(rr.rentBook(user.getId(), book)) {
+			System.out.println("[도서 대여 완료]");
 		} else {
-			System.out.println("[도서 대여에 실패했습니다.]");
+			System.out.println("[도서 대여 실패]");
 		}
 		
 	}
 
 	private void returnBook() {
 		
+		List<Book> rentList;
 		
+		rentList = rr.print(user.getId());
+		System.out.print("반납할 도서 선택 : ");
+		int index = scan.nextInt() - 1;
+		
+		if(index < 0 || index >= rentList.size()) {
+			System.out.println("[잘못 입력했습니다.]");
+			return;
+		}
+		
+		Book book = rentList.get(index);
+		
+		if(rr.returnBook(book, user.getId())) {
+			System.out.println("[도서 반납 완료]");
+		} else {
+			System.out.println("[도서 반납 실패]");
+		}
 	}
 
 }
