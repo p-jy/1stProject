@@ -4,27 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 public class BookManager {
 	//도서관리
 	
 	private List<Book> list;
 	
-	public BookManager(List<Book> list) {
-		if(list == null) {
-			this.list = new ArrayList<Book>();
-		} else {
-			this.list = list;
-		}
-	}
-	
-	public BookManager() {
-		this.list = new ArrayList<Book>();
-	}
-	
-	
 	public boolean registBook(Book book) {
 		
-		if(book == null || list == null) {
+		if(book == null ||
+			book.getBookCode() == null ||
+			book.getTitle() == null ||
+			book.getAuthor() == null ||
+			book.getPublisher() == null) {
 			return false;
 		}
 		
@@ -33,14 +27,6 @@ public class BookManager {
 		}
 		
 		return list.add(book);
-	}
-
-	public void print(String title) {
-		
-		if(list == null) {
-			System.out.println("");
-		}
-		
 	}
 
 	public List<Book> getBookList(Book book) {

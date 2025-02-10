@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class MemberManager {
 	
 	/* 
@@ -31,19 +33,7 @@ public class MemberManager {
 	
 	//회원관리
 	
-	private static List<Member> members;
-	
-	public MemberManager(List<Member> members) {
-		if(members == null) {
-			this.members = new ArrayList<Member>();
-		} else {
-			this.members = members;
-		}
-	}
-	
-	public MemberManager() {
-		this.members = new ArrayList<Member>();
-	}
+	private List<Member> members;
 	
 	public boolean insertMember(Member member) {
 		if(member == null || members == null) {
@@ -131,12 +121,6 @@ public class MemberManager {
 	public boolean delete(Member member) {
 		
 		return members.remove(member);
-	}
-
-	public void cancelMembership(String id, String pw) {
-		Member member = new Member(id, pw, "", "");
-		
-		
 	}
 
 	public Member getMember(String id, String pw) {
