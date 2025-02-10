@@ -11,8 +11,6 @@ public class LibraryProgram implements ConsoleProgram {
 	
 	private Scanner scan = new Scanner(System.in);
 	
-	private List<Member> memberList;
-	private List<Book> bookList;
 	private BookManager bm = new BookManager();
 	private MemberManager mm = new MemberManager();
 	private Member user = null;
