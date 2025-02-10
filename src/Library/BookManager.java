@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 public class BookManager {
 	//도서관리
 	
-	private List<Book> list;
+	private static List<Book> list;
 	
 	public BookManager(List<Book> list) {
 		if(list == null) {
@@ -143,4 +143,17 @@ public class BookManager {
 	public void setRentReturn(Book book, boolean b) {
 		book.setRentReturn(b);
 	}
+	
+	public static void listBook() {
+	    if (list.isEmpty()) { 
+	        System.out.println("[등록된 도서가 없습니다.]");
+	        return;
+	    }
+
+	    System.out.println("===== 도서 목록 =====");
+	    for (Book book : list) {
+	        System.out.println(book);
+	    }
+	}
+	
 }

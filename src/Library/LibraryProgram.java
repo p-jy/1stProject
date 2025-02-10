@@ -218,7 +218,8 @@ public class LibraryProgram implements ConsoleProgram {
 		System.out.println("2. 도서 수정");
 		System.out.println("3. 도서 삭제");
 		System.out.println("4. 도서 조회");
-		System.out.println("5. 이전 메뉴");
+		System.out.println("5. 도서 목록");
+		System.out.println("6. 이전 메뉴");
 		System.out.print("메뉴 입력 : ");
 		
 		int menu = scan.nextInt();
@@ -237,6 +238,9 @@ public class LibraryProgram implements ConsoleProgram {
 			searchBook();
 			break;
 		case 5:
+			BookManager.listBook();
+			break;
+		case 6:
 			System.out.println("[이전 메뉴로 돌아갑니다.]");
 			break;
 		default:
