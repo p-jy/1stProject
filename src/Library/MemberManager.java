@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import lombok.AllArgsConstructor;
 
 public class MemberManager {
 	
@@ -33,6 +32,7 @@ public class MemberManager {
 	//회원관리
 	
 	private static List<Member> members;
+	public Object getMembers;
 	
 	public MemberManager(List<Member> members) {
 		if(members == null) {
@@ -134,6 +134,12 @@ public class MemberManager {
 		return members.remove(member);
 	}
 
+	public void cancelMembership(String id, String pw) {
+		Member member = new Member(id, pw, "", "");
+		
+		
+	}
+
 	public Member getMember(String id, String pw) {
 		Member member = new Member(id, pw, "", "");
 		
@@ -162,16 +168,30 @@ public class MemberManager {
 		
 		return null;
 	}
+	public List<Member> getMembers() {
+	    return members;
+	}
 
 	public boolean checkAdmin(Member user) {
-		if("admin".equals(user.getId())) {
-			return true;
-		}
-		
-		return false;
+		return user != null && "admin".equals(user.getId());
 	}
+		
+	
+	
 
 	public void addAdmin() {
-		members.add(new Member("admin", "admin", "관리자", "관리자"));
+		boolean exists = members.stream().anyMatch(m -> "admin".equals(m.getId()));
+		if(!exists) {
+			members.add(new Member("admin", "admin", "관리자", "관리자"));
+		}
 	}
+
+	public void setMembers(List<Member> memberss) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+
+	
 }

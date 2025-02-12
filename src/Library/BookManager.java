@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 public class BookManager {
 	//도서관리
 	
-	private List<Book> list;
+	private static List<Book> list;
 	
 	public BookManager(List<Book> list) {
 		if(list == null) {
@@ -22,13 +21,10 @@ public class BookManager {
 		this.list = new ArrayList<Book>();
 	}
 	
+	
 	public boolean registBook(Book book) {
 		
-		if(book == null ||
-			book.getBookCode() == null ||
-			book.getTitle() == null ||
-			book.getAuthor() == null ||
-			book.getPublisher() == null) {
+		if(book == null || list == null) {
 			return false;
 		}
 		
@@ -37,6 +33,14 @@ public class BookManager {
 		}
 		
 		return list.add(book);
+	}
+
+	public void print(String title) {
+		
+		if(list == null) {
+			System.out.println("");
+		}
+		
 	}
 
 	public List<Book> getBookList(Book book) {
@@ -139,4 +143,26 @@ public class BookManager {
 	public void setRentReturn(Book book, boolean b) {
 		book.setRentReturn(b);
 	}
+	
+	public static void listBook() {
+	    if (list.isEmpty()) { 
+	        System.out.println("[등록된 도서가 없습니다.]");
+	        return;
+	    }
+
+	    System.out.println("===== 도서 목록 =====");
+	    for (Book book : list) {
+	        System.out.println(book);
+	    }
+	}
+	public List<Book> getBooks() {
+	    return list;
+	}
+
+	public void setBooks(List<Book> books) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 }
