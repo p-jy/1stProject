@@ -141,6 +141,7 @@ public class LibraryProgram implements ConsoleProgram {
 		//어드민 메뉴 노출
 		printAdminMenu();
 		menu = scan.nextInt();
+		scan.nextLine();
 		
 		switch(menu) {
 		case 1:
@@ -172,6 +173,7 @@ public class LibraryProgram implements ConsoleProgram {
 			//회원 메뉴 노출
 			printMemberMenu();
 			menu = scan.nextInt();
+			scan.nextLine();
 			
 			runMemberMenu(menu);
 		} while(menu != 4);
@@ -222,6 +224,7 @@ public class LibraryProgram implements ConsoleProgram {
 		System.out.print("메뉴 입력 : ");
 		
 		int menu = scan.nextInt();
+		scan.nextLine();
 		
 		switch(menu) {
 		case 1:
@@ -252,6 +255,7 @@ public class LibraryProgram implements ConsoleProgram {
 		System.out.print("메뉴 입력 : ");
 		
 		int menu = scan.nextInt();
+		scan.nextLine();
 		
 		switch(menu) {
 		case 1:
@@ -843,6 +847,7 @@ public class LibraryProgram implements ConsoleProgram {
 		do {
 			printSearchMemberMenu();
 			menu = scan.nextInt();
+			scan.nextLine();
 			
 			runSearchMemberMenu(menu);
 			
@@ -1065,6 +1070,7 @@ public class LibraryProgram implements ConsoleProgram {
 		do {
 			printSearchBookMenu();
 			menu = scan.nextInt();
+			scan.nextLine();
 			
 			runRentBookMenu(menu);
 			
