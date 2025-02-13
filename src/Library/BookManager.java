@@ -158,11 +158,14 @@ public class BookManager {
 	public List<Book> getBooks() {
 	    return list;
 	}
+<<<<<<< HEAD
 
 	public void setBooks(List<Book> books) {
 		 BookManager.list = books;
 		
 	}
+=======
+>>>>>>> 7d9bc6091f9a09074f9fdbee6b43795d1b3d4723
 	
 	
 }

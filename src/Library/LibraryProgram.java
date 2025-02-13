@@ -16,34 +16,34 @@ public class LibraryProgram implements ConsoleProgram {
 	private Member user = null;
 	Map<String, List<Book>> rentList = new HashMap<String, List<Book>>();
 	private RentReturn rr = new RentReturn(rentList);
-	private List<Member> memberss;
+	private List<Member> members;
 	private List<Book> books;
 	private Map<String, List<Book>> rentals;
 	
 	@Override
 	public void run() {
+<<<<<<< HEAD
 		String membersFileName = "src/Library/Member.txt";
         String booksFileName = "src/Library/Book.txt";
         String rentalsFileName = "src/Library/RentReturn.txt";
+=======
+		String membersFileName = "src/Library/members.txt";
+        String booksFileName = "src/Library/books.txt";
+        String rentalsFileName = "src/Library/rentals.txt";
+>>>>>>> 7d9bc6091f9a09074f9fdbee6b43795d1b3d4723
         
        
-        memberss = (List<Member>) load(membersFileName);
+        members = (List<Member>) load(membersFileName);
         books = (List<Book>) load(booksFileName);
         rentals = (Map<String, List<Book>>) load(rentalsFileName);
         
        
-        if (memberss == null) {     
+        if (members == null) {     
             mm.addAdmin();
-        } 
-        else {
-        	mm.setMembers(memberss);
         }
         
         if (books == null) {
             bm.addSampleBookData();
-        } 
-        else {
-        	bm.setBooks(books);
         }
         
         if (rentals != null) {
@@ -141,6 +141,7 @@ public class LibraryProgram implements ConsoleProgram {
 		//어드민 메뉴 노출
 		printAdminMenu();
 		menu = scan.nextInt();
+		scan.nextLine();
 		
 		switch(menu) {
 		case 1:
@@ -172,6 +173,7 @@ public class LibraryProgram implements ConsoleProgram {
 			//회원 메뉴 노출
 			printMemberMenu();
 			menu = scan.nextInt();
+			scan.nextLine();
 			
 			runMemberMenu(menu);
 		} while(menu != 4);
@@ -222,6 +224,7 @@ public class LibraryProgram implements ConsoleProgram {
 		System.out.print("메뉴 입력 : ");
 		
 		int menu = scan.nextInt();
+		scan.nextLine();
 		
 		switch(menu) {
 		case 1:
@@ -252,6 +255,7 @@ public class LibraryProgram implements ConsoleProgram {
 		System.out.print("메뉴 입력 : ");
 		
 		int menu = scan.nextInt();
+		scan.nextLine();
 		
 		switch(menu) {
 		case 1:
@@ -523,7 +527,7 @@ public class LibraryProgram implements ConsoleProgram {
 		String numPattern = "[0-9]{4}-[0-9]{4}$"; //010-nnnn-nnnn
 		String num = "";
 		while (true) {
-	        System.out.print("번호 : 010(생략) xxxx-xxxx");
+	        System.out.print("번호(010(생략) xxxx-xxxx) : ");
 	        num = scan.nextLine();
 	        if (num.matches(numPattern)) {
 	            break;
@@ -843,6 +847,7 @@ public class LibraryProgram implements ConsoleProgram {
 		do {
 			printSearchMemberMenu();
 			menu = scan.nextInt();
+			scan.nextLine();
 			
 			runSearchMemberMenu(menu);
 			
@@ -940,8 +945,7 @@ public class LibraryProgram implements ConsoleProgram {
 		switch(menu) {
 		case 1:
 			System.out.print("도서명 : ");
-			String title = scan.next();
-			scan.nextLine();
+			String title = scan.nextLine();
 			
 			tmpList = bm.getBookList(new Book("", title, "", ""));
 			
@@ -954,8 +958,7 @@ public class LibraryProgram implements ConsoleProgram {
 			break;
 		case 2:
 			System.out.print("작가명 : ");
-			String author = scan.next();
-			scan.nextLine();
+			String author = scan.nextLine();
 			
 			tmpList = bm.getBookList(new Book("", "", author, ""));
 			
@@ -968,8 +971,7 @@ public class LibraryProgram implements ConsoleProgram {
 			break;
 		case 3:
 			System.out.print("출판사 : ");
-			String publisher = scan.next();
-			scan.nextLine();
+			String publisher = scan.nextLine();
 			
 			tmpList = bm.getBookList(new Book("", "", "", publisher));
 			
@@ -982,8 +984,7 @@ public class LibraryProgram implements ConsoleProgram {
 			break;
 		case 4:
 			System.out.print("도서코드 : ");
-			String bookCode = scan.next();
-			scan.nextLine();
+			String bookCode = scan.nextLine();
 			
 			tmpList = bm.getBookList(new Book(bookCode, "", "", ""));
 			
@@ -1069,6 +1070,7 @@ public class LibraryProgram implements ConsoleProgram {
 		do {
 			printSearchBookMenu();
 			menu = scan.nextInt();
+			scan.nextLine();
 			
 			runRentBookMenu(menu);
 			
@@ -1084,8 +1086,7 @@ public class LibraryProgram implements ConsoleProgram {
 		switch(menu) {
 		case 1:
 			System.out.print("도서명 : ");
-			String title = scan.next();
-			scan.nextLine();
+			String title = scan.nextLine();
 			
 			tmpList = bm.getBookList(new Book("", title, "", ""));
 			
@@ -1106,8 +1107,7 @@ public class LibraryProgram implements ConsoleProgram {
 			break;
 		case 2:
 			System.out.print("작가명 : ");
-			String author = scan.next();
-			scan.nextLine();
+			String author = scan.nextLine();
 			
 			tmpList = bm.getBookList(new Book("", "", author, ""));
 			
@@ -1128,8 +1128,7 @@ public class LibraryProgram implements ConsoleProgram {
 			break;
 		case 3:
 			System.out.print("출판사 : ");
-			String publisher = scan.next();
-			scan.nextLine();
+			String publisher = scan.nextLine();
 			
 			tmpList = bm.getBookList(new Book("", "", "", publisher));
 			
@@ -1150,8 +1149,7 @@ public class LibraryProgram implements ConsoleProgram {
 			break;
 		case 4:
 			System.out.print("도서 코드 : ");
-			String code = scan.next();
-			scan.nextLine();
+			String code = scan.nextLine();
 			
 			tmpList = bm.getBookList(new Book(code, "", "", ""));
 			
