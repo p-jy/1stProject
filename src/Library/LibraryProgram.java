@@ -1,6 +1,5 @@
 package Library;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -15,7 +14,7 @@ public class LibraryProgram implements ConsoleProgram {
 	private BookManager bm = new BookManager();
 	private MemberManager mm = new MemberManager();
 	private Member user = null;
-	private Map<String, List<Book>> rentList = new HashMap<String, List<Book>>();
+	Map<String, List<Book>> rentList = new HashMap<String, List<Book>>();
 	private RentReturn rr = new RentReturn(rentList);
 	private List<Member> members;
 	private List<Book> books;
@@ -34,13 +33,17 @@ public class LibraryProgram implements ConsoleProgram {
         
        
         if (members == null) {     
-            members = new ArrayList<Member>();
-        	mm.addAdmin();
+            mm.addAdmin();
+        } 
+        else {
+        	mm.setMembers(members);
         }
         
         if (books == null) {
-        	books = new ArrayList<Book>();
             bm.addSampleBookData();
+        } 
+        else {
+        	bm.setBooks(books);
         }
         
         if (rentals != null) {
@@ -387,8 +390,7 @@ public class LibraryProgram implements ConsoleProgram {
 		switch(menu) {
 		case 1:
 			System.out.print("도서명 : ");
-			String title = scan.next();
-			scan.nextLine();
+			String title = scan.nextLine();
 			
 			tmpList = bm.getBookList(new Book("", title, "", ""));
 			
@@ -408,8 +410,7 @@ public class LibraryProgram implements ConsoleProgram {
 			break;
 		case 2:
 			System.out.print("작가명 : ");
-			String author = scan.next();
-			scan.nextLine();
+			String author = scan.nextLine();
 			
 			tmpList = bm.getBookList(new Book("", "", author, ""));
 			
@@ -429,8 +430,7 @@ public class LibraryProgram implements ConsoleProgram {
 			break;
 		case 3:
 			System.out.print("출판사 : ");
-			String publisher = scan.next();
-			scan.nextLine();
+			String publisher = scan.nextLine();
 			
 			tmpList = bm.getBookList(new Book("", "", "", publisher));
 			
@@ -450,8 +450,7 @@ public class LibraryProgram implements ConsoleProgram {
 			break;
 		case 4:
 			System.out.print("도서코드 : ");
-			String bookCode = scan.next();
-			scan.nextLine();
+			String bookCode = scan.nextLine();
 			
 			tmpList = bm.getBookList(new Book(bookCode, "", "", ""));
 			
@@ -731,8 +730,7 @@ public class LibraryProgram implements ConsoleProgram {
 		switch(menu) {
 		case 1:
 			System.out.print("도서명 : ");
-			String title = scan.next();
-			scan.nextLine();
+			String title = scan.nextLine();
 			
 			tmpList = bm.getBookList(new Book("", title, "", ""));
 			
@@ -752,8 +750,7 @@ public class LibraryProgram implements ConsoleProgram {
 			break;
 		case 2:
 			System.out.print("작가명 : ");
-			String author = scan.next();
-			scan.nextLine();
+			String author = scan.nextLine();
 			
 			tmpList = bm.getBookList(new Book("", "", author, ""));
 			
@@ -773,8 +770,7 @@ public class LibraryProgram implements ConsoleProgram {
 			break;
 		case 3:
 			System.out.print("출판사 : ");
-			String publisher = scan.next();
-			scan.nextLine();
+			String publisher = scan.nextLine();
 			
 			tmpList = bm.getBookList(new Book("", "", "", publisher));
 			
@@ -794,8 +790,7 @@ public class LibraryProgram implements ConsoleProgram {
 			break;
 		case 4:
 			System.out.print("도서코드 : ");
-			String bookCode = scan.next();
-			scan.nextLine();
+			String bookCode = scan.nextLine();
 			
 			tmpList = bm.getBookList(new Book(bookCode, "", "", ""));
 			
