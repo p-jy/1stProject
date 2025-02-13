@@ -22,7 +22,7 @@ public class Member {
 	@NonNull
 	private String num; //연락처
 	
-	public Member(String id) {
+	public Member(String id, String pw) {
 		this.id = id;
 		this.pw = pw;
 	}
