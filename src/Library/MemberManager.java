@@ -182,16 +182,9 @@ public class MemberManager {
 	public void addAdmin() {
 		boolean exists = members.stream().anyMatch(m -> "admin".equals(m.getId()));
 		if(!exists) {
-			members.add(new Member("admin", "admin", "관리자", "관리자"));
+			members.add(new Member("admin", "admin", "관리자", "010-1111-1111"));
 		}
 	}
-
-	public void setMembers(List<Member> memberss) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
 
 	
 }

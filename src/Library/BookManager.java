@@ -158,11 +158,6 @@ public class BookManager {
 	public List<Book> getBooks() {
 	    return list;
 	}
-
-	public void setBooks(List<Book> books) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	
 }

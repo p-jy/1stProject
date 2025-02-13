@@ -34,16 +34,10 @@ public class LibraryProgram implements ConsoleProgram {
        
         if (members == null) {     
             mm.addAdmin();
-        } 
-        else {
-        	mm.setMembers(members);
         }
         
         if (books == null) {
             bm.addSampleBookData();
-        } 
-        else {
-        	bm.setBooks(books);
         }
         
         if (rentals != null) {
