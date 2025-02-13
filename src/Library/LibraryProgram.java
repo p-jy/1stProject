@@ -16,7 +16,7 @@ public class LibraryProgram implements ConsoleProgram {
 	private Member user = null;
 	Map<String, List<Book>> rentList = new HashMap<String, List<Book>>();
 	private RentReturn rr = new RentReturn(rentList);
-	private List<Member> memberss;
+	private List<Member> members;
 	private List<Book> books;
 	private Map<String, List<Book>> rentals;
 	
@@ -27,16 +27,16 @@ public class LibraryProgram implements ConsoleProgram {
         String rentalsFileName = "src/Library/RentReturn.txt";
         
        
-        memberss = (List<Member>) load(membersFileName);
+        members = (List<Member>) load(membersFileName);
         books = (List<Book>) load(booksFileName);
         rentals = (Map<String, List<Book>>) load(rentalsFileName);
         
        
-        if (memberss == null) {     
+        if (members == null) {     
             mm.addAdmin();
         } 
         else {
-        	mm.setMembers(memberss);
+        	mm.setMembers(members);
         }
         
         if (books == null) {
