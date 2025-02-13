@@ -187,8 +187,7 @@ public class MemberManager {
 	}
 
 	public void setMembers(List<Member> memberss) {
-		// TODO Auto-generated method stub
-		
+		MemberManager.members = memberss;
 	}
 
 	

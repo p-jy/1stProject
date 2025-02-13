@@ -22,9 +22,9 @@ public class LibraryProgram implements ConsoleProgram {
 	
 	@Override
 	public void run() {
-		String membersFileName = "src/Library/members.dat";
-        String booksFileName = "src/Library/books.dat";
-        String rentalsFileName = "src/Library/rentals.dat";
+		String membersFileName = "src/Library/Member.txt";
+        String booksFileName = "src/Library/Book.txt";
+        String rentalsFileName = "src/Library/RentReturn.txt";
         
        
         memberss = (List<Member>) load(membersFileName);

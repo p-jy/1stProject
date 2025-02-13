@@ -160,7 +160,7 @@ public class BookManager {
 	}
 
 	public void setBooks(List<Book> books) {
-		// TODO Auto-generated method stub
+		 BookManager.list = books;
 		
 	}
 	

@@ -20,6 +20,7 @@ public class Book implements Serializable{
 	private String publisher; //출판사
 	private boolean rentReturn;
 	
+	
 	public Book(String bookCode, String title, String author, String publisher) {
 		this.bookCode = bookCode;
 		this.title = title;
@@ -108,5 +109,7 @@ public class Book implements Serializable{
 		this.author = book.author;
 		this.publisher = book.publisher;
 	}
+
 	
+
 }
