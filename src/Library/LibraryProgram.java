@@ -1080,8 +1080,7 @@ public class LibraryProgram implements ConsoleProgram {
 		switch(menu) {
 		case 1:
 			System.out.print("도서명 : ");
-			String title = scan.next();
-			scan.nextLine();
+			String title = scan.nextLine();
 			
 			tmpList = bm.getBookList(new Book("", title, "", ""));
 			
@@ -1102,8 +1101,7 @@ public class LibraryProgram implements ConsoleProgram {
 			break;
 		case 2:
 			System.out.print("작가명 : ");
-			String author = scan.next();
-			scan.nextLine();
+			String author = scan.nextLine();
 			
 			tmpList = bm.getBookList(new Book("", "", author, ""));
 			
@@ -1124,8 +1122,7 @@ public class LibraryProgram implements ConsoleProgram {
 			break;
 		case 3:
 			System.out.print("출판사 : ");
-			String publisher = scan.next();
-			scan.nextLine();
+			String publisher = scan.nextLine();
 			
 			tmpList = bm.getBookList(new Book("", "", "", publisher));
 			
@@ -1146,8 +1143,7 @@ public class LibraryProgram implements ConsoleProgram {
 			break;
 		case 4:
 			System.out.print("도서 코드 : ");
-			String code = scan.next();
-			scan.nextLine();
+			String code = scan.nextLine();
 			
 			tmpList = bm.getBookList(new Book(code, "", "", ""));
 			
