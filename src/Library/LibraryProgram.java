@@ -16,27 +16,27 @@ public class LibraryProgram implements ConsoleProgram {
 	private Member user = null;
 	Map<String, List<Book>> rentList = new HashMap<String, List<Book>>();
 	private RentReturn rr = new RentReturn(rentList);
-	private List<Member> memberss;
+	private List<Member> members;
 	private List<Book> books;
 	private Map<String, List<Book>> rentals;
 	
 	@Override
 	public void run() {
-		String membersFileName = "src/Library/members.dat";
-        String booksFileName = "src/Library/books.dat";
-        String rentalsFileName = "src/Library/rentals.dat";
+		String membersFileName = "src/Library/members.txt";
+        String booksFileName = "src/Library/books.txt";
+        String rentalsFileName = "src/Library/rentals.txt";
         
        
-        memberss = (List<Member>) load(membersFileName);
+        members = (List<Member>) load(membersFileName);
         books = (List<Book>) load(booksFileName);
         rentals = (Map<String, List<Book>>) load(rentalsFileName);
         
        
-        if (memberss == null) {     
+        if (members == null) {     
             mm.addAdmin();
         } 
         else {
-        	mm.setMembers(memberss);
+        	mm.setMembers(members);
         }
         
         if (books == null) {
@@ -523,7 +523,7 @@ public class LibraryProgram implements ConsoleProgram {
 		String numPattern = "[0-9]{4}-[0-9]{4}$"; //010-nnnn-nnnn
 		String num = "";
 		while (true) {
-	        System.out.print("번호 : 010(생략) xxxx-xxxx");
+	        System.out.print("번호(010(생략) xxxx-xxxx) : ");
 	        num = scan.nextLine();
 	        if (num.matches(numPattern)) {
 	            break;
@@ -940,8 +940,7 @@ public class LibraryProgram implements ConsoleProgram {
 		switch(menu) {
 		case 1:
 			System.out.print("도서명 : ");
-			String title = scan.next();
-			scan.nextLine();
+			String title = scan.nextLine();
 			
 			tmpList = bm.getBookList(new Book("", title, "", ""));
 			
@@ -954,8 +953,7 @@ public class LibraryProgram implements ConsoleProgram {
 			break;
 		case 2:
 			System.out.print("작가명 : ");
-			String author = scan.next();
-			scan.nextLine();
+			String author = scan.nextLine();
 			
 			tmpList = bm.getBookList(new Book("", "", author, ""));
 			
@@ -968,8 +966,7 @@ public class LibraryProgram implements ConsoleProgram {
 			break;
 		case 3:
 			System.out.print("출판사 : ");
-			String publisher = scan.next();
-			scan.nextLine();
+			String publisher = scan.nextLine();
 			
 			tmpList = bm.getBookList(new Book("", "", "", publisher));
 			
@@ -982,8 +979,7 @@ public class LibraryProgram implements ConsoleProgram {
 			break;
 		case 4:
 			System.out.print("도서코드 : ");
-			String bookCode = scan.next();
-			scan.nextLine();
+			String bookCode = scan.nextLine();
 			
 			tmpList = bm.getBookList(new Book(bookCode, "", "", ""));
 			
