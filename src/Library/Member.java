@@ -1,5 +1,6 @@
 package Library;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import lombok.Data;
@@ -8,7 +9,10 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @RequiredArgsConstructor
-public class Member {
+public class Member implements Serializable{
+	
+	private static final long serialVersionUID = 9055960272294860934L;
+	
 	//회원
 	//아이디, 비밀번호, 이름, 연락처
 	@NonNull
