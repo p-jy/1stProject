@@ -1,5 +1,6 @@
 package Library;
 
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -27,6 +28,8 @@ public interface ConsoleProgram {
 	}
 	
 	default void save(String fileName, Object obj) {
+		
+		
 		try(FileOutputStream fos = new FileOutputStream(fileName);
 			ObjectOutputStream oos = new ObjectOutputStream(fos)) {
 			
@@ -37,5 +40,6 @@ public interface ConsoleProgram {
 			System.out.println("저장하기 실패");
 			System.out.println("----------------");
 		}
+		
 	}
 }
