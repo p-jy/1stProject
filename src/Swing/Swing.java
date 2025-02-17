@@ -1,6 +1,7 @@
 package Swing;
 
 import java.awt.CardLayout;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -10,6 +11,7 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -17,7 +19,7 @@ import javax.swing.JTextField;
 public class Swing {
 	private final List<Member> members = new ArrayList<>();
 	private final List<Book> books = new ArrayList<>();
-	 private static DefaultListModel<String> listModel = new DefaultListModel<>();
+	private static DefaultListModel<String> listModel = new DefaultListModel<>();
 	private CardLayout cardLayout;
 	private JFrame frame;
 	private JTextField idText;
@@ -34,12 +36,14 @@ public class Swing {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		frame.add(createMainPanel(), "main");
-		frame.add(createMainPanel(), "login");
-		frame.add(createMainPanel(), "signup");
+		frame.add(createLoginPanel(), "login");
+		frame.add(createSignUpPanel(), "signup");
 		
 		frame.setVisible(true);
 	}
 	
+	
+
 	private JPanel createMainPanel() {
 		JPanel mainPanel = new JPanel(new GridLayout(3, 1));
 		JButton btnLogin = new JButton("로그인");
@@ -58,19 +62,8 @@ public class Swing {
         
 	}
 	
-	private void switchPanel(String panelName) {
-        cardLayout.show(frame.getContentPane(), panelName);
-    }
-	
-	private void exitProgram() {
-		int result = JOptionPane.showConfirmDialog(frame, "정말 종료하시겠습니까?", "종료 확인", JOptionPane.YES_NO_OPTION);
-		if (result == JOptionPane.YES_OPTION) {
-			System.exit(0);
-		}
-	}
-	
-	private JPanel createInsertMemberPanel() {
-		JPanel insertPanel = new JPanel(new GridBagLayout());
+	private JPanel createSignUpPanel() {
+		JPanel signupPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.weightx = 1.0;
@@ -83,24 +76,52 @@ public class Swing {
 		JButton btnSignUp = new JButton("회원 가입");
 		
 		btnSignUp.addActionListener(e-> SignUp());
+		addComponent(signupPanel, new JLabel("아이디"), 0, 0, gbc);
+		addComponent(signupPanel, idText, 1, 0, gbc);
+		addComponent(signupPanel, new JLabel("비밀번호"), 0, 1, gbc);
+		addComponent(signupPanel, pwText, 1, 1, gbc);
+		addComponent(signupPanel, new JLabel("이름"), 0, 2, gbc);
+		addComponent(signupPanel, nameText, 1, 2, gbc);
+		addComponent(signupPanel, new JLabel("번호"), 0, 3, gbc);
+		addComponent(signupPanel, numText, 1, 3, gbc);
 		
-		return insertPanel;
+		gbc.gridx = 0;
+		gbc.gridy = 4;
+		gbc.gridwidth = 2;
+		signupPanel.add(btnSignUp, gbc);
+		
+		return signupPanel;
 	}
-//    btnRegister.addActionListener(e -> registerStudent());
-//
-//    addComponent(insertPanel, new JLabel("학년"), 0, 0, gbc);
-//    addComponent(insertPanel, gradeText, 1, 0, gbc);
-//    addComponent(insertPanel, new JLabel("반"), 0, 1, gbc);
-//    addComponent(insertPanel, classText, 1, 1, gbc);
-//    addComponent(insertPanel, new JLabel("번호"), 0, 2, gbc);
-//    addComponent(insertPanel, numText, 1, 2, gbc);
-//    addComponent(insertPanel, new JLabel("이름"), 0, 3, gbc);
-//    addComponent(insertPanel, nameText, 1, 3, gbc);
-//
-//    gbc.gridx = 0; gbc.gridy = 4; gbc.gridwidth = 2;
-//    insertPanel.add(btnRegister, gbc);
-//    return insertPanel;
-//}
+	
+	private Component createLoginPanel() {
+		JPanel loginPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.weightx = 1.0;
+		
+		
+		
+		return null;
+	}
+	
+	private void switchPanel(String panelName) {
+        cardLayout.show(frame.getContentPane(), panelName);
+    }
+	
+	private void exitProgram() {
+		int result = JOptionPane.showConfirmDialog(frame, "정말 종료하시겠습니까?", "종료 확인", JOptionPane.YES_NO_OPTION);
+		if (result == JOptionPane.YES_OPTION) {
+			System.exit(0);
+		}
+	}
+	
+
+	private void addComponent(JPanel panel, Component comp, int x, int y, GridBagConstraints gbc) {
+		gbc.gridx = x;
+		gbc.gridy = y;
+		panel.add(comp, gbc);
+	}
+
 	private void SignUp() {
 		try {
 			Member member = new Member(idText.getText(), pwText.getText(), nameText.getText(), numText.getText());
