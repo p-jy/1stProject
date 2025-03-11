@@ -10,18 +10,14 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Data
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class Member implements Serializable{
 	private static final long serialVersionUID = 1L;
 	//회원
 	//아이디, 비밀번호, 이름, 연락처
-	@NonNull
 	private String id; //아이디
-	@NonNull
 	private String pw; //비번
-	@NonNull
 	private String name; //이름
-	@NonNull
 	private String num; //연락처
 	
 	public Member(String id) {
@@ -46,6 +42,11 @@ public class Member implements Serializable{
 		this.name = member.name;
 		this.num = member.num;
 		
+	}
+
+	@Override
+	public String toString() {
+		return "ID : " + id + " | 이름 : " + name;
 	}
 	
 	
