@@ -155,5 +155,14 @@ public class BookManager {
 	        System.out.println(book);
 	    }
 	}
+	public List<Book> getBooks() {
+	    return list;
+	}
+
+	public void setBooks(List<Book> books) {
+		 BookManager.list = books;
+		
+	}
+	
 	
 }
