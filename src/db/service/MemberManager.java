@@ -19,6 +19,7 @@ import lombok.Data;
 
 @Data
 public class MemberManager {
+
 	private List<Member> list;
 	
 	private BookDAO bookDao;
@@ -35,18 +36,18 @@ public class MemberManager {
 			session = sessionFactory.openSession(true);
 			bookDao = session.getMapper(BookDAO.class);
 			memberDao = session.getMapper(MemberDAO.class);
+			rentDao = session.getMapper(RentDAO.class);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public boolean contains(Member member) {
 		Member dbMem = memberDao.selectMember(member);
 		
 		if(dbMem != null) {
 			return true;
 		}
-		
 		return false;
 	}
 	
@@ -60,6 +61,7 @@ public class MemberManager {
 		}
 		
 		return memberDao.insertStudent(member);
+
 	}
 	
 	public Member getMember(Member member) {
@@ -80,7 +82,9 @@ public class MemberManager {
 		}
 		
 		return memberDao.updateMember(selMember, newMember);
+		
 	}
+	
 	
 	public boolean deleteMember(Member member) {
 		if(member == null) {
@@ -106,7 +110,7 @@ public class MemberManager {
 	}
 	
 	public int getRentNum(Member member, Rent rent) {
-		if(member == null || rent == null || rent.getBook() == null) {
+		if(member == null || rent == null) {
 			return -1;
 		}
 		
@@ -120,15 +124,16 @@ public class MemberManager {
 			return -1;
 		}
 		
-		rent.setId(dbMem.getId());
+		rent.setMe_id(dbMem.getId());
 		rent.getBook().setCode(dbBook.getCode());
 		Rent dbRent = rentDao.selectRent(rent);
 		
-		return dbRent != null ? dbRent.getNum() : -1;
+		return dbRent != null ? dbRent.getRe_num() : -1;
 	}
 	
+	
 	public boolean rentBook(Member member, Rent rent) {
-		if(member == null || rent == null) {
+		if(member == null) {
 			return false;
 		}
 		
@@ -157,37 +162,40 @@ public class MemberManager {
 		return rentDao.returnBook(dbMem.getId(), dbBook.getCode());
 	}
 	
-	public void printRent(Member member, Book book) {
-		if(member == null || book == null) {
+
+	public void printRent(Member member, Book book) { //이건 대여중인 책 하나만 출력인디 고쳐야함
+		if(member == null) {
 			System.out.println("출력할 수 없습니다.");
 			return;
 		}
+		
 		member = memberDao.selectMember(member);
 		if(member == null) {
 			System.out.println("일치하는 회원 정보가 없습니다.");
 			return;
 		}
+
 		book = bookDao.selectBook(book);
 		if(book == null) {
 			System.out.println("일치하는 도서 정보가 없습니다.");
 			return;
 		}
-		Rent tmp = new Rent(new Book("", "", "", ""), "");
-		tmp.setId(member.getId());
-		tmp.getBook().setCode(book.getCode());
-		
-		Rent rent = rentDao.selectRent(tmp);
-		if(rent == null) {
-			System.out.println("대여중인 도서가 없습니다.");
-			return;
-		}
-		
-		System.out.println(member.getId() + " " + rent);
+//		Rent tmp = new Rent("", new Book("", "", "", ""));
+//		tmp.setMe_id(member.getId());
+//
+//		tmp.getBook().setCode(book.getCode());
+//		
+//		Rent rent = rentDao.selectRent(tmp);
+//		if(rent == null) {
+//			System.out.println("대여중인 도서가 없습니다.");
+//			return;
+//		}
+//		
+//		System.out.println(member.getId() + " " + rent);
 	}
 
 	public boolean checkAdmin(Member user) {
 		return user != null && "admin".equals(user.getId());
 	}
-	
-	
+
 }

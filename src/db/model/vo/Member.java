@@ -33,18 +33,9 @@ public class Member implements Serializable{
 	}
 
 	public void print() {
-		System.out.println("----------------------------");
+		
 		System.out.println("ID : " + id + " 이름 : " + name + " 번호 : " + num);
-		System.out.println("----------------------------");
 		
-		if(list.size() == 0) {
-			System.out.println("대여 중인 도서가 없습니다.");
-			return;
-		}
-		
-		for(Rent rent : list) {
-			System.out.println(rent);
-		}
 	}
 	
 

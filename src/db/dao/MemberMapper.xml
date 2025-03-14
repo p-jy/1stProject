@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="db/dao/MemberMapper.xml">
+	
+	<resultMap type="db.model.vo.MemberVO" id="MemberMap">
+	<!-- property : MemberVO의 필드명, column : member 테이블의 속성명 -->
+		<id property="id" column="me_id"/>
+		<result property="pw" column="me_pw"/>
+		<result property="name" column="me_name"/>
+		<result property="num" column="me_num"/>
+		
+		<collection property="list" select="selectRentList" column="me_id" ofType="db.dao.model.vo.Rent" />
+	</resultMap>
+
+	<resultMap type="db.model.vo.Rent" id="RentMap">
+		<id property="re_num" column="re_num"/>
+		<result property="me_id" column="me_id"/>
+		
+		<association property="book" javaType="db.model.vo.Book">
+			<id property="code" column="bo_code"/>
+			<result property="title" column="bo_title"/>
+			<result property="author" column="bo_author"/>
+			<result property="publisher" column="bo_publisher"/>
+		</association>
+	</resultMap>
+	
+	<select id="selectRentList" resultMap="RentMap">
+		select * from rent
+		join book on re_bo_code = bo_code
+		where
+			re_me_id = #{id} and re_state = "대여"
+	</select>
+	
+	<select id="selectMember" resultMap="MemberMap">
+		select * from Member
+		where
+	</select>
+</mapper>
