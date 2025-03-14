@@ -1,17 +1,37 @@
 package db2.ex1.service;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import db.model.vo.Member;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
+import db2.ex1.dao.MemberDAO;
+import db2.ex1.model.vo.Member;
 
 
 public class MemberManager {
 	
 	private List<Member> members;
 	
+	private MemberDAO memberDao;
+	
 	public MemberManager() {
-		
+		String resource = "db2/ex1/config/mybatis-config.xml";
+		InputStream inputStream;
+		SqlSession session;
+		try {
+			inputStream = Resources.getResourceAsStream(resource);
+			SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+			session = sessionFactory.openSession(true);
+			memberDao = session.getMapper(MemberDAO.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		
 	}
@@ -20,13 +40,17 @@ public class MemberManager {
 		if(member == null) {
 			return false;
 		}
-		
 		//중복 확인
-		if(members.contains(member)) {
+		//DB에서 member를 이용하여 회원 정보를 가져옴
+		Member dbMem = memberDao.selectMember(member);
+		System.out.println("DB에서 가져온 정보 : " + dbMem);
+		
+		//DB에서 가져온 회원 정보가 있으면 중복 -> false 반환
+		if(dbMem != null) {
 			return false;
 		}
 		//중복x -> 추가
-		return members.add(member);
+		return memberDao.insertMember(member);
 	}
 	
 	
@@ -156,12 +180,6 @@ public class MemberManager {
 			members.add(new Member("admin", "admin", "관리자", "관리자"));
 		}
 	}
-
-	public void setMembers(List<Member> memberss) {
-		MemberManager.members = memberss;
-	}
-
-	
 
 	
 }

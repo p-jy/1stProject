@@ -24,10 +24,7 @@ public class Member implements Serializable{
 	@NonNull
 	private String num; //me_num
 	
-	public Member(String id) {
-		this.id = id;
-		this.pw = pw;
-	}
+	
 	
 	@Override
 	public boolean equals(Object obj) {

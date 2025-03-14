@@ -9,7 +9,7 @@ import lombok.NonNull;
 public class Rent {
 	//String : id
 	
-	private int num; //re_num
+	private int re_num; //re_num
 	private String id; //re_me_id
 	private String code; //re_bo_code
 	
