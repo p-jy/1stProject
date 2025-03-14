@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="db/dao/RentMapper.xml">
+	
+	<resultMap type="db.model.vo.RentVO" id="RentMap">
+	<!-- property : RentVO의 필드명, column : rent 테이블의 속성명 -->
+		<id property="re_num" column="re_num"/>
+		<result property="re_date" column="re_date"/>
+		
+		<association property="rent" javaType="db.model.vo.RentVO">
+			
+		</association>
+	</resultMap>
+
+	
+</mapper>
