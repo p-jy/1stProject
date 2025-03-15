@@ -3,7 +3,7 @@ package prac.model.vo;
 import lombok.Data;
 
 @Data
-public class Student {
+public class StudentVO {
 	
 	private int st_key;
 	private int st_grade;

@@ -1,4 +1,4 @@
-package db.main;
+package db2.main;
 
 import java.util.HashMap;
 import java.util.InputMismatchException;
@@ -6,26 +6,27 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import Library.Book;
-import Library.BookManager;
-import Library.ConsoleProgram;
-import Library.Member;
-import Library.MemberManager;
-import Library.RentReturn;
+import db2.Library.RentReturn;
+import db2.dao.BookDAOImpl;
+import db2.model.vo.Book;
+import db2.model.vo.Member;
+import db2.service.BookManager;
+import db2.service.MemberManager;
 
 public class LibraryProgram implements ConsoleProgram {
 	
 	
 	private Scanner scan = new Scanner(System.in);
 	
-	private BookManager bm = new BookManager();
-	private MemberManager mm = new MemberManager();
-	private Member user = null;
-	Map<String, List<Book>> rentList = new HashMap<String, List<Book>>();
-	private RentReturn rr = new RentReturn(rentList);
-	private List<Member> members;
-	private List<Book> books;
-	private Map<String, List<Book>> rentals;
+	private BookDAOImpl bookDao = new BookDAOImpl();
+    private BookManager bm = new BookManager(bookDao); 
+    private MemberManager mm = new MemberManager();
+    private Member user = null;
+    Map<String, List<Book>> rentList = new HashMap<>();
+    private RentReturn rr = new RentReturn(rentList);
+    private List<Member> members;
+    private List<Book> books;
+    private Map<String, List<Book>> rentals;
 	
 	@Override
 	public void run() {
@@ -1210,12 +1211,7 @@ public class LibraryProgram implements ConsoleProgram {
 		
 		Book book = rentList.get(index);
 		
-		if(rr.returnBook(book, user.getId())) {
-			System.out.println("[도서 반납 완료]");
-			bm.setRentReturn(book, true);
-		} else {
-			System.out.println("[도서 반납 실패]");
-		}
+		
 	}
 	private void saveDataToFile(String membersFileName, String booksFileName, String rentalsFileName) {
         save(membersFileName, mm.getMembers());

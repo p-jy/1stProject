@@ -1,13 +1,10 @@
-package Library;
+package db2.model.vo;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 @Data
 @AllArgsConstructor

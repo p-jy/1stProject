@@ -3,6 +3,14 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="db.prac.dao.StudentDAO">
-	<!-- 태그에는 insert, select, update, delete가 들어감 -->
+	<!-- 내가 작성하려는 DML에 맞게 태그를 선택
+	- select문을 쓴다 => select 태그
+	- id는 DAO의 메소드명을 작성
+	- 메소드 오버로딩이 X
+	- select태그의 경우 resultType, resultMap을 지정해야 한다.
+	 -->
+	<select id="selectStudentList">
+	
+	</select>
     
-</mapper>
+</mapper>	

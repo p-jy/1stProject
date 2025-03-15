@@ -1,12 +1,40 @@
-package Library;
+package db2.service;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
+import db2.dao.BookDAO;
+import db2.dao.MemberDAO;
+import db2.model.vo.Member;
+
 
 public class MemberManager {
 	
+	private BookDAO bookDao;
+	private MemberDAO memberDao;
+	
+	public MemberManager() {
+		String resource = "db/config/mybatis-config.xml";
+		InputStream inputStream;
+		SqlSession session;
+		try {
+			inputStream = Resources.getResourceAsStream(resource);
+			SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+			session = sessionFactory.openSession(true);
+			bookDao = session.getMapper(BookDAO.class);
+			memberDao = session.getMapper(MemberDAO.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	/* 
 	 * 1. 로그인
 	   ㄴ 아이디, 비밀번호 입력하여 일치하면 로그인
@@ -31,6 +59,8 @@ public class MemberManager {
 	
 	//회원관리
 	
+	
+	
 	private static List<Member> members;
 	public Object getMembers;
 	
@@ -40,10 +70,6 @@ public class MemberManager {
 		} else {
 			this.members = members;
 		}
-	}
-	
-	public MemberManager() {
-		this.members = new ArrayList<Member>();
 	}
 	
 	public boolean insertMember(Member member) {

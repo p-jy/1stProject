@@ -2,10 +2,10 @@ package prac.service;
 
 import java.util.List;
 
-import prac.model.vo.Student;
+import prac.model.vo.StudentVO;
 
 public interface StudentService {
 
-	List<Student> getStudentList();
+	List<StudentVO> getStudentList();
 
 }

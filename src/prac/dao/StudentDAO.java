@@ -2,10 +2,10 @@ package prac.dao;
 
 import java.util.List;
 
-import prac.model.vo.Student;
+import prac.model.vo.StudentVO;
 
 public interface StudentDAO {
 
-	List<Student> selectStudentList();
+	List<StudentVO> selectStudentList();
 
 }

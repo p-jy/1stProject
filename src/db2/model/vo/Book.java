@@ -1,8 +1,7 @@
-package Library;
+package db2.model.vo;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
-import java.util.List;
 
 import lombok.Data;
 
@@ -20,6 +19,14 @@ public class Book implements Serializable{
 	private String publisher; //출판사
 	private boolean rentReturn;
 	
+	 public boolean isRentReturn() {
+	        return rentReturn;
+    }
+
+	    // 책의 대여 가능 여부를 설정하는 메서드
+	    public void setRentReturn(boolean rentReturn) {
+	        this.rentReturn = rentReturn;
+    }
 	
 	public Book(String bookCode, String title, String author, String publisher) {
 		this.bookCode = bookCode;

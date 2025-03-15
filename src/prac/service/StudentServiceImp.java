@@ -10,7 +10,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import prac.dao.StudentDAO;
-import prac.model.vo.Student;
+import prac.model.vo.StudentVO;
 
 public class StudentServiceImp implements StudentService {
 	
@@ -31,7 +31,7 @@ public class StudentServiceImp implements StudentService {
 	}
 
 	@Override
-	public List<Student> getStudentList() {
+	public List<StudentVO> getStudentList() {
 		return studentDao.selectStudentList();
 	}
 }
