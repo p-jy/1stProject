@@ -19,10 +19,10 @@ public class LibraryProgram {
 
 		    switch (menu) {
 		        case 1:
-		            System.out.println("로그인 기능 (미구현)");
+		            login(scanner,memberDAO);
 		            break;
 		        case 2:
-		            registerMember(scanner, memberDAO);
+		            signUp(scanner, memberDAO);
 		            break;
 		        case 3:
 		            System.out.println("프로그램 종료");
@@ -33,18 +33,47 @@ public class LibraryProgram {
 		}
     }
 	
-	 public void printMenu() {
+
+	public void printMenu() {
 	        System.out.println("\n==== 도서 관리 시스템 ====");
 	        System.out.println("1. 로그인");
 	        System.out.println("2. 회원가입");
 	        System.out.println("3. 종료");
     }
 	 
-	 public void registerMember(Scanner scanner, MemberDAO memberDAO) {
+	private void login(Scanner scanner, MemberDAO memberDAO) {
+		System.out.print("아이디: ");
+	    String id = scanner.nextLine();
+	    
+	    // 아이디 중복 체크
+	    if (!memberDAO.isIdExists(id)) {
+	        System.out.println("로그인 실패! 존재하지 않는 아이디입니다.");
+	        return; //
+	    }
+
+	    System.out.print("비밀번호: ");
+	    String pw = scanner.nextLine();
+
+	    Member member = memberDAO.login(id, pw);
+
+	    if (member != null) {
+	        System.out.println("로그인 성공!");
+	        System.out.println("ID: " + member.getId() + " | 이름: " + member.getName() + " | 0권 대여중: " );
+	    } else {
+	        System.out.println("로그인 실패! 아이디 또는 비밀번호를 확인하세요.");
+	    }
+	}
+	
+	 public void signUp(Scanner scanner, MemberDAO memberDAO) {
 	        System.out.println("회원가입을 시작합니다.");
 	        
 	        System.out.print("아이디: ");
 	        String id = scanner.nextLine();
+	        
+	        if (memberDAO.isIdExists(id)) {
+	            System.out.println("이미 존재하는 아이디입니다.");
+	            return;
+	        }
 
 	        System.out.print("비밀번호: ");
 	        String pw = scanner.nextLine();

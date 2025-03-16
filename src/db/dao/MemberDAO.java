@@ -40,6 +40,65 @@ public class MemberDAO {
         return memberList;
     }
     
+    
+    //로그인
+    public Member login(String id, String pw) {
+    	
+    	boolean idExists = isIdExists(id);
+    	
+    	 if (!isIdExists(id)) {
+    	        System.out.println("존재하지 않는 아이디입니다.");
+    	        return null;
+	    }
+    	 
+    	// 비밀번호 검증
+        String sql = "SELECT * FROM member WHERE ME_ID = ? AND ME_PW = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, id);
+            pstmt.setString(2, pw);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return new Member(
+                    rs.getString("ME_ID"),
+                    rs.getString("ME_PW"),
+                    rs.getString("ME_NAME"),
+                    rs.getString("ME_NUM"),
+                    rs.getString("ME_AUTHORITY"),
+                    rs.getString("ME_CAN_RENT")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    // 아이디 중복 체크
+    public boolean isIdExists(String id) {
+        String sql = "SELECT COUNT(*) FROM member WHERE ME_ID = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt(1) > 0; // ID가 존재하면 true 반환
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
+    
     // 회원 가입
     public boolean addMember(Member member) {
     	String sql = "INSERT INTO member (ME_ID, ME_PW, ME_NAME, ME_NUM, ME_AUTHORITY, ME_CAN_RENT, ME_CAN_RENT_DATE, ME_NO_RENT, ME_DEL) " +

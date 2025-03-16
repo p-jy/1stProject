@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class Member {
     // 회원 정보
@@ -18,15 +17,20 @@ public class Member {
     private String authority; // USER or ADMIN
     private String canRent;    // 'Y' or 'N'
     
-    public Member(String id, String pw, String name, String num) {
+    // 데이터 관리용
+    public Member(String id, String pw, String name, String num, String authority, String canRent) {
         this.id = id;
         this.pw = pw;
         this.name = name;
         this.num = num;
-        this.authority = "USER";
-        this.canRent = "Y";
+        this.authority = authority;
+        this.canRent = (canRent != null) ? canRent : "Y";
     }
-
+    
+    // 회원가입용
+    public Member(String id, String pw, String name, String num) {
+        this(id, pw, name, num, "USER", "Y");
+    }
     
     @Override
     public boolean equals(Object obj) {
