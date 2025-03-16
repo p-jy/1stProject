@@ -8,9 +8,11 @@
 	- id는 DAO의 메소드명을 작성
 	- 메소드 오버로딩이 X
 	- select태그의 경우 resultType, resultMap을 지정해야 한다.
+		- resultType : xxxVO를 그대로 사용하는 경우
+		- resultMap : xxxVO와 검색 결과가 일치하지 않아 변형해야 하는 경우, 서브 쿼리를 실행해야 하는 경우
 	 -->
-	<select id="selectStudentList">
-	
+	<select id="selectStudentList" resultType="db.ex.model.vo.StudentVO">
+		select * from student
 	</select>
     
 </mapper>	

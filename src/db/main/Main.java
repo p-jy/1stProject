@@ -1,10 +1,13 @@
 package db.main;
 
 public class Main {
-
+	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+        JDBCTest.main(new String[]{});
 
+		LibraryProgram libProgram = new LibraryProgram();
+		libProgram.run();
+		
 	}
-
+	
 }
