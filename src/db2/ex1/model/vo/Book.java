@@ -45,7 +45,7 @@ public class Book implements Serializable{
 
 	
 
-	static String getCodePrefix(String category) throws Exception {
+	public static String getCodePrefix(String category) throws Exception {
 		switch(category) {
 		case "총류":
 			return "000";

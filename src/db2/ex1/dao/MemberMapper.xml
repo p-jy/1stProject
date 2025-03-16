@@ -13,11 +13,25 @@
 
 	<select id="selectMember" resultMap="MemberMap">
 		select * from member
-		where me_id = #{member.id} and me_pw = #{member.pw} and me_name = #{member.name} and me_num = #{member.num}
+		where me_id = #{member.id}
 	</select>
 	
 	<insert id="insertMember">
 		insert into member(me_id, me_pw, me_name, me_num)
 		values(#{member.id}, #{member.pw}, #{member.name}, #{member.num})
 	</insert>
+	
+	<update id="updateMember">
+		update member
+		set
+			me_name = #{new.name},
+			me_num = #{new.num}
+		where
+			me_id = #{old.id}
+	</update>
+	
+	<delete id="deleteMember">
+		delete from member
+		where me_id = #{member.id} and me_pw = #{member.pw};
+	</delete>
 </mapper>

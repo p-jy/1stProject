@@ -10,6 +10,10 @@ public interface MemberDAO {
 
 	boolean insertMember(@Param("member")Member member);
 
+	boolean updateMember(@Param("old")Member oldMem, @Param("new")Member newMem);
+
+	boolean deleteMember(@Param("member")Member member);
+
 	
 
 }

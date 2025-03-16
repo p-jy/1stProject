@@ -1,14 +1,39 @@
 package db2.ex1.service;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
+import db2.ex1.dao.BookDAO;
 import db2.ex1.model.vo.Book;
 
 public class BookManager {
 	//도서관리
 	
 	private static List<Book> list;
+	
+	private BookDAO bookDao;
+	
+	public BookManager() {
+		String resource = "db2/ex1/config/mybatis-config.xml";
+		InputStream inputStream;
+		SqlSession session;
+		try {
+			inputStream = Resources.getResourceAsStream(resource);
+			SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+			session = sessionFactory.openSession(true);
+			bookDao = session.getMapper(BookDAO.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
 	
 	public BookManager(List<Book> list) {
 		if(list == null) {
@@ -18,22 +43,23 @@ public class BookManager {
 		}
 	}
 	
-	public BookManager() {
-		this.list = new ArrayList<Book>();
+	public boolean contains(Book book) {
+		Book dbBook = bookDao.selectBook(book);
+		
+		return dbBook != null;
 	}
-	
 	
 	public boolean registBook(Book book) {
 		
-		if(book == null || list == null) {
+		if(book == null) {
 			return false;
 		}
 		
-		if(list.contains(book)) {
+		if(contains(book)) {
 			return false;
 		}
 		
-		return list.add(book);
+		return bookDao.insertBook(book);
 	}
 
 	public void print(String title) {

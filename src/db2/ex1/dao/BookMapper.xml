@@ -4,5 +4,21 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="db2.ex1.dao.BookDAO">
 	
+	<resultMap type="db2.ex1.model.vo.Book" id="BookMap">
+		<id property="code" column="bo_code"/>
+		<result property="title" column="bo_title"/>
+		<result property="author" column="bo_author"/>
+		<result property="publisher" column="bo_publisher"/>
+	</resultMap>
+	<select id="selectBook" resultMap="BookMap">
+		select * from book
+		where
+			bo_code = #{book.code} and bo_title = #{book.title} and
+			bo_author = #{book.author} and bo_publisher = #{book.publisher}
+	</select>
 	
+	<insert id="insertBook">
+		insert into book(bo_code, bo_title, bo_author, bo_publisher)
+		values(#{book.code}, #{book.title}, #{book.author}, #{book.publisher})
+	</insert>
 </mapper>

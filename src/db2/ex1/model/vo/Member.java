@@ -25,7 +25,6 @@ public class Member implements Serializable{
 	private String num; //me_num
 	
 	
-	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -37,6 +36,7 @@ public class Member implements Serializable{
 		Member other = (Member) obj;
 		return Objects.equals(id, other.id);
 	}
+	
 
 	public void update(Member member) {
 		
@@ -44,7 +44,6 @@ public class Member implements Serializable{
 		this.num = member.num;
 		
 	}
-	
 	
 	
 }

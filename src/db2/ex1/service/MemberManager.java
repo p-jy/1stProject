@@ -33,44 +33,32 @@ public class MemberManager {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public boolean contains(Member member) {
+		Member dbMem = memberDao.selectMember(member);
 		
+		if(dbMem != null) {
+			return true;
+		}
+		
+		return false;
 	}
 	
 	public boolean insertMember(Member member) {
 		if(member == null) {
 			return false;
 		}
-		//중복 확인
-		//DB에서 member를 이용하여 회원 정보를 가져옴
-		Member dbMem = memberDao.selectMember(member);
-		System.out.println("DB에서 가져온 정보 : " + dbMem);
 		
-		//DB에서 가져온 회원 정보가 있으면 중복 -> false 반환
-		if(dbMem != null) {
+		//중복 확인
+		if(contains(member)) {
 			return false;
 		}
+		
 		//중복x -> 추가
 		return memberDao.insertMember(member);
 	}
 	
-	
-
-	public boolean checkId(String id, String pw) {
-		Member member = new Member(id, pw, "", "");
-		
-		int index = members.indexOf(member);
-		
-		if(index < 0 || index >= members.size()) {
-			return false;
-		}
-		
-		if(!members.get(index).getPw().equals(pw)) {
-			return false;
-		}
-		
-		return true;
-	}
-
 	public List<Member> getMemberList(Member member) {
 		if(member.getName() != null) {
 			String name = member.getName();
@@ -114,19 +102,28 @@ public class MemberManager {
 		
 	}
 
-	public boolean update(Member member, Member memberObj) {
-		if(member == null || memberObj == null) {
+	public boolean update(Member selMem, Member newMem) {
+		if(selMem == null || newMem == null) {
 			return false;
 		}
 		
-		member.update(memberObj);
+		//id가 같은 경우 이름, 번호 수정
+		if(selMem.equals(newMem)) {
+			return memberDao.updateMember(newMem, newMem);
+		}
+		//id가 다른 경우
+		if(contains(newMem)) {
+			return false;
+		}
+		return memberDao.updateMember(selMem, newMem);
 		
-		return true;
 	}
 
 	public boolean delete(Member member) {
-		
-		return members.remove(member);
+		if(member == null) {
+			return false;
+		}
+		return memberDao.deleteMember(member);
 	}
 
 	public void cancelMembership(String id, String pw) {
@@ -138,24 +135,21 @@ public class MemberManager {
 	public Member getMember(String id, String pw) {
 		Member member = new Member(id, pw, "", "");
 		
-		Member user = getMember(members, member);
+		Member user = getMember(member);
 		
 		return user;
 	}
 
-	private Member getMember(List<Member> members2, Member member) {
-		if(members == null || members.isEmpty()) {
-			return null;
-		} if(member == null) {
-			return null;
-		}
-		int index = members.indexOf(member);
-		
-		if(index < 0) {
+	private Member getMember(Member member) {
+		if(member == null) {
 			return null;
 		}
 		
-		Member user = members.get(index);
+		if(!contains(member)) {
+			return null;
+		}
+		
+		Member user = member;
 		
 		if(user.getPw().equals(member.getPw())) {
 			return user;

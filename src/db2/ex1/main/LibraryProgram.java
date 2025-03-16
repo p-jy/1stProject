@@ -276,7 +276,7 @@ public class LibraryProgram implements ConsoleProgram {
 			
 			printSearchBookMenu();
 			menu = scan.nextInt();
-			scan.nextLine();
+			removeBuffer();
 			
 			runUpdateBookMenu(menu);
 			
@@ -292,7 +292,7 @@ public class LibraryProgram implements ConsoleProgram {
 		case 1:
 			System.out.print("이름 : ");
 			String name = scan.next();
-			scan.nextLine();
+			removeBuffer();
 			
 			tmpList = mm.getMemberList(new Member("", "", name, ""));
 			
@@ -358,97 +358,97 @@ public class LibraryProgram implements ConsoleProgram {
 
 	private void runUpdateBookMenu(int menu) {
 		
-//		List<Book> tmpList;
-//		int index;
-//		
-//		switch(menu) {
-//		case 1:
-//			System.out.print("도서명 : ");
-//			String title = scan.nextLine();
-//			
-//			tmpList = bm.getBookList(new Book("", title, "", ""));
-//			
-//			if(tmpList == null || tmpList.isEmpty()) {
-//				System.out.println("[일치하는 도서가 없습니다.]");
-//				return;
-//			}
-//			
-//			searchBook(tmpList, true);
-//	
-//			System.out.print("선택 : ");
-//			index = scan.nextInt() - 1;
-//			scan.nextLine();
-//			
-//			updateBook(index, tmpList);
-//			
-//			break;
-//		case 2:
-//			System.out.print("작가명 : ");
-//			String author = scan.nextLine();
-//			
-//			tmpList = bm.getBookList(new Book("", "", author, ""));
-//			
-//			if(tmpList == null || tmpList.isEmpty()) {
-//				System.out.println("[일치하는 도서가 없습니다.]");
-//				return;
-//			}
-//			
-//			searchBook(tmpList, true);
-//	
-//			System.out.print("선택 : ");
-//			index = scan.nextInt() - 1;
-//			scan.nextLine();
-//			
-//			updateBook(index, tmpList);
-//			
-//			break;
-//		case 3:
-//			System.out.print("출판사 : ");
-//			String publisher = scan.nextLine();
-//			
-//			tmpList = bm.getBookList(new Book("", "", "", publisher));
-//			
-//			if(tmpList == null || tmpList.isEmpty()) {
-//				System.out.println("[일치하는 도서가 없습니다.]");
-//				return;
-//			}
-//			
-//			searchBook(tmpList, true);
-//	
-//			System.out.print("선택 : ");
-//			index = scan.nextInt() - 1;
-//			scan.nextLine();
-//			
-//			updateBook(index, tmpList);
-//			
-//			break;
-//		case 4:
-//			System.out.print("도서코드 : ");
-//			String bookCode = scan.nextLine();
-//			
-//			tmpList = bm.getBookList(new Book(bookCode, "", "", ""));
-//			
-//			if(tmpList == null || tmpList.isEmpty()) {
-//				System.out.println("[일치하는 도서가 없습니다.]");
-//				return;
-//			}
-//			
-//			searchBook(tmpList, true);
-//	
-//			System.out.print("선택 : ");
-//			index = scan.nextInt() - 1;
-//			scan.nextLine();
-//			
-//			updateBook(index, tmpList);
-//			
-//			break;
-//		case 5:
-//			System.out.println("[이전 메뉴로 돌아갑니다.]");
-//			break;
-//		default:
-//			System.out.println("[잘못된 입력입니다.]");
-//		}
-//		
+		List<Book> tmpList;
+		int index;
+		
+		switch(menu) {
+		case 1:
+			System.out.print("도서명 : ");
+			String title = scan.nextLine();
+			
+			tmpList = bm.getBookList(new Book("", title, "", ""));
+			
+			if(tmpList == null || tmpList.isEmpty()) {
+				System.out.println("[일치하는 도서가 없습니다.]");
+				return;
+			}
+			
+			searchBook(tmpList, true);
+	
+			System.out.print("선택 : ");
+			index = scan.nextInt() - 1;
+			scan.nextLine();
+			
+			updateBook(index, tmpList);
+			
+			break;
+		case 2:
+			System.out.print("작가명 : ");
+			String author = scan.nextLine();
+			
+			tmpList = bm.getBookList(new Book("", "", author, ""));
+			
+			if(tmpList == null || tmpList.isEmpty()) {
+				System.out.println("[일치하는 도서가 없습니다.]");
+				return;
+			}
+			
+			searchBook(tmpList, true);
+	
+			System.out.print("선택 : ");
+			index = scan.nextInt() - 1;
+			scan.nextLine();
+			
+			updateBook(index, tmpList);
+			
+			break;
+		case 3:
+			System.out.print("출판사 : ");
+			String publisher = scan.nextLine();
+			
+			tmpList = bm.getBookList(new Book("", "", "", publisher));
+			
+			if(tmpList == null || tmpList.isEmpty()) {
+				System.out.println("[일치하는 도서가 없습니다.]");
+				return;
+			}
+			
+			searchBook(tmpList, true);
+	
+			System.out.print("선택 : ");
+			index = scan.nextInt() - 1;
+			scan.nextLine();
+			
+			updateBook(index, tmpList);
+			
+			break;
+		case 4:
+			System.out.print("도서코드 : ");
+			String bookCode = scan.nextLine();
+			
+			tmpList = bm.getBookList(new Book(bookCode, "", "", ""));
+			
+			if(tmpList == null || tmpList.isEmpty()) {
+				System.out.println("[일치하는 도서가 없습니다.]");
+				return;
+			}
+			
+			searchBook(tmpList, true);
+	
+			System.out.print("선택 : ");
+			index = scan.nextInt() - 1;
+			scan.nextLine();
+			
+			updateBook(index, tmpList);
+			
+			break;
+		case 5:
+			System.out.println("[이전 메뉴로 돌아갑니다.]");
+			break;
+		default:
+			System.out.println("[잘못된 입력입니다.]");
+		}
+		
 	}
 
 	private void updateMember(int index, List<Member> tmpList) {
@@ -468,25 +468,25 @@ public class LibraryProgram implements ConsoleProgram {
 	}
 
 	private void updateBook(int index, List<Book> tmpList) {
-//		if(index < 0 || index >= tmpList.size()) {
-//			System.out.println("[잘못 선택했습니다.]");
-//			return;
-//		}
-//		
-//		System.out.print("도서명 : ");
-//		String title = scan.nextLine();
-//		System.out.print("작가명 : ");
-//		String author = scan.nextLine();
-//		System.out.print("출판사 : ");
-//		String publisher = scan.nextLine();
-//		
-//		Book bookObj = new Book("", title, author, publisher);
-//		
-//		if(bm.update(tmpList.get(index), bookObj)) {
-//			System.out.println("[도서를 수정했습니다.]");
-//		} else {
-//			System.out.println("[도서를 수정하지 못했습니다.]");
-//		}
+		if(index < 0 || index >= tmpList.size()) {
+			System.out.println("[잘못 선택했습니다.]");
+			return;
+		}
+		
+		System.out.print("도서명 : ");
+		String title = scan.nextLine();
+		System.out.print("작가명 : ");
+		String author = scan.nextLine();
+		System.out.print("출판사 : ");
+		String publisher = scan.nextLine();
+		
+		Book bookObj = new Book("", title, author, publisher);
+		
+		if(bm.update(tmpList.get(index), bookObj)) {
+			System.out.println("[도서를 수정했습니다.]");
+		} else {
+			System.out.println("[도서를 수정하지 못했습니다.]");
+		}
 	}
 
 	private Member inputMemberBase() {
@@ -540,36 +540,34 @@ public class LibraryProgram implements ConsoleProgram {
 	}
 
 	private Book inputBookBase() {
-//		System.out.print("도서명 : ");
-//		String title = scan.nextLine();
-//		System.out.print("작가명 : ");
-//		String author = scan.nextLine();
-//		System.out.print("출판사 : ");
-//		String publisher = scan.nextLine();
-//		
-//		return new Book("", title, author, publisher);
-		return null;
+		System.out.print("도서명 : ");
+		String title = scan.nextLine();
+		System.out.print("작가명 : ");
+		String author = scan.nextLine();
+		System.out.print("출판사 : ");
+		String publisher = scan.nextLine();
+		
+		return new Book("", title, author, publisher);
 	}
 
 	private Book inputBook() {
-//		System.out.print("카테고리 : ");
-//		String category = scan.next();
-//		scan.nextLine();
-//		Book book = inputBookBase();
-//		
-//		String codePrefix;
-//		try {
-//			codePrefix = Book.getCodePrefix(category);
-//			
-//		} catch (Exception e) {
-//			System.out.println(e.getMessage());
-//			return null;
-//		}
-//		
-//		int count = bm.getLastNum(codePrefix);
-//		
-//		return new Book(count, category, book.getTitle(), book.getAuthor(), book.getPublisher());
-		return null;
+		System.out.print("카테고리 : ");
+		String category = scan.next();
+		removeBuffer();
+		Book book = inputBookBase();
+		
+		String codePrefix;
+		try {
+			codePrefix = Book.getCodePrefix(category);
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+		
+		int count = bm.getLastNum(codePrefix);
+		
+		return new Book(count, category, book.getTitle(), book.getAuthor(), book.getPublisher());
 	}
 
 	private void registBook() {
@@ -595,7 +593,7 @@ public class LibraryProgram implements ConsoleProgram {
 	private void deleteID() {
 		System.out.print("아이디 : ");
 		String id = scan.next();
-		scan.nextLine();
+		removeBuffer();
 		System.out.print("비밀번호 : ");
 		String pw = scan.nextLine();
 		
