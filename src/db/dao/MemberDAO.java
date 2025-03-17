@@ -158,4 +158,53 @@ public class MemberDAO {
         return false;
     }
 
+
+    public Member findById(String id) {
+        String sql = "SELECT * FROM member WHERE ME_ID = ?";
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            
+            if (rs.next()) {
+                return new Member(
+                    rs.getString("ME_ID"),
+                    rs.getString("ME_PW"),
+                    rs.getString("ME_NAME"),
+                    rs.getString("ME_NUM"),
+                    rs.getString("ME_AUTHORITY"),
+                    rs.getString("ME_CAN_RENT")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public void setRentBan(String memberId, long overdueDays) {
+        // 연체된 일수만큼 대여 금지 기간을 설정 (현재 날짜 + overdueDays)
+        String sql = "UPDATE member SET ME_CAN_RENT = 'N', ME_CAN_RENT_DATE = DATE_ADD(CURDATE(), INTERVAL ? DAY) WHERE ME_ID = ?";
+        
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setLong(1, overdueDays);
+            pstmt.setString(2, memberId);
+            
+            int result = pstmt.executeUpdate();
+            if (result > 0) {
+                System.out.println("회원 " + memberId + "의 대여 금지 기간이 " + overdueDays + "일로 설정되었습니다.");
+            } else {
+                System.out.println("회원 " + memberId + "의 대여 금지 기간 설정에 실패했습니다.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 }
