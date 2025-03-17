@@ -11,6 +11,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import db2.ex1.dao.MemberDAO;
+import db2.ex1.model.vo.Book;
 import db2.ex1.model.vo.Member;
 
 
@@ -86,18 +87,16 @@ public class MemberManager {
 		return null;
 	}
 
-	public void print(List<Member> tmpList, boolean isMember) {
+	public void print() {
 		
-		if(tmpList == null || tmpList.isEmpty()) {
-			System.out.println("[일치하는 회원 정보가 없습니다.]");
+		List<Member> list = memberDao.selectMemberList();
+		
+		if(list == null || list.size() == 0) {
+			System.out.println("[등록된 회원이 없습니다.]");
 			return;
 		}
-		
-		for(int i = 0; i < tmpList.size(); i++) {
-			if(isMember == true) {
-				System.out.print(i+1 + ". ");
-			}
-			System.out.println(tmpList.get(i));
+		for(Member member : list) {
+			System.out.println(member);
 		}
 		
 	}
@@ -173,6 +172,13 @@ public class MemberManager {
 		if(!exists) {
 			members.add(new Member("admin", "admin", "관리자", "관리자"));
 		}
+	}
+
+	public boolean deleteByAdmin(Member member) {
+		if(member == null) {
+			return false;
+		}
+		return memberDao.deleteMemberByAdmin(member);
 	}
 
 	

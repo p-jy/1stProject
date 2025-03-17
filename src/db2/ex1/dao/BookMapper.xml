@@ -13,12 +13,33 @@
 	<select id="selectBook" resultMap="BookMap">
 		select * from book
 		where
-			bo_code = #{book.code} and bo_title = #{book.title} and
-			bo_author = #{book.author} and bo_publisher = #{book.publisher}
+			bo_code = #{book.code}
 	</select>
 	
 	<insert id="insertBook">
-		insert into book(bo_code, bo_title, bo_author, bo_publisher)
-		values(#{book.code}, #{book.title}, #{book.author}, #{book.publisher})
+		insert into book(bo_code, bo_title, bo_author, bo_publisher, bo_ca_code)
+		values(#{book.code}, #{book.title}, #{book.author}, #{book.publisher}, #{book.caCode})
 	</insert>
+	
+	<update id="updateBook">
+		update book
+		set
+			bo_title = #{new.title},
+			bo_author = #{new.author},
+			bo_publisher = #{new.publisher}
+		where
+			bo_code = #{old.code}
+	</update>
+	
+	<delete id="deleteBook">
+		delete from book
+		where
+			bo_code = #{book.code} and bo_title = #{book.title} and
+			bo_author = #{book.author} and bo_publisher = #{book.publisher}
+	</delete>
+	
+	<select id="selectBookList" resultMap="BookMap">
+		select * from book
+		order by bo_code
+	</select>
 </mapper>

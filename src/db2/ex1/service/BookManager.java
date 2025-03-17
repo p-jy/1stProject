@@ -105,52 +105,67 @@ public class BookManager {
 		
 	}
 
-	public void print(List<Book> tmpList, boolean isBook) {
-		if(tmpList == null || tmpList.isEmpty()) {
-			System.out.println("[일치하는 도서가 없습니다.]");
+	public void print() {
+		
+		List<Book> list = bookDao.selectBookList();
+		
+		if(list == null || list.size() == 0) {
+			System.out.println("[등록된 도서가 없습니다.]");
 			return;
 		}
-		
-		for(int i = 0; i < tmpList.size(); i++) {
-			if(isBook == true) {
-				System.out.print(i+1 + ". ");
-			}
-			System.out.println(tmpList.get(i));
+		for(Book book : list) {
+			System.out.println(book);
 		}
+		
 	}
 
 	public int getLastNum(String codePrefix) {
-		if(list == null) {
-			return -1;
+
+		List<Book> list = bookDao.selectBookList();
+		System.out.println(list);
+		
+		if(list == null || list.size() == 0) {
+			return 0;
 		}
+		
 		int max = 0;
 		
-//		for(Book book : list) {
-//			String bookCodePrefix = book.getBookCode().substring(0, 3);
-//			String bookCodeSuffix = book.getBookCode().substring(3);
-//			if(bookCodePrefix.equals(codePrefix)) {
-//				int num = Integer.parseInt(bookCodeSuffix);
-//				if(max < num) {
-//					max = num;
-//				}
-//			}
-//		}
+		for(Book book : list) {
+			String bookCodePrefix = book.getCode().substring(0, 3);
+			String bookCodeSuffix = book.getCode().substring(3);
+			if(bookCodePrefix.equals(codePrefix)) {
+				int num = Integer.parseInt(bookCodeSuffix);
+				if(max < num) {
+					max = num;
+				}
+			}
+		}
 		return max;
 	}
 
-	public boolean update(Book book, Book bookObj) {
+	public boolean update(Book book, Book newBook) {
 		
-//		if(book == null || bookObj == null) {
-//			return false;
-//		}
-//		
-//		book.update(bookObj);
+		if(book == null || newBook == null) {
+			return false;
+		}
 		
-		return true;
+		if(!contains(book)) {
+			return false;
+		}
+		
+		if(!contains(newBook)) {
+			return bookDao.updateBook(book, newBook);
+		}
+		
+		return false;
 	}
 
 	public boolean delete(Book book) {
-		return list.remove(book);
+		if(book == null) {
+			return false;
+		}
+		
+		return bookDao.deleteBook(book);
 	}
 	
 	public void addSampleBookData() {
@@ -170,25 +185,11 @@ public class BookManager {
 	public void setRentReturn(Book book, boolean b) {
 //		book.setRentReturn(b);
 	}
-	
-	public static void listBook() {
-	    if (list.isEmpty()) { 
-	        System.out.println("[등록된 도서가 없습니다.]");
-	        return;
-	    }
 
-	    System.out.println("===== 도서 목록 =====");
-	    for (Book book : list) {
-	        System.out.println(book);
-	    }
-	}
-	public List<Book> getBooks() {
-	    return list;
-	}
-
-	public void setBooks(List<Book> books) {
-		 BookManager.list = books;
+	public Book getBook(String code) {
+		Book book = new Book(code, "", "", "");
 		
+		return book;
 	}
 	
 	

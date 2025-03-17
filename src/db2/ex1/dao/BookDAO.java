@@ -1,5 +1,7 @@
 package db2.ex1.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import db2.ex1.model.vo.Book;
@@ -10,7 +12,11 @@ public interface BookDAO {
 
 	boolean insertBook(@Param("book")Book book);
 
+	boolean updateBook(@Param("old")Book book, @Param("new")Book newBook);
 
+	boolean deleteBook(@Param("book")Book book);
+
+	List<Book> selectBookList();
 
 }
 

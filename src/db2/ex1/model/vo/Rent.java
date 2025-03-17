@@ -1,12 +1,17 @@
 package db2.ex1.model.vo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import lombok.NonNull;
 
-public class Rent {
+public class Rent implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9055960272294860934L;
 	//String : id
 	
 	private int re_num; //re_num
@@ -71,7 +76,7 @@ public class Rent {
 		}
 		
 		if(list.remove(book)) {
-		book.setRentReturn(true);
+//		book.setRentReturn(true);
 		
 		return true;
 		}

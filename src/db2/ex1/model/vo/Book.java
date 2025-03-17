@@ -5,28 +5,36 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 @Data
+@RequiredArgsConstructor
+@NoArgsConstructor
 public class Book implements Serializable{
 	
 	private static final long serialVersionUID = 9055960272294860934L;
 	
 	//도서
 		//도서코드, 도서명, 작가명, 출판사, 대여/반납상태
+	@NonNull
 	private String code; //bo_code
-	private String category; 
+	private String category;
+	@NonNull
 	private String title; //bo_title
+	@NonNull
 	private String author; //bo_author
+	@NonNull
 	private String publisher; //bo_publisher
-	private boolean rentReturn;
-	
+	@NonNull
+	private String caCode; //bo_ca_code
 	
 	public Book(String code, String title, String author, String publisher) {
 		this.code = code;
 		this.title = title;
 		this.author = author;
 		this.publisher = publisher;
-		this.rentReturn = true;
 	}
 	
 	public Book(int max, String category, String title, String author, String publisher) {
@@ -41,6 +49,7 @@ public class Book implements Serializable{
 		DecimalFormat format = new DecimalFormat("000");
 		String suffix = format.format(max + 1);
 		this.code = prefix + suffix;
+		this.caCode = prefix;
 	}
 
 	
@@ -101,7 +110,7 @@ public class Book implements Serializable{
 
 	@Override
 	public String toString() {
-		return "[" + code + "] " + title + " " + author + " " + publisher + " : " + (rentReturn? "대여 가능" : "대여 불가");
+		return "[" + code + "] " + title + " " + author + " " + publisher;
 	}
 
 	public void update(Book book) {

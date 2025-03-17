@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 @Data
 @RequiredArgsConstructor
 public class Member implements Serializable{
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 9055960272294860934L;
 	//회원
 	//아이디, 비밀번호, 이름, 연락처
 	@NonNull
@@ -44,6 +44,14 @@ public class Member implements Serializable{
 		this.num = member.num;
 		
 	}
+
+
+	@Override
+	public String toString() {
+		return "ID : " + id + " 이름 : " + name + " 번호 : " + num;
+	}
+	
+	
 	
 	
 }

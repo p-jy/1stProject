@@ -34,4 +34,14 @@
 		delete from member
 		where me_id = #{member.id} and me_pw = #{member.pw};
 	</delete>
+	
+	<delete id="deleteMemberByAdmin">
+		delete from member
+		where me_id = #{member.id} and me_id != "admin"
+	</delete>
+	
+	<select id="selectMemberList" resultMap="MemberMap">
+		select * from member
+		order by me_id
+	</select>
 </mapper>
