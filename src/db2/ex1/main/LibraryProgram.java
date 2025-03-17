@@ -512,7 +512,7 @@ public class LibraryProgram implements ConsoleProgram {
 		System.out.print("대여할 도서의 도서코드 : ");
 		String code = scan.nextLine();
 		
-		mm.rent(user.getId(), code);
+		
 		
 	}
 
