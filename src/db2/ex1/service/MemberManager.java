@@ -122,13 +122,14 @@ public class MemberManager {
 		if(member == null) {
 			return false;
 		}
-		return memberDao.deleteMember(member);
-	}
-
-	public void cancelMembership(String id, String pw) {
-		Member member = new Member(id, pw, "", "");
 		
+		member.setDel("Y");
+		if(!memberDao.deleteMember(member)) {
+			member.setDel("N");
+			return false;
+		}
 		
+		return true;
 	}
 
 	public Member getMember(String id, String pw) {
@@ -163,22 +164,19 @@ public class MemberManager {
 	public boolean checkAdmin(Member user) {
 		return user != null && "admin".equals(user.getId());
 	}
-		
-	
-	
-
-	public void addAdmin() {
-		boolean exists = members.stream().anyMatch(m -> "admin".equals(m.getId()));
-		if(!exists) {
-			members.add(new Member("admin", "admin", "관리자", "관리자"));
-		}
-	}
 
 	public boolean deleteByAdmin(Member member) {
 		if(member == null) {
 			return false;
 		}
-		return memberDao.deleteMemberByAdmin(member);
+		
+		member.setDel("Y");
+		if(!memberDao.deleteMemberByAdmin(member)) {
+			member.setDel("N");
+			return false;
+		}
+		
+		return true;
 	}
 
 	

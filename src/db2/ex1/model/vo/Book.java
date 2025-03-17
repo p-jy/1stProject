@@ -29,6 +29,7 @@ public class Book implements Serializable{
 	private String publisher; //bo_publisher
 	@NonNull
 	private String caCode; //bo_ca_code
+	private String del; //bo_del
 	
 	public Book(String code, String title, String author, String publisher) {
 		this.code = code;

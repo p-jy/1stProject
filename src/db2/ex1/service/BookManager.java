@@ -35,14 +35,6 @@ public class BookManager {
 		
 	}
 	
-	public BookManager(List<Book> list) {
-		if(list == null) {
-			this.list = new ArrayList<Book>();
-		} else {
-			this.list = list;
-		}
-	}
-	
 	public boolean contains(Book book) {
 		Book dbBook = bookDao.selectBook(book);
 		
@@ -165,7 +157,14 @@ public class BookManager {
 			return false;
 		}
 		
-		return bookDao.deleteBook(book);
+		book.setDel("Y");
+		
+		if(!bookDao.deleteBook(book)) {
+			book.setDel("N");
+			return false;
+		}
+		
+		return true;
 	}
 	
 	public void addSampleBookData() {

@@ -9,6 +9,7 @@
 		<result property="title" column="bo_title"/>
 		<result property="author" column="bo_author"/>
 		<result property="publisher" column="bo_publisher"/>
+		<result property="del" column="bo_del"/>
 	</resultMap>
 	<select id="selectBook" resultMap="BookMap">
 		select * from book
@@ -31,15 +32,20 @@
 			bo_code = #{old.code}
 	</update>
 	
-	<delete id="deleteBook">
-		delete from book
+	<update id="deleteBook">
+		update book
+		set
+			bo_title = null,
+			bo_author = null,
+			bo_publisher = null,
+			bo_del = #{book.del}
 		where
-			bo_code = #{book.code} and bo_title = #{book.title} and
-			bo_author = #{book.author} and bo_publisher = #{book.publisher}
-	</delete>
+			bo_code = #{book.code}
+	</update>
 	
 	<select id="selectBookList" resultMap="BookMap">
 		select * from book
+		where bo_del = "N"
 		order by bo_code
 	</select>
 </mapper>

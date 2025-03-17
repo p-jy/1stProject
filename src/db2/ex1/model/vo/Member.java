@@ -23,6 +23,7 @@ public class Member implements Serializable{
 	private String name; //me_name
 	@NonNull
 	private String num; //me_num
+	private String del; //me_del
 	
 	
 	@Override

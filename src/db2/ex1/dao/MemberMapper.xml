@@ -30,18 +30,29 @@
 			me_id = #{old.id}
 	</update>
 	
-	<delete id="deleteMember">
-		delete from member
-		where me_id = #{member.id} and me_pw = #{member.pw};
-	</delete>
+	<update id="deleteMember">
+		update member
+		set
+			me_pw = null,
+			me_name = null,
+			me_num = null,
+			me_del = #{member.del}
+		where me_id = #{member.id} and me_pw = #{member.pw}
+	</update>
 	
-	<delete id="deleteMemberByAdmin">
-		delete from member
+	<update id="deleteMemberByAdmin">
+		update member
+		set
+			me_pw = null,
+			me_name = null,
+			me_num = null,
+			me_del = #{member.del}
 		where me_id = #{member.id} and me_id != "admin"
-	</delete>
+	</update>
 	
 	<select id="selectMemberList" resultMap="MemberMap">
 		select * from member
+		where me_id != "admin" and me_del = "N"
 		order by me_id
 	</select>
 </mapper>
