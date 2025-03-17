@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="db2.ex1.dao.BookDAO">
+	
+	<resultMap type="db2.ex1.model.vo.Book" id="BookMap">
+		<id property="code" column="bo_code"/>
+		<result property="title" column="bo_title"/>
+		<result property="author" column="bo_author"/>
+		<result property="publisher" column="bo_publisher"/>
+		<result property="del" column="bo_del"/>
+	</resultMap>
+	<select id="selectBook" resultMap="BookMap">
+		select * from book
+		where
+			bo_code = #{book.code}
+	</select>
+	
+	<insert id="insertBook">
+		insert into book(bo_code, bo_title, bo_author, bo_publisher, bo_ca_code)
+		values(#{book.code}, #{book.title}, #{book.author}, #{book.publisher}, #{book.caCode})
+	</insert>
+	
+	<update id="updateBook">
+		update book
+		set
+			bo_title = #{new.title},
+			bo_author = #{new.author},
+			bo_publisher = #{new.publisher}
+		where
+			bo_code = #{old.code}
+	</update>
+	
+	<update id="deleteBook">
+		update book
+		set
+			bo_title = null,
+			bo_author = null,
+			bo_publisher = null,
+			bo_del = #{book.del}
+		where
+			bo_code = #{book.code}
+	</update>
+	
+	<select id="selectBookList" resultMap="BookMap">
+		select * from book
+		where bo_del = "N"
+		order by bo_code
+	</select>
+</mapper>

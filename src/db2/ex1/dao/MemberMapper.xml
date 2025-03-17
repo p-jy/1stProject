@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="db2.ex1.dao.MemberDAO">
+
+	<resultMap type="db2.ex1.model.vo.Member" id="MemberMap">
+		<id property="id" column="me_id"/>
+		<result property="pw" column="me_pw"/>
+		<result property="name" column="me_name"/>
+		<result property="num" column="me_num"/>
+	</resultMap>
+
+	<select id="selectMember" resultMap="MemberMap">
+		select * from member
+		where me_id = #{member.id}
+	</select>
+	
+	<insert id="insertMember">
+		insert into member(me_id, me_pw, me_name, me_num)
+		values(#{member.id}, #{member.pw}, #{member.name}, #{member.num})
+	</insert>
+	
+	<update id="updateMember">
+		update member
+		set
+			me_name = #{new.name},
+			me_num = #{new.num}
+		where
+			me_id = #{old.id}
+	</update>
+	
+	<update id="deleteMember">
+		update member
+		set
+			me_pw = null,
+			me_name = null,
+			me_num = null,
+			me_del = #{member.del},
+			me_can_rent = #{member.canRent}
+		where me_id = #{member.id} and me_pw = #{member.pw}
+	</update>
+	
+	<update id="deleteMemberByAdmin">
+		update member
+		set
+			me_pw = null,
+			me_name = null,
+			me_num = null,
+			me_del = #{member.del},
+			me_can_rent = #{member.canRent}
+		where me_id = #{member.id} and me_id != "admin"
+	</update>
+	
+	<select id="selectMemberList" resultMap="MemberMap">
+		select * from member
+		where me_id != "admin" and me_del = "N"
+		order by me_id
+	</select>
+</mapper>
