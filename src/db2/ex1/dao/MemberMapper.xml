@@ -36,7 +36,8 @@
 			me_pw = null,
 			me_name = null,
 			me_num = null,
-			me_del = #{member.del}
+			me_del = #{member.del},
+			me_can_rent = #{member.canRent}
 		where me_id = #{member.id} and me_pw = #{member.pw}
 	</update>
 	
@@ -46,7 +47,8 @@
 			me_pw = null,
 			me_name = null,
 			me_num = null,
-			me_del = #{member.del}
+			me_del = #{member.del},
+			me_can_rent = #{member.canRent}
 		where me_id = #{member.id} and me_id != "admin"
 	</update>
 	

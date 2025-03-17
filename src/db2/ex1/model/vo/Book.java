@@ -30,6 +30,7 @@ public class Book implements Serializable{
 	@NonNull
 	private String caCode; //bo_ca_code
 	private String del; //bo_del
+	private String rent; //bo_rent
 	
 	public Book(String code, String title, String author, String publisher) {
 		this.code = code;
@@ -113,13 +114,5 @@ public class Book implements Serializable{
 	public String toString() {
 		return "[" + code + "] " + title + " " + author + " " + publisher;
 	}
-
-	public void update(Book book) {
-		this.title = book.title;
-		this.author = book.author;
-		this.publisher = book.publisher;
-	}
-
 	
-
 }

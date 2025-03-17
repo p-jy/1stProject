@@ -270,11 +270,11 @@ public class LibraryProgram implements ConsoleProgram {
 		Member member = new Member(id, "", "", "");
 		
 		if(!mm.contains(member)) {
-			System.out.println("[일치하는 회원 정보가 없습니다.]");
+			System.out.println("[일치하는 회원 ID가 없습니다.]");
 			return;
 		}
 		
-		System.out.println("수정할 회원 정보를 입력하세요.");
+		System.out.println("수정할 회원의 정보를 입력하세요.");
 		
 		Member newMember = inputMemberBase();
 		
@@ -299,7 +299,7 @@ public class LibraryProgram implements ConsoleProgram {
 			return;
 		}
 		
-		System.out.println("수정할 도서 정보를 입력하세요.");
+		System.out.println("수정할 도서의 정보를 입력하세요.");
 		
 		Book newBook = inputBookBase();
 		
@@ -509,7 +509,10 @@ public class LibraryProgram implements ConsoleProgram {
 	
 	private void rentBook() {
 		
+		System.out.print("대여할 도서의 도서코드 : ");
+		String code = scan.nextLine();
 		
+		mm.rent(user.getId(), code);
 		
 	}
 

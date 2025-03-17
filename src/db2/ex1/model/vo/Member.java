@@ -1,10 +1,9 @@
 package db2.ex1.model.vo;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 import java.util.Objects;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +23,10 @@ public class Member implements Serializable{
 	@NonNull
 	private String num; //me_num
 	private String del; //me_del
+	private String canRent; //me_can_rent
+	private Date canRentDate; //me_can_rent_date
+	private int noRent; //me_no_rent
+	
 	
 	
 	@Override
@@ -37,15 +40,6 @@ public class Member implements Serializable{
 		Member other = (Member) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-
-	public void update(Member member) {
-		
-		this.name = member.name;
-		this.num = member.num;
-		
-	}
-
 
 	@Override
 	public String toString() {

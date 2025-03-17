@@ -13,6 +13,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import db2.ex1.dao.MemberDAO;
 import db2.ex1.model.vo.Book;
 import db2.ex1.model.vo.Member;
+import lombok.NonNull;
 
 
 public class MemberManager {
@@ -59,33 +60,6 @@ public class MemberManager {
 		//중복x -> 추가
 		return memberDao.insertMember(member);
 	}
-	
-	public List<Member> getMemberList(Member member) {
-		if(member.getName() != null) {
-			String name = member.getName();
-			
-			return members.stream()
-					.filter(m-> m.getName().contains(name))
-					.collect(Collectors.toList());
-			
-		} else if(member.getNum() != null) {
-			String num = member.getNum();
-			
-			return members.stream()
-					.filter(m-> m.getNum().contains(num))
-					.collect(Collectors.toList());
-			
-		} else if(member.getId() != null) {
-			String publisher = member.getId();
-			
-			return members.stream()
-					.filter(m-> m.getId().contains(publisher))
-					.collect(Collectors.toList());
-		}
-		
-		System.out.println("[일치하는 회원 정보가 없습니다.]");
-		return null;
-	}
 
 	public void print() {
 		
@@ -124,8 +98,10 @@ public class MemberManager {
 		}
 		
 		member.setDel("Y");
+		member.setCanRent("N");
 		if(!memberDao.deleteMember(member)) {
 			member.setDel("N");
+			member.setCanRent("Y");
 			return false;
 		}
 		
@@ -171,13 +147,14 @@ public class MemberManager {
 		}
 		
 		member.setDel("Y");
+		member.setCanRent("N");
 		if(!memberDao.deleteMemberByAdmin(member)) {
 			member.setDel("N");
+			member.setCanRent("Y");
 			return false;
 		}
 		
 		return true;
 	}
-
 	
 }

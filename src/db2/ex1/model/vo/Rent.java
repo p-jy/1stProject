@@ -1,12 +1,17 @@
 package db2.ex1.model.vo;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
+import java.util.Objects;
 
+import lombok.Data;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
+@Data
+@RequiredArgsConstructor
 public class Rent implements Serializable {
 	/**
 	 * 
@@ -14,79 +19,38 @@ public class Rent implements Serializable {
 	private static final long serialVersionUID = 9055960272294860934L;
 	//String : id
 	
-	private int re_num; //re_num
+	private int reNum; //re_num
+	@NonNull
 	private String id; //re_me_id
+	@NonNull
 	private String code; //re_bo_code
+	private String state; //re_state
+	private Date rentDate; //re_rent_date
+	private Date returnDate; //re_return_date
+	private Date dueDate; //re_due_date
 	
-	private Map<String, List<Book>> rentReturn;
-	
-	public Rent(Map<String, List<Book>> rentReturn) {
-		this.rentReturn = rentReturn;
-	}
-	
-	public List<Book> print(String id) {
-		List<Book> list = rentReturn.get(id);
-		
-		if(list == null || list.isEmpty()) {
-			System.out.println("[대여 중인 도서가 없습니다.]");
-			return null;
-		}
-		
-		for(int i = 0; i < list.size(); i++) {
-			System.out.print(i+ 1 + ". ");
-			System.out.println(list.get(i).getCode() + " " + list.get(i).getTitle());
-		}
-		return list;
-	}
-
-	public boolean rentBook(String id, Book book) {	
-		List<Book> list = rentReturn.get(id);
-		
-		if(list == null) {
-			list = new ArrayList<Book>();
-			list.add(book);
-			
-			rentReturn.put(id, list);
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
 			return true;
-		}
-		 if(list.size() >= 3) {
-	            System.out.println("대여 가능 권수를 초과하였습니다.");
-	            return false;
-	        }
-		
-		for(Book b : list) {
-			if(b.equals(book)) {
-				 System.out.println("이미 대여한 도서입니다.");
-				return false;
-			}
-		}
-		
-		list.add(book);
-		
-		return true;
-	}
-
-	public boolean returnBook(Book book, String id) {
-		
-		List<Book> list = rentReturn.get(id);
-		
-		if(book == null || list == null || list.isEmpty()) {
-			System.out.println("[대여 중인 도서가 없습니다.]");
+		if (obj == null)
 			return false;
-		}
-		
-		if(list.remove(book)) {
-//		book.setRentReturn(true);
-		
-		return true;
-		}
-		else {
-            System.out.println("대여 기록을 찾을 수 없습니다.");
-            return false;
-		}
-
+		if (getClass() != obj.getClass())
+			return false;
+		Rent other = (Rent) obj;
+		return reNum == other.reNum;
 	}
-	public Map<String, List<Book>> getRentReturnMap() {
-	    return rentReturn;
+	
+	public String getDateStr(Date date) {
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-DD-dd");
+		return f.format(date);
 	}
+	
+	@Override
+	public String toString() {
+		return "도서코드 : " + code + " 대여일 : " + getDateStr(rentDate) + " ";
+	}
+	
+	
+	
 }
