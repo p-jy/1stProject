@@ -1,6 +1,7 @@
 package db2.ex1.main;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 import db2.ex1.model.vo.Book;
@@ -22,8 +23,8 @@ public class LibraryProgram implements ConsoleProgram {
 	@Override
 	public void run() {
         
-       
-        
+		bm.addBookSample();
+		
        
         int menu = 0;
         do {
@@ -31,6 +32,7 @@ public class LibraryProgram implements ConsoleProgram {
             try {
                 menu = scan.nextInt();
                 removeBuffer();
+                System.out.println("------------");
                 runMenu(menu);
             } catch (InputMismatchException e) {
                 System.out.println("[올바른 입력이 아닙니다.]");
@@ -49,9 +51,11 @@ public class LibraryProgram implements ConsoleProgram {
 
 	@Override
 	public void printMenu() {
+		System.out.println("------------");
 		System.out.println("1. 로그인");
 		System.out.println("2. 회원가입");
 		System.out.println("3. 종료");
+		System.out.println("------------");
 		System.out.print("메뉴 입력 : ");
 	}
 
@@ -116,6 +120,7 @@ public class LibraryProgram implements ConsoleProgram {
 		printAdminMenu();
 		menu = scan.nextInt();
 		removeBuffer();
+		System.out.println("------------");
 		
 		switch(menu) {
 		case 1:
@@ -148,6 +153,7 @@ public class LibraryProgram implements ConsoleProgram {
 			printMemberMenu();
 			menu = scan.nextInt();
 			removeBuffer();
+			System.out.println("------------");
 			
 			runMemberMenu(menu);
 		} while(menu != 4);
@@ -174,17 +180,21 @@ public class LibraryProgram implements ConsoleProgram {
 	}
 
 	private void printAdminMenu() {
+		System.out.println("------------");
 		System.out.println("1. 회원 관리");
 		System.out.println("2. 도서 관리");
 		System.out.println("3. 로그아웃");
+		System.out.println("------------");
 		System.out.print("메뉴 입력 : ");
 	}
 
 	private void printMemberMenu() {
+		System.out.println("------------");
 		System.out.println("1. 회원 탈퇴");
 		System.out.println("2. 도서 조회");
 		System.out.println("3. 대여 반납");
 		System.out.println("4. 로그아웃");
+		System.out.println("------------");
 		System.out.print("메뉴 입력 : ");
 		
 	}
@@ -194,10 +204,12 @@ public class LibraryProgram implements ConsoleProgram {
 		do {
 			
 			//회원 관리
+			System.out.println("------------");
 			System.out.println("1. 회원 수정");
 			System.out.println("2. 회원 삭제");
 			System.out.println("3. 회원 조회");
 			System.out.println("4. 이전 메뉴");
+			System.out.println("------------");
 			System.out.print("메뉴 입력 : ");
 			
 			menu = scan.nextInt();
@@ -214,7 +226,7 @@ public class LibraryProgram implements ConsoleProgram {
 				searchMember();
 				break;
 			case 4:
-				System.out.println("이전 메뉴로 돌아갑니다.");
+				System.out.println("[이전 메뉴로 돌아갑니다.]");
 				break;
 			default:
 			}
@@ -228,11 +240,13 @@ public class LibraryProgram implements ConsoleProgram {
 		do {
 			
 			//도서 관리
+			System.out.println("------------");
 			System.out.println("1. 도서 등록");
 			System.out.println("2. 도서 수정");
 			System.out.println("3. 도서 삭제");
 			System.out.println("4. 도서 조회");
 			System.out.println("5. 이전 메뉴");
+			System.out.println("------------");
 			System.out.print("메뉴 입력 : ");
 			
 			menu = scan.nextInt();
@@ -275,6 +289,7 @@ public class LibraryProgram implements ConsoleProgram {
 		}
 		
 		System.out.println("수정할 회원의 정보를 입력하세요.");
+		System.out.println("=======================");
 		
 		Member newMember = inputMemberBase();
 		
@@ -300,6 +315,7 @@ public class LibraryProgram implements ConsoleProgram {
 		}
 		
 		System.out.println("수정할 도서의 정보를 입력하세요.");
+		System.out.println("=======================");
 		
 		Book newBook = inputBookBase();
 		
@@ -370,6 +386,7 @@ public class LibraryProgram implements ConsoleProgram {
 		String author = scan.nextLine();
 		System.out.print("출판사 : ");
 		String publisher = scan.nextLine();
+		System.out.println("------------");
 		
 		return new Book("", title, author, publisher);
 	}
@@ -431,6 +448,7 @@ public class LibraryProgram implements ConsoleProgram {
 		removeBuffer();
 		System.out.print("비밀번호 : ");
 		String pw = scan.nextLine();
+		System.out.println("------------");
 		
 		Member member = mm.getMember(id, pw);
 		
@@ -446,7 +464,7 @@ public class LibraryProgram implements ConsoleProgram {
 
 	private void deleteBook() {
 		
-		System.out.print("삭제할 도서 코드 : ");
+		System.out.print("삭제할 도서의 도서코드 : ");
 		String code = scan.nextLine();
 		
 		Book book = bm.getBook(code);
@@ -479,6 +497,7 @@ public class LibraryProgram implements ConsoleProgram {
 			printRentReturnMenu();
 			menu = scan.nextInt();
 			removeBuffer();
+			System.out.println("------------");
 			
 			runRentReturnMenu(menu);
 			
@@ -490,9 +509,11 @@ public class LibraryProgram implements ConsoleProgram {
 	
 
 	private void printRentReturnMenu() {
+		System.out.println("------------");
 		System.out.println("1. 도서 대여");
 		System.out.println("2. 도서 반납");
 		System.out.println("3. 이전 메뉴");
+		System.out.println("------------");
 		System.out.print("메뉴 입력 : ");
 	}
 
@@ -513,30 +534,62 @@ public class LibraryProgram implements ConsoleProgram {
 	
 	private void rentBook() {
 		
+		if(mm.countRent(user) >= 3) {
+			mm.setCantRent(user);
+			System.out.println("[1인 당 최대 3권까지 대여가능합니다.]\n[대여 중인 도서를 반납 후 이용해주세요.]");
+			return;
+		}
+		
+		//checkDueDate : true 연체X false 연체O
+		if(mm.checkDueDate(user)) {
+			
+		}
+		
 		System.out.print("대여할 도서의 도서코드 : ");
 		String code = scan.nextLine();
 		
 		Book book = bm.getBook(code);
 		
 		if(!bm.contains(book)) {
-			System.out.println("일치하는 도서 정보가 없습니다.");
+			System.out.println("[일치하는 도서 정보가 없습니다.]");
 			return;
 		}
 		
-		Rent rent = new Rent(user.getId(), code);
-		System.out.println(rent);
+		Rent rent = new Rent(user.getId(), book);
 		
 		if(mm.rentBook(user, rent)) {
+			bm.rentBook(book);
 			System.out.println("[도서 대여 완료]");
 		} else {
-			System.out.println("[도서 대여 실패]");
+			System.out.println("[대여 중인 도서는 대여할 수 없습니다.]");
 		}
 		
 	}
 
 	private void returnBook() {
 	
+		if(mm.countRent(user) == 0) {
+			System.out.println("[대여 중인 도서가 없습니다.]");
+			return;
+		}
 		
+		Rent rent = new Rent(user.getId());
+		mm.printRentList(user);
+		
+		System.out.print("반납할 도서의 도서코드 : ");
+		String code = scan.nextLine();
+		
+		Book book = bm.getBook(code);
+		if(book == null || !bm.contains(book)) {
+			System.out.println("[일치하는 도서 정보가 없습니다.]");
+			return;
+		}
+		
+		if(mm.returnBook(user, book)) {
+			System.out.println("[도서 반납 완료]");
+		} else {
+			System.out.println("[도서 반납 실패]");
+		}
 		
 	}
 	

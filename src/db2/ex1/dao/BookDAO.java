@@ -19,7 +19,7 @@ public interface BookDAO {
 
 	List<Book> selectBookList();
 
-	Book selectBookByCode(@Param("book")String code);
+	boolean updateState(@Param("book")Book book);
 
 }
 

@@ -29,8 +29,8 @@ public class Book implements Serializable{
 	private String publisher; //bo_publisher
 	@NonNull
 	private String caCode; //bo_ca_code
-	private String del; //bo_del
-	private String rent; //bo_rent
+	private String del = "N"; //bo_del
+	private String rent = "N"; //bo_rent
 	
 	public Book(String code, String title, String author, String publisher) {
 		this.code = code;
@@ -110,9 +110,23 @@ public class Book implements Serializable{
 		}
 	}
 
+	public String ellipsizeStr(String str, int limit) {
+		String res;
+		
+		StringBuffer sb = new StringBuffer(str);
+		if(sb.length() > limit) {
+			sb.setLength(limit);
+			sb.append("..");
+		}
+		
+		res = sb.toString();
+		
+		return res;
+	}
+	
 	@Override
 	public String toString() {
-		return "[" + code + "] " + title + " " + author + " " + publisher;
+		return "[" + code + "] " + " " + ellipsizeStr(title, 8) + "\t" + ellipsizeStr(author, 3) + "\t" + ellipsizeStr(publisher, 3) + "\t" + (rent.equals("N") ? "대여가능" : "대여불가");
 	}
 	
 }

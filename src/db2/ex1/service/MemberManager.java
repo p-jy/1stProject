@@ -2,6 +2,7 @@ package db2.ex1.service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.io.Resources;
@@ -138,10 +139,7 @@ public class MemberManager {
 		
 		return null;
 	}
-	public List<Member> getMembers() {
-	    return members;
-	}
-
+	
 	public boolean checkAdmin(Member user) {
 		return user != null && "admin".equals(user.getId());
 	}
@@ -176,7 +174,7 @@ public class MemberManager {
 	}
 
 	private int getRentNum(Member member, Rent rent) {
-		if(member == null || rent == null || rent.getCode() == null) {
+		if(member == null || rent == null || rent.getBook() == null) {
 			return -1;
 		}
 		
@@ -186,15 +184,102 @@ public class MemberManager {
 		}
 		
 		
-		Book dbBook = bookDao.selectBookByCode(rent.getCode());
+		Book dbBook = bookDao.selectBook(rent.getBook());
 		if(dbBook == null) {
 			return -1;
 		}
 		rent.setId(dbMem.getId());
-		rent.setCode(dbBook.getCode());
+		rent.getBook().setCode(dbBook.getCode());
 		Rent dbRent = rentDao.selectRent(rent);
 		
 		return dbRent != null ? dbRent.getNum() : -1;
 	}
+
+	public int countRent(Member member) {
+		if(member == null) {
+			return 0;
+		}
+		
+		List<Rent> list = rentDao.selectRentList(member.getId());
+		
+		return list.size();
+	}
+
+	public void setCantRent(Member member) {
+		if(member == null) {
+			return;
+		}
+		
+		member.setCanRent("N");
+		
+	}
+	
+	
+	//반납 예정일을 확인하여 지난 경우 false, 지나지않은 경우 true를 반환
+	//지난 경우 대여불가기간을 합산하여 me_no_rent에 저장
+	public boolean checkDueDate(Member member) {
+		
+		if(member == null) {
+			return false;
+		}
+		
+		long diff = 0L;
+		long re = 0L;
+		int noRent = 0;
+		
+		Date now = new Date();
+		
+		List<Rent> list = rentDao.selectRentList(member.getId());
+		for(Rent rent : list) {
+			if(rent.getDueDate() == null) {
+				return false;
+			}
+			diff = rent.getDueDate().getTime() - now.getTime();
+			if(diff < 0) {
+				member.setCanRent("N");
+				re = diff / (3600 * 24 * 1000L);
+				noRent = (int) (member.getNoRent() - re);
+			}
+		}
+		member.setNoRent(noRent);
+		
+		return member.getNoRent() < 0 ? false : true;
+	}
+
+	public void printRentList(Member member) {
+		
+		if(member == null) {
+			return;
+		}
+		
+		List<Rent> list = rentDao.selectRentList(member.getId());
+		System.out.println("========================================================================================");
+		for(Rent rt : list) {
+			System.out.println(rt);
+		}
+		System.out.println("========================================================================================");
+		
+	}
+
+	public boolean returnBook(Member member, Book book) {
+		if(member == null || book == null) {
+			return false;
+		}
+		
+		Member dbMem = memberDao.selectMember(member);
+		if(dbMem == null) {
+			return false;
+		}
+		
+		Book dbBook = bookDao.selectBook(book);
+		if(dbBook == null) {
+			return false;
+		}
+		
+		return rentDao.returnBook(dbMem.getId(), dbBook.getCode());
+	}
+
+	
+
 	
 }

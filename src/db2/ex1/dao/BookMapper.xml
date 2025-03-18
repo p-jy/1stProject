@@ -10,6 +10,7 @@
 		<result property="author" column="bo_author"/>
 		<result property="publisher" column="bo_publisher"/>
 		<result property="del" column="bo_del"/>
+		<result property="rent" column="bo_rent"/>
 	</resultMap>
 	<select id="selectBook" resultMap="BookMap">
 		select * from book
@@ -49,8 +50,11 @@
 		order by bo_code
 	</select>
 	
-	<select id="selectBookByCode" resultMap="BookMap">
-		select * from book
-		where bo_code = #{book.code}
-	</select>
+	<update id="updateState">
+		update book
+		set
+			bo_rent = "Y"
+		where
+			bo_code = #{book.code}
+	</update>
 </mapper>
