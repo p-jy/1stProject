@@ -1,11 +1,11 @@
 package db2.ex1.main;
 
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
 
 import db2.ex1.model.vo.Book;
 import db2.ex1.model.vo.Member;
+import db2.ex1.model.vo.Rent;
 import db2.ex1.service.BookManager;
 import db2.ex1.service.MemberManager;
 
@@ -182,7 +182,7 @@ public class LibraryProgram implements ConsoleProgram {
 
 	private void printMemberMenu() {
 		System.out.println("1. 회원 탈퇴");
-		System.out.println("2. 도서 검색");
+		System.out.println("2. 도서 조회");
 		System.out.println("3. 대여 반납");
 		System.out.println("4. 로그아웃");
 		System.out.print("메뉴 입력 : ");
@@ -398,7 +398,11 @@ public class LibraryProgram implements ConsoleProgram {
 		Book book = inputBook();
 		
 		
-		bm.registBook(book);
+		if(bm.registBook(book)) {
+			System.out.println("[도서 등록 완료]");
+		} else {
+			System.out.println("[도서 등록 실패]");
+		}
 		
 	}
 
@@ -512,7 +516,21 @@ public class LibraryProgram implements ConsoleProgram {
 		System.out.print("대여할 도서의 도서코드 : ");
 		String code = scan.nextLine();
 		
+		Book book = bm.getBook(code);
 		
+		if(!bm.contains(book)) {
+			System.out.println("일치하는 도서 정보가 없습니다.");
+			return;
+		}
+		
+		Rent rent = new Rent(user.getId(), code);
+		System.out.println(rent);
+		
+		if(mm.rentBook(user, rent)) {
+			System.out.println("[도서 대여 완료]");
+		} else {
+			System.out.println("[도서 대여 실패]");
+		}
 		
 	}
 

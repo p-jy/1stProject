@@ -3,17 +3,18 @@ package db2.ex1.service;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
+import db2.ex1.dao.BookDAO;
 import db2.ex1.dao.MemberDAO;
+import db2.ex1.dao.RentDAO;
 import db2.ex1.model.vo.Book;
 import db2.ex1.model.vo.Member;
-import lombok.NonNull;
+import db2.ex1.model.vo.Rent;
 
 
 public class MemberManager {
@@ -21,6 +22,8 @@ public class MemberManager {
 	private List<Member> members;
 	
 	private MemberDAO memberDao;
+	private BookDAO bookDao;
+	private RentDAO rentDao;
 	
 	public MemberManager() {
 		String resource = "db2/ex1/config/mybatis-config.xml";
@@ -31,6 +34,8 @@ public class MemberManager {
 			SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 			session = sessionFactory.openSession(true);
 			memberDao = session.getMapper(MemberDAO.class);
+			bookDao = session.getMapper(BookDAO.class);
+			rentDao = session.getMapper(RentDAO.class);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -155,6 +160,41 @@ public class MemberManager {
 		}
 		
 		return true;
+	}
+
+	public boolean rentBook(Member member, Rent rent) {
+		
+		if(member == null || rent == null) {
+			return false;
+		}
+		
+		if(getRentNum(member, rent) != -1) {
+			return false;
+		}
+		
+		return rentDao.rentBook(rent);
+	}
+
+	private int getRentNum(Member member, Rent rent) {
+		if(member == null || rent == null || rent.getCode() == null) {
+			return -1;
+		}
+		
+		Member dbMem = memberDao.selectMember(member);
+		if(dbMem == null) {
+			return -1;
+		}
+		
+		
+		Book dbBook = bookDao.selectBookByCode(rent.getCode());
+		if(dbBook == null) {
+			return -1;
+		}
+		rent.setId(dbMem.getId());
+		rent.setCode(dbBook.getCode());
+		Rent dbRent = rentDao.selectRent(rent);
+		
+		return dbRent != null ? dbRent.getNum() : -1;
 	}
 	
 }

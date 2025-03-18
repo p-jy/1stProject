@@ -114,7 +114,6 @@ public class BookManager {
 	public int getLastNum(String codePrefix) {
 
 		List<Book> list = bookDao.selectBookList();
-		System.out.println(list);
 		
 		if(list == null || list.size() == 0) {
 			return 0;

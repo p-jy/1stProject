@@ -48,4 +48,9 @@
 		where bo_del = "N"
 		order by bo_code
 	</select>
+	
+	<select id="selectBookByCode" resultMap="BookMap">
+		select * from book
+		where bo_code = #{book.code}
+	</select>
 </mapper>
