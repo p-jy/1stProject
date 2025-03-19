@@ -58,7 +58,7 @@ public class Rent implements Serializable {
 	
 	@Override
 	public String toString() {
-		return book + " | " + "대여일 : " + getDateStr(rentDate) + " 반납예정일 : " + getDateStr(dueDate);
+		return book + " | " + getDateStr(rentDate) + " | " + getDateStr(dueDate);
 	}
 	
 	

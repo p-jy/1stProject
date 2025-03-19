@@ -53,20 +53,6 @@ public class MemberManager {
 		return false;
 	}
 	
-	public boolean insertMember(Member member) {
-		if(member == null) {
-			return false;
-		}
-		
-		//중복 확인
-		if(contains(member)) {
-			return false;
-		}
-		
-		//중복x -> 추가
-		return memberDao.insertMember(member);
-	}
-
 	public void print() {
 		
 		List<Member> list = memberDao.selectMemberList();
@@ -79,6 +65,20 @@ public class MemberManager {
 			System.out.println(member);
 		}
 		
+	}
+
+	public boolean insertMember(Member member) {
+		if(member == null) {
+			return false;
+		}
+		
+		//중복 확인
+		if(contains(member)) {
+			return false;
+		}
+		
+		//중복x -> 추가
+		return memberDao.insertMember(member);
 	}
 
 	public boolean update(Member selMem, Member newMem) {
@@ -106,6 +106,22 @@ public class MemberManager {
 		member.setDel("Y");
 		member.setCanRent("N");
 		if(!memberDao.deleteMember(member)) {
+			member.setDel("N");
+			member.setCanRent("Y");
+			return false;
+		}
+		
+		return true;
+	}
+
+	public boolean deleteByAdmin(Member member) {
+		if(member == null) {
+			return false;
+		}
+		
+		member.setDel("Y");
+		member.setCanRent("N");
+		if(!memberDao.deleteMemberByAdmin(member)) {
 			member.setDel("N");
 			member.setCanRent("Y");
 			return false;
@@ -144,22 +160,6 @@ public class MemberManager {
 		return user != null && "admin".equals(user.getId());
 	}
 
-	public boolean deleteByAdmin(Member member) {
-		if(member == null) {
-			return false;
-		}
-		
-		member.setDel("Y");
-		member.setCanRent("N");
-		if(!memberDao.deleteMemberByAdmin(member)) {
-			member.setDel("N");
-			member.setCanRent("Y");
-			return false;
-		}
-		
-		return true;
-	}
-
 	public boolean rentBook(Member member, Rent rent) {
 		
 		if(member == null || rent == null) {
@@ -171,6 +171,24 @@ public class MemberManager {
 		}
 		
 		return rentDao.rentBook(rent);
+	}
+
+	public boolean returnBook(Member member, Book book) {
+		if(member == null || book == null) {
+			return false;
+		}
+		
+		Member dbMem = memberDao.selectMember(member);
+		if(dbMem == null) {
+			return false;
+		}
+		
+		Book dbBook = bookDao.selectBook(book);
+		if(dbBook == null) {
+			return false;
+		}
+		
+		return rentDao.returnBook(dbMem.getId(), dbBook.getCode());
 	}
 
 	private int getRentNum(Member member, Rent rent) {
@@ -214,6 +232,14 @@ public class MemberManager {
 		
 	}
 	
+	public void setCanRent(Member member) {
+		if(member == null) {
+			return;
+		}
+		
+		member.setCanRent("Y");
+	}
+	
 	
 	//반납 예정일을 확인하여 지난 경우 false, 지나지않은 경우 true를 반환
 	//지난 경우 대여불가기간을 합산하여 me_no_rent에 저장
@@ -253,30 +279,13 @@ public class MemberManager {
 		}
 		
 		List<Rent> list = rentDao.selectRentList(member.getId());
-		System.out.println("========================================================================================");
+		System.out.println("===========================================================================");
+		System.out.println(" 도서코드" + "\t\t도서명\t 저자\t출판사" + "\t대여\t  대여일\t      반납예정일");
 		for(Rent rt : list) {
 			System.out.println(rt);
 		}
-		System.out.println("========================================================================================");
+		System.out.println("===========================================================================");
 		
-	}
-
-	public boolean returnBook(Member member, Book book) {
-		if(member == null || book == null) {
-			return false;
-		}
-		
-		Member dbMem = memberDao.selectMember(member);
-		if(dbMem == null) {
-			return false;
-		}
-		
-		Book dbBook = bookDao.selectBook(book);
-		if(dbBook == null) {
-			return false;
-		}
-		
-		return rentDao.returnBook(dbMem.getId(), dbBook.getCode());
 	}
 
 	

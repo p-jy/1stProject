@@ -50,10 +50,18 @@
 		order by bo_code
 	</select>
 	
-	<update id="updateState">
+	<update id="updateStateY">
 		update book
 		set
 			bo_rent = "Y"
+		where
+			bo_code = #{book.code}
+	</update>
+	
+	<update id="updateStateN">
+		update book
+		set
+			bo_rent = "N"
 		where
 			bo_code = #{book.code}
 	</update>

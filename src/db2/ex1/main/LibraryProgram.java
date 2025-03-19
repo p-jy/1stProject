@@ -550,7 +550,7 @@ public class LibraryProgram implements ConsoleProgram {
 		
 		Book book = bm.getBook(code);
 		
-		if(!bm.contains(book)) {
+		if(book == null || !bm.contains(book)) {
 			System.out.println("[일치하는 도서 정보가 없습니다.]");
 			return;
 		}
@@ -573,7 +573,6 @@ public class LibraryProgram implements ConsoleProgram {
 			return;
 		}
 		
-		Rent rent = new Rent(user.getId());
 		mm.printRentList(user);
 		
 		System.out.print("반납할 도서의 도서코드 : ");
@@ -586,6 +585,7 @@ public class LibraryProgram implements ConsoleProgram {
 		}
 		
 		if(mm.returnBook(user, book)) {
+			bm.returnBook(book);
 			System.out.println("[도서 반납 완료]");
 		} else {
 			System.out.println("[도서 반납 실패]");

@@ -138,9 +138,18 @@ public class BookManager {
 		if(book == null) {
 			return false;
 		}
-		book.setRent("Y");
-		if(!bookDao.updateState(book)) {
-			book.setRent("N");
+		if(!bookDao.updateStateY(book)) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public boolean returnBook(Book book) {
+		if(book == null) {
+			return false;
+		}
+		if(!bookDao.updateStateN(book)) {
 			return false;
 		}
 		
