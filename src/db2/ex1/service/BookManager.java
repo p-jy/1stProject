@@ -163,18 +163,5 @@ public class BookManager {
 		
 	}
 	
-	public boolean returnBook(Book book) {
-	    if (book == null) {
-	        return false;
-	    }
-	    book.setRent("N");
-	    if (!bookDao.returnBookStatus(book)) {
-	        // 업데이트 실패 시 상태 복구
-	        book.setRent("Y");
-	        return false;
-	    }
-	    return true;
-	}
-
 	
 }

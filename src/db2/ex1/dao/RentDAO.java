@@ -16,5 +16,4 @@ public interface RentDAO {
 	boolean returnBook(@Param("id")String id, @Param("code")String code);
 
 	List<Rent> selectRentList(@Param("id")String id);
-	
 }

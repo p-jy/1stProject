@@ -586,7 +586,6 @@ public class LibraryProgram implements ConsoleProgram {
 		}
 		
 		if(mm.returnBook(user, book)) {
-			 bm.returnBook(book);
 			System.out.println("[도서 반납 완료]");
 		} else {
 			System.out.println("[도서 반납 실패]");
