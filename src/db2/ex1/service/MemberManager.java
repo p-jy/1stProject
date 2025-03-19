@@ -256,6 +256,7 @@ public class MemberManager {
 		Date now = new Date();
 		
 		List<Rent> list = rentDao.selectRentList(member.getId());
+		
 		for(Rent rent : list) {
 			if(rent.getDueDate() == null) {
 				return false;
@@ -269,7 +270,7 @@ public class MemberManager {
 		}
 		member.setNoRent(noRent);
 		
-		return member.getNoRent() < 0 ? false : true;
+		return member.getCanRent().equals("N") ? false : true;
 	}
 
 	public void printRentList(Member member) {

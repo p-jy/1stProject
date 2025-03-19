@@ -138,7 +138,9 @@ public class BookManager {
 		if(book == null) {
 			return false;
 		}
+		book.setRent("Y");
 		if(!bookDao.updateStateY(book)) {
+			book.setRent("N");
 			return false;
 		}
 		
@@ -149,7 +151,9 @@ public class BookManager {
 		if(book == null) {
 			return false;
 		}
+		book.setRent("N");
 		if(!bookDao.updateStateN(book)) {
+			book.setRent("Y");
 			return false;
 		}
 		
@@ -160,16 +164,6 @@ public class BookManager {
 		Book book = new Book(code, "", "", "");
 		
 		return book;
-	}
-
-	public void addBookSample() {
-		
-		List<Book> list = bookDao.selectBookList();
-		
-		if(list == null || list.size() == 0) {
-			addBookSample();
-		}
-		
 	}
 	
 	
