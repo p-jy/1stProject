@@ -13,7 +13,7 @@
 
 	<select id="selectMember" resultMap="MemberMap">
 		select * from member
-		where me_id = #{member.id}
+		where me_id = #{member.id} and me_pw = #{member.pw}
 	</select>
 	
 	<insert id="insertMember">
@@ -57,4 +57,11 @@
 		where me_id != "admin" and me_del = "N"
 		order by me_id
 	</select>
+	
+	<update id="updateNoRent">
+		update member
+		set
+			me_no_rent = #{member.noRent}
+		where me_id = #{member.id}
+	</update>
 </mapper>

@@ -5,11 +5,13 @@ import java.util.Date;
 import java.util.Objects;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Data
 @RequiredArgsConstructor
+@NoArgsConstructor
 public class Member implements Serializable{
 	private static final long serialVersionUID = 9055960272294860934L;
 	//회원
@@ -23,11 +25,15 @@ public class Member implements Serializable{
 	@NonNull
 	private String num; //me_num
 	private String del; //me_del
-	private String canRent; //me_can_rent
+	private String canRent = "Y"; //me_can_rent
 	private Date canRentDate; //me_can_rent_date
 	private int noRent; //me_no_rent
 	
 	
+	public Member(String id) {
+		this.id = id;
+		this.pw = pw;
+	}
 	
 	@Override
 	public boolean equals(Object obj) {
@@ -38,15 +44,14 @@ public class Member implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Member other = (Member) obj;
-		return Objects.equals(id, other.id);
+		return Objects.equals(id, other.id) && Objects.equals(pw, other.pw);
 	}
-
+	
 	@Override
 	public String toString() {
 		return "ID : " + id + " 이름 : " + name + " 번호 : " + num;
 	}
-	
-	
+
 	
 	
 }

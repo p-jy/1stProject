@@ -83,10 +83,8 @@ public class LibraryProgram implements ConsoleProgram {
 		
 		user = mm.getMember(id, pw);
 		
+		
 		//회원매니저에 일치하는 회원 정보가 있는지 확인
-		if(user.getPw() == null) {
-			System.out.println("[탈퇴한 회원입니다.]");
-		}
 		if(user == null) { //일치X
 			System.out.println("[아이디 또는 비밀번호를 잘못 입력했습니다.]");
 		} else if(mm.checkAdmin(user)) {
