@@ -57,4 +57,13 @@
 		where
 			bo_code = #{book.code}
 	</update>
+	
+	<update id="returnBookState">
+    	update book
+    	set 
+    		bo_rent = "N"
+    	where 
+    		bo_code = #{book.code}
+	</update>
+	
 </mapper>

@@ -21,4 +21,5 @@ public interface BookDAO {
 
 	boolean updateState(@Param("book")Book book);
 
+	boolean returnBookState(@Param("book") Book book);
 }

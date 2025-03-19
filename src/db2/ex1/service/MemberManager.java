@@ -275,11 +275,15 @@ public class MemberManager {
 		if(dbBook == null) {
 			return false;
 		}
-		
-		return rentDao.returnBook(dbMem.getId(), dbBook.getCode());
+	    // 대여 기록 삭제 결과를 result 변수에 저장
+		boolean result = rentDao.returnBook(dbMem.getId(), dbBook.getCode());
+	    
+	    // 대여 기록 삭제가 성공하면 도서의 상태를 업데이트
+	    if(result) {
+	        boolean updateResult = bookDao.returnBookState(dbBook);
+	        // 두 작업 모두 성공해야 최종적으로 true 반환
+	        return updateResult;
+	    }
+	    return result;
 	}
-
-	
-
-	
 }
