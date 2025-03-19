@@ -438,6 +438,11 @@ public class LibraryProgram implements ConsoleProgram {
 		
 		Member member = mm.getMember(id, pw);
 		
+		if(!mm.checkRent(member)) {
+			System.out.println("[대여 중인 도서가 있는 회원은 삭제할 수 없습니다.]");
+			return;
+		}
+		
 		if(mm.deleteByAdmin(member)) {
 			System.out.println("[" + id + " 회원을 삭제하였습니다.]");
 		} else {
@@ -455,6 +460,11 @@ public class LibraryProgram implements ConsoleProgram {
 		System.out.println("------------");
 		
 		Member member = mm.getMember(id, pw);
+		
+		if(!mm.checkRent(member)) {
+			System.out.println("[대여 중인 도서가 있습니다.]\n[대여 중인 도서를 반납 후 다시 시도해주세요.]");
+			return;
+		}
 		
 		if(mm.delete(member)) {
 			System.out.println("[회원 탈퇴 완료]");

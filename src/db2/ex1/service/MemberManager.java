@@ -303,5 +303,17 @@ public class MemberManager {
 		return pw;
 	}
 
+	public boolean checkRent(Member member) {
+		
+		List<Rent> list = rentDao.selectRentList(member.getId());
+		
+		if(list == null) {
+			return true;
+		}
+		
+		return false;
+	}
+
+	
 	
 }
