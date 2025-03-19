@@ -16,8 +16,9 @@ import db2.ex1.dao.RentDAO;
 import db2.ex1.model.vo.Book;
 import db2.ex1.model.vo.Member;
 import db2.ex1.model.vo.Rent;
+import lombok.Data;
 
-
+@Data
 public class MemberManager {
 	
 	private List<Member> members;
@@ -135,10 +136,18 @@ public class MemberManager {
 		
 		Member user = getMember(member);
 		
+		if(user == null) {
+			return null;
+		}
+		
+		if(!user.getPw().equals(pw)) {
+			return null;
+		}
+		
 		return user;
 	}
 
-	private Member getMember(Member member) {
+	public Member getMember(Member member) {
 		if(member == null) {
 			return null;
 		}
@@ -149,11 +158,7 @@ public class MemberManager {
 		
 		Member user = member;
 		
-		if(user.getPw().equals(member.getPw())) {
-			return user;
-		}
-		
-		return null;
+		return user;
 	}
 	
 	public boolean checkAdmin(Member user) {
@@ -269,6 +274,7 @@ public class MemberManager {
 			}
 		}
 		member.setNoRent(noRent);
+		memberDao.updateNoRent(member);
 		
 		return member.getCanRent().equals("N") ? false : true;
 	}
@@ -289,7 +295,12 @@ public class MemberManager {
 		
 	}
 
-	
+	public String getPw(String id) {
+		
+		Member member = memberDao.selectMemberByID(id);
+		String pw = member.getPw();
+		return pw;
+	}
 
 	
 }

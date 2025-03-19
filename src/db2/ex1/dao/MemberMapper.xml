@@ -64,4 +64,9 @@
 			me_no_rent = #{member.noRent}
 		where me_id = #{member.id}
 	</update>
+	
+	<select id="selectMemberByID" resultMap="MemberMap">
+		select * from member
+		where me_id = #{id}
+	</select>
 </mapper>

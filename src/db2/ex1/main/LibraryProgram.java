@@ -81,8 +81,9 @@ public class LibraryProgram implements ConsoleProgram {
 		System.out.print("비밀번호 : ");
 		String pw = scan.nextLine();
 		
-		user = mm.getMember(id, pw);
+		Member member = new Member(id, pw, "", "");
 		
+		user = mm.getMember(member);
 		
 		//회원매니저에 일치하는 회원 정보가 있는지 확인
 		if(user == null) { //일치X
@@ -280,7 +281,9 @@ public class LibraryProgram implements ConsoleProgram {
 		System.out.print("수정할 회원의 ID : ");
 		String id = scan.nextLine();
 		
-		Member member = new Member(id, "", "", "");
+		String pw = mm.getPw(id);
+		
+		Member member = new Member(id, pw, "", "");
 		
 		if(!mm.contains(member)) {
 			System.out.println("[일치하는 회원 ID가 없습니다.]");
@@ -431,7 +434,9 @@ public class LibraryProgram implements ConsoleProgram {
 			return;
 		}
 		
-		Member member = mm.getMember(id, "");
+		String pw = mm.getPw(id);
+		
+		Member member = mm.getMember(id, pw);
 		
 		if(mm.deleteByAdmin(member)) {
 			System.out.println("[" + id + " 회원을 삭제하였습니다.]");

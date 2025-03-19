@@ -20,5 +20,10 @@ public interface MemberDAO {
 
 	boolean deleteMemberByAdmin(@Param("member")Member member);
 
+	void updateNoRent(@Param("member")Member member);
+
+	Member selectMemberByID(@Param("id")String id);
+
+	
 }
 
