@@ -2,18 +2,20 @@ package db2.ex1.service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
+import db2.ex1.dao.BookDAO;
 import db2.ex1.dao.MemberDAO;
+import db2.ex1.dao.RentDAO;
 import db2.ex1.model.vo.Book;
 import db2.ex1.model.vo.Member;
-import lombok.NonNull;
+import db2.ex1.model.vo.Rent;
 
 
 public class MemberManager {
@@ -21,6 +23,8 @@ public class MemberManager {
 	private List<Member> members;
 	
 	private MemberDAO memberDao;
+	private BookDAO bookDao;
+	private RentDAO rentDao;
 	
 	public MemberManager() {
 		String resource = "db2/ex1/config/mybatis-config.xml";
@@ -31,6 +35,8 @@ public class MemberManager {
 			SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 			session = sessionFactory.openSession(true);
 			memberDao = session.getMapper(MemberDAO.class);
+			bookDao = session.getMapper(BookDAO.class);
+			rentDao = session.getMapper(RentDAO.class);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -133,10 +139,7 @@ public class MemberManager {
 		
 		return null;
 	}
-	public List<Member> getMembers() {
-	    return members;
-	}
-
+	
 	public boolean checkAdmin(Member user) {
 		return user != null && "admin".equals(user.getId());
 	}
@@ -156,5 +159,127 @@ public class MemberManager {
 		
 		return true;
 	}
+
+	public boolean rentBook(Member member, Rent rent) {
+		
+		if(member == null || rent == null) {
+			return false;
+		}
+		
+		if(getRentNum(member, rent) != -1) {
+			return false;
+		}
+		
+		return rentDao.rentBook(rent);
+	}
+
+	private int getRentNum(Member member, Rent rent) {
+		if(member == null || rent == null || rent.getBook() == null) {
+			return -1;
+		}
+		
+		Member dbMem = memberDao.selectMember(member);
+		if(dbMem == null) {
+			return -1;
+		}
+		
+		
+		Book dbBook = bookDao.selectBook(rent.getBook());
+		if(dbBook == null) {
+			return -1;
+		}
+		rent.setId(dbMem.getId());
+		rent.getBook().setCode(dbBook.getCode());
+		Rent dbRent = rentDao.selectRent(rent);
+		
+		return dbRent != null ? dbRent.getNum() : -1;
+	}
+
+	public int countRent(Member member) {
+		if(member == null) {
+			return 0;
+		}
+		
+		List<Rent> list = rentDao.selectRentList(member.getId());
+		
+		return list.size();
+	}
+
+	public void setCantRent(Member member) {
+		if(member == null) {
+			return;
+		}
+		
+		member.setCanRent("N");
+		
+	}
+	
+	
+	//반납 예정일을 확인하여 지난 경우 false, 지나지않은 경우 true를 반환
+	//지난 경우 대여불가기간을 합산하여 me_no_rent에 저장
+	public boolean checkDueDate(Member member) {
+		
+		if(member == null) {
+			return false;
+		}
+		
+		long diff = 0L;
+		long re = 0L;
+		int noRent = 0;
+		
+		Date now = new Date();
+		
+		List<Rent> list = rentDao.selectRentList(member.getId());
+		for(Rent rent : list) {
+			if(rent.getDueDate() == null) {
+				return false;
+			}
+			diff = rent.getDueDate().getTime() - now.getTime();
+			if(diff < 0) {
+				member.setCanRent("N");
+				re = diff / (3600 * 24 * 1000L);
+				noRent = (int) (member.getNoRent() - re);
+			}
+		}
+		member.setNoRent(noRent);
+		
+		return member.getNoRent() < 0 ? false : true;
+	}
+
+	public void printRentList(Member member) {
+		
+		if(member == null) {
+			return;
+		}
+		
+		List<Rent> list = rentDao.selectRentList(member.getId());
+		System.out.println("========================================================================================");
+		for(Rent rt : list) {
+			System.out.println(rt);
+		}
+		System.out.println("========================================================================================");
+		
+	}
+
+	public boolean returnBook(Member member, Book book) {
+		if(member == null || book == null) {
+			return false;
+		}
+		
+		Member dbMem = memberDao.selectMember(member);
+		if(dbMem == null) {
+			return false;
+		}
+		
+		Book dbBook = bookDao.selectBook(book);
+		if(dbBook == null) {
+			return false;
+		}
+		
+		return rentDao.returnBook(dbMem.getId(), dbBook.getCode());
+	}
+
+	
+
 	
 }

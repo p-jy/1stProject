@@ -4,6 +4,43 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="db2.ex1.dao.RentDAO">
 	
+	<resultMap type="db2.ex1.model.vo.Rent" id="RentMap">
+		<id property="num" column="re_num"/>
+		<result property="id" column="re_me_id"/>
+		<result property="rentDate" column="re_rent_date"/>
+		<result property="dueDate" column="re_due_date"/>
+		
+		<association property="book" javaType="db2.ex1.model.vo.Book">
+			<id property="code" column="bo_code"/>
+			<result property="title" column="bo_title"/>
+			<result property="author" column="bo_author"/>
+			<result property="publisher" column="bo_publisher"/>
+			<result property="del" column="bo_del"/>
+		</association>
+	</resultMap>
 	
+	<select id="selectRent" resultMap="RentMap">
+		select * from rent
+		join book on re_bo_code = bo_code
+		where
+			re_me_id = #{rent.id} and re_bo_code = #{rent.book.code}
+	</select>
 	
+	<insert id="rentBook">
+		insert into rent(re_me_id, re_bo_code, re_rent_date, re_due_date)
+		values(#{rent.id}, #{rent.book.code}, #{rent.rentDate}, #{rent.dueDate})
+	</insert>
+	
+	<select id="selectRentList" resultMap="RentMap">
+		select * from rent
+		join book on re_bo_code = bo_code
+		where
+			re_me_id = #{id}
+	</select>
+	
+	<delete id="returnBook">
+		delete from rent
+		where
+			re_me_id = #{id} and re_bo_code = #{code}
+	</delete>
 </mapper>

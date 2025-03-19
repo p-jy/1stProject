@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import db2.ex1.model.vo.Book;
+import lombok.NonNull;
 
 public interface BookDAO {
 
@@ -18,8 +19,8 @@ public interface BookDAO {
 
 	List<Book> selectBookList();
 
-	Book selectBookByCode(String code);
-	 
-	boolean updateBookRentStatus(Book book);
-	
+	boolean updateState(@Param("book")Book book);
+
+	boolean returnBookStatus(@Param("book") Book book);
+
 }
