@@ -189,6 +189,10 @@ public class MemberManager {
 		
 		Rent rent = new Rent(dbMem.getId(), dbBook);
 		
+		if(getRentNum(dbMem, rent) != -1) {
+			return false;
+		}
+		
 		return rentDao.rentBook(rent);
 		
 	}
@@ -248,7 +252,10 @@ public class MemberManager {
 			return;
 		}
 		
-		member.setCanRent("N");
+		Member dbMem = memberDao.selectMember(member);
+		
+		dbMem.setCanRent("N");
+		memberDao.updateCanRentN(dbMem);
 		
 	}
 	
