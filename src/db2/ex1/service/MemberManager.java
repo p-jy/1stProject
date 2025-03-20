@@ -49,11 +49,11 @@ public class MemberManager {
 	public boolean contains(Member member) {
 		Member dbMem = memberDao.selectMember(member);
 		
-		if(dbMem != null) {
-			return true;
+		if(dbMem == null) {
+			return false;
 		}
 		
-		return false;
+		return true;
 	}
 	
 	public void print() {
@@ -76,7 +76,7 @@ public class MemberManager {
 		}
 		
 		//중복 확인
-		if(contains(member)) {
+		if(!contains(member)) {
 			return false;
 		}
 		
