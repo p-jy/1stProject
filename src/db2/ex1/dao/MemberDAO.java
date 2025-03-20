@@ -28,7 +28,9 @@ public interface MemberDAO {
 
 	void updateCanRentDate(@Param("member")Member member);
 
-	void clearCanRentDate(@Param("member")Member member);
+	void clearCanRent(@Param("member")Member member);
+
+	void updateCanRentN(@Param("member")Member member);
 
 	
 }

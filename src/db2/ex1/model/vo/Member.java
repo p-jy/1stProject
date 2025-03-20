@@ -49,7 +49,7 @@ public class Member implements Serializable{
 	
 	@Override
 	public String toString() {
-		return "ID : " + id + " 이름 : " + name + " 번호 : " + num;
+		return "ID : " + id + " 이름 : " + name + " 번호 : " + num + " 대여가능? : " + canRent;
 	}
 
 	

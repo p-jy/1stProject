@@ -89,10 +89,19 @@
 			me_id = #{member.id}
 	</update>
 	
-	<update id="clearCanRentDate">
+	<update id="clearCanRent">
 		update member
 		set
-			me_can_rent_date = null
+			me_can_rent_date = null,
+			me_can_rent = "Y"
+		where
+			me_id = #{member.id}
+	</update>
+	
+	<update id="updateCanRentN">
+		update member
+		set
+			me_can_rent = "N"
 		where
 			me_id = #{member.id}
 	</update>

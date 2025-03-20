@@ -271,6 +271,7 @@ public class MemberManager {
 			diff = rent.getDueDate().getTime() - now.getTime();
 			if(diff < 0) {
 				member.setCanRent("N");
+				memberDao.updateCanRentN(member);
 				re = diff / (3600 * 24 * 1000L);
 				noRent = (int) (member.getNoRent() - re);
 			}
@@ -346,7 +347,8 @@ public class MemberManager {
 		boolean res = member.getCanRentDate().before(now);
 		System.out.println(res);
 		
-		if(member.getCanRentDate().after(now)) {
+		if(member.getCanRentDate().before(now)) {
+			System.out.println(member.getCanRentDate().before(now));
 			return true;
 		}
 		
@@ -354,7 +356,17 @@ public class MemberManager {
 	}
 
 	public void clearCanRentDate(Member member) {
-		memberDao.clearCanRentDate(member);
+		memberDao.clearCanRent(member);
+	}
+
+	public String getCanRentDate(Member member) {
+		
+		Date d = memberDao.selectMember(member).getCanRentDate();
+		
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
+		String date = f.format(d);
+		return date;
 	}
 
 	

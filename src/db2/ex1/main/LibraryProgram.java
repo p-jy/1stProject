@@ -1,7 +1,7 @@
 package db2.ex1.main;
 
+import java.util.Date;
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
 
 import db2.ex1.model.vo.Book;
@@ -554,9 +554,16 @@ public class LibraryProgram implements ConsoleProgram {
 			return;
 		}
 		
-		//checkDueDate : true 연체X / false 연체O
-		if(!mm.checkDueDate(user) || mm.checkCanRentDate(user)) {
+		//checkDueDate : true 연체X / false 연체O (
+		if(!mm.checkDueDate(user)) {
+			System.out.println(user);
 			System.out.println("[연체된 이력이 있어 대여가 불가합니다.]");
+			return;
+		}
+		
+		if(!mm.checkCanRentDate(user)) {
+			String date = mm.getCanRentDate(user);
+			System.out.println("[" + date + "부터 대여가 가능합니다.]");
 			return;
 		} else {
 			mm.clearCanRentDate(user);
