@@ -554,12 +554,14 @@ public class LibraryProgram implements ConsoleProgram {
 			return;
 		}
 		
-		//checkDueDate : true 연체X false 연체O
-		if(!mm.checkDueDate(user)) {
+		//checkDueDate : true 연체X / false 연체O
+		if(!mm.checkDueDate(user) || mm.checkCanRentDate(user)) {
 			System.out.println("[연체된 이력이 있어 대여가 불가합니다.]");
 			return;
+		} else {
+			mm.clearCanRentDate(user);
 		}
-		
+				
 		System.out.print("대여할 도서의 도서코드 : ");
 		String code = scan.nextLine();
 		
@@ -599,8 +601,14 @@ public class LibraryProgram implements ConsoleProgram {
 			return;
 		}
 		
+		mm.checkDueDate(user);
+		
 		if(mm.returnBook(user, book)) {
 			bm.returnBook(book);
+			if(!mm.checkRent(user) ) {
+				System.out.println("마지막 반납");
+				mm.setCanRentDate(user);
+			}
 			System.out.println("[도서 반납 완료]");
 		} else {
 			System.out.println("[도서 반납 실패]");

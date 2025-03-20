@@ -24,6 +24,12 @@ public interface MemberDAO {
 
 	Member selectMemberByID(@Param("id")String id);
 
+	void updateLastReturn(@Param("member")Member member);
+
+	void updateCanRentDate(@Param("member")Member member);
+
+	void clearCanRentDate(@Param("member")Member member);
+
 	
 }
 

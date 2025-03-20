@@ -2,6 +2,8 @@ package db2.ex1.service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -284,7 +286,6 @@ public class MemberManager {
 		if(member == null) {
 			return;
 		}
-		
 		List<Rent> list = rentDao.selectRentList(member.getId());
 		System.out.println("==========================================================================");
 		System.out.println(" 도서코드" + "\t\t도서명\t 저자\t출판사" + "\t대여\t  대여일\t      반납예정일");
@@ -313,6 +314,50 @@ public class MemberManager {
 		
 		return false;
 	}
+
+	public void setCanRentDate(Member member) {
+
+		Date now = new Date();
+		int day = member.getNoRent();
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(now);
+		
+		cal.add(Calendar.DATE, day);
+		
+		Date set = cal.getTime();
+		System.out.println(set);
+		member.setCanRentDate(set);
+		memberDao.updateCanRentDate(member);
+	}
+
+	public boolean checkCanRentDate(Member member) {
+		
+		if(member == null) {
+			return false;
+		}
+		
+		if(member.getCanRentDate() == null) {
+			return false;
+		}
+		
+		Date now = new Date();
+		
+		boolean res = member.getCanRentDate().before(now);
+		System.out.println(res);
+		
+		if(member.getCanRentDate().after(now)) {
+			return true;
+		}
+		
+		return false;
+	}
+
+	public void clearCanRentDate(Member member) {
+		memberDao.clearCanRentDate(member);
+	}
+
+	
 
 	
 	

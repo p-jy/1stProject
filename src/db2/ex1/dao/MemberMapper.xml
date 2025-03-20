@@ -9,6 +9,9 @@
 		<result property="pw" column="me_pw"/>
 		<result property="name" column="me_name"/>
 		<result property="num" column="me_num"/>
+		<result property="canRent" column="me_can_rent"/>
+		<result property="canRentDate" column="me_can_rent_date"/>
+		<result property="noRent" column="me_no_rent"/>
 	</resultMap>
 
 	<select id="selectMember" resultMap="MemberMap">
@@ -48,7 +51,8 @@
 			me_name = null,
 			me_num = null,
 			me_del = #{member.del},
-			me_can_rent = #{member.canRent}
+			me_can_rent = #{member.canRent},
+			me_last_return = null
 		where me_id = #{member.id} and me_id != "admin"
 	</update>
 	
@@ -69,4 +73,27 @@
 		select * from member
 		where me_id = #{id}
 	</select>
+	
+	<update id="updateLastReturn">
+		update member
+		set
+			me_last_return = #{member.lastReturn}
+		where me_id = #{member.id}
+	</update>
+	
+	<update id="updateCanRentDate">
+		update member
+		set
+			me_can_rent_date = #{member.canRentDate}
+		where
+			me_id = #{member.id}
+	</update>
+	
+	<update id="clearCanRentDate">
+		update member
+		set
+			me_can_rent_date = null
+		where
+			me_id = #{member.id}
+	</update>
 </mapper>
