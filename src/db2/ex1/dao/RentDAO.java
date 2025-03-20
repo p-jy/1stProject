@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import db2.ex1.model.vo.Rent;
-import lombok.NonNull;
 
 public interface RentDAO {
 

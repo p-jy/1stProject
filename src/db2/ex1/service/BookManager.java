@@ -138,11 +138,18 @@ public class BookManager {
 		if(book == null) {
 			return false;
 		}
-		book.setRent("Y");
-		if(!bookDao.updateStateY(book)) {
-			book.setRent("N");
+		
+		Book dbBook = bookDao.selectBook(book);
+		if(dbBook == null) {
 			return false;
 		}
+		
+		if(dbBook.getRent().equals("Y")) {
+			return false;
+		}
+		
+		book.setRent("Y");
+		bookDao.updateState(book);
 		
 		return true;
 	}
@@ -151,11 +158,18 @@ public class BookManager {
 		if(book == null) {
 			return false;
 		}
-		book.setRent("N");
-		if(!bookDao.updateStateN(book)) {
-			book.setRent("Y");
+
+		Book dbBook = bookDao.selectBook(book);
+		if(dbBook == null) {
 			return false;
 		}
+		
+		if(dbBook.getRent().equals("N")) {
+			return false;
+		}
+		
+		book.setRent("N");
+		bookDao.updateState(book);
 		
 		return true;
 	}

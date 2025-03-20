@@ -556,7 +556,6 @@ public class LibraryProgram implements ConsoleProgram {
 		
 		//checkDueDate : true 연체X / false 연체O (
 		if(!mm.checkDueDate(user)) {
-			System.out.println(user);
 			System.out.println("[연체된 이력이 있어 대여가 불가합니다.]");
 			return;
 		}
@@ -579,9 +578,7 @@ public class LibraryProgram implements ConsoleProgram {
 			return;
 		}
 		
-		Rent rent = new Rent(user.getId(), book);
-		
-		if(mm.rentBook(user, rent)) {
+		if(mm.rentBook(user, book)) {
 			bm.rentBook(book);
 			System.out.println("[도서 대여 완료]");
 		} else {

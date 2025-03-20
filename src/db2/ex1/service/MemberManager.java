@@ -167,17 +167,30 @@ public class MemberManager {
 		return user != null && "admin".equals(user.getId());
 	}
 
-	public boolean rentBook(Member member, Rent rent) {
+	public boolean rentBook(Member member, Book book) {
 		
-		if(member == null || rent == null) {
+		if(member == null || book == null) {
 			return false;
 		}
 		
-		if(getRentNum(member, rent) != -1) {
+		Member dbMem = memberDao.selectMember(member);
+		if(dbMem == null) {
 			return false;
 		}
+		
+		Book dbBook = bookDao.selectBook(book);
+		if(dbBook == null) {
+			return false;
+		}
+		
+		if(dbBook.getRent().equals("Y")) {
+			return false;
+		}
+		
+		Rent rent = new Rent(dbMem.getId(), dbBook);
 		
 		return rentDao.rentBook(rent);
+		
 	}
 
 	public boolean returnBook(Member member, Book book) {
@@ -345,7 +358,6 @@ public class MemberManager {
 		Date now = new Date();
 		
 		boolean res = member.getCanRentDate().before(now);
-		System.out.println(res);
 		
 		if(member.getCanRentDate().before(now)) {
 			System.out.println(member.getCanRentDate().before(now));

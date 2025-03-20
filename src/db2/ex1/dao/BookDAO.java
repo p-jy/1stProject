@@ -19,9 +19,7 @@ public interface BookDAO {
 
 	List<Book> selectBookList();
 
-	boolean updateStateY(@Param("book")Book book);
-
-	boolean updateStateN(@Param("book")Book book);
+	void updateState(@Param("book")Book book);
 
 }
 
