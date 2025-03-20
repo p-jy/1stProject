@@ -606,7 +606,6 @@ public class LibraryProgram implements ConsoleProgram {
 		if(mm.returnBook(user, book)) {
 			bm.returnBook(book);
 			if(!mm.checkRent(user) ) {
-				System.out.println("마지막 반납");
 				mm.setCanRentDate(user);
 			}
 			System.out.println("[도서 반납 완료]");

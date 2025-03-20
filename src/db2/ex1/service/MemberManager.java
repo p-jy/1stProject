@@ -326,7 +326,7 @@ public class MemberManager {
 		cal.add(Calendar.DATE, day);
 		
 		Date set = cal.getTime();
-		System.out.println(set);
+		
 		member.setCanRentDate(set);
 		memberDao.updateCanRentDate(member);
 	}
