@@ -561,7 +561,7 @@ public class LibraryProgram implements ConsoleProgram {
 			return;
 		}
 		
-		if(!mm.checkCanRentDate(user)) {
+		if(!mm.checkCanRentDate(user) && !mm.checkCanRent(user)) {
 			String date = mm.getCanRentDate(user);
 			System.out.println("[" + date + "부터 대여가 가능합니다.]");
 			return;

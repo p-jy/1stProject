@@ -362,11 +362,22 @@ public class MemberManager {
 	public String getCanRentDate(Member member) {
 		
 		Date d = memberDao.selectMember(member).getCanRentDate();
-		
-		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		if(d == null) {
+			return null;
+		}
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
 		
 		String date = f.format(d);
 		return date;
+	}
+
+	public boolean checkCanRent(Member member) {
+		Member dbMem = memberDao.selectMember(member);
+		
+		if(dbMem == null) {
+			return false;
+		}
+		return dbMem.getCanRent().equals("Y");
 	}
 
 	
