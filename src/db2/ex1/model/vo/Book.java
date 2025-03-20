@@ -110,13 +110,16 @@ public class Book implements Serializable{
 		}
 	}
 
-	public String ellipsizeStr(String str, int limit) {
+	public String ellipsizeStr(String str, int limit, boolean title) {
 		String res;
 		
 		StringBuffer sb = new StringBuffer(str);
 		if(sb.length() > limit) {
 			sb.setLength(limit);
 			sb.append("..");
+		}
+		if(sb.length() < 3 && title) {
+			sb.append("\t");
 		}
 		
 		res = sb.toString();
@@ -126,7 +129,7 @@ public class Book implements Serializable{
 	
 	@Override
 	public String toString() {
-		return "[" + code + "] " + " " + ellipsizeStr(title, 8) + "\t" + ellipsizeStr(author, 3) + "\t" + ellipsizeStr(publisher, 3) + "\t" + (rent.equals("N") ? "대여가능" : "대여불가");
+		return "[" + code + "] " + " " + ellipsizeStr(title, 8, true) + "\t" + ellipsizeStr(author, 3, false) + "\t" + ellipsizeStr(publisher, 3, false) + "\t" + (rent.equals("N") ? "대여가능" : "대여불가");
 	}
 	
 }
