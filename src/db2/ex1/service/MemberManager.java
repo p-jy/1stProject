@@ -75,8 +75,9 @@ public class MemberManager {
 			return false;
 		}
 		
-		//중복 확인
-		if(!contains(member)) {
+		Member dbMem = memberDao.selectMember(member);
+		System.out.println(dbMem);
+		if(dbMem != null) {
 			return false;
 		}
 		
