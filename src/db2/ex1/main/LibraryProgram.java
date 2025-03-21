@@ -570,7 +570,8 @@ public class LibraryProgram implements ConsoleProgram {
 			System.out.println("[1인 당 최대 3권까지 대여가능합니다.]\n[대여 중인 도서를 반납 후 이용해주세요.]");
 			return;
 		}
-		
+		//checkCanRentDate : user의 canRentDate를 현재와 비교 => 현재보다 이전이면 true
+		//checkDueDate : user의 대여목록을 통해 dueDate 확인-> dueDate에 따라 canRent 수정 => canRent가 N : false
 		if(!mm.checkCanRentDate(user) && !mm.checkDueDate(user)) {
 			String date = mm.getCanRentDate(user);
 			System.out.println("[" + date + "부터 대여가 가능합니다.]");
@@ -579,6 +580,7 @@ public class LibraryProgram implements ConsoleProgram {
 			System.out.println("[연체된 이력이 있어 대여가 불가합니다.]");
 			return;
 		} else {
+			//canRentDate : null / canRent : Y
 			mm.clearCanRentDate(user);
 		}
 		
