@@ -76,7 +76,6 @@ public class MemberManager {
 		}
 		
 		Member dbMem = memberDao.selectMember(member);
-		System.out.println(dbMem);
 		if(dbMem != null) {
 			return false;
 		}
