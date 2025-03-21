@@ -576,6 +576,7 @@ public class LibraryProgram implements ConsoleProgram {
 			String date = mm.getCanRentDate(user);
 			System.out.println("[" + date + "부터 대여가 가능합니다.]");
 			return;
+		//대여중인 모든 도서를 반납해야 canRentDate가 생기기 때문에 현재 연체된 도서를 반납하지 않은 경우는 checkDueDate로 확인
 		} else if(!mm.checkDueDate(user)) {
 			System.out.println("[연체된 이력이 있어 대여가 불가합니다.]");
 			return;
