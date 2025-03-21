@@ -281,9 +281,11 @@ public class LibraryProgram implements ConsoleProgram {
 		System.out.print("수정할 회원의 ID : ");
 		String id = scan.nextLine();
 		
-		String pw = mm.getPw(id);
+		Member member = mm.getMember(id);
 		
-		Member member = new Member(id, pw, "", "");
+		if(member == null) {
+			return;
+		}
 		
 		if(!mm.contains(member)) {
 			System.out.println("[일치하는 회원 ID가 없습니다.]");
@@ -434,12 +436,20 @@ public class LibraryProgram implements ConsoleProgram {
 			return;
 		}
 		
-		String pw = mm.getPw(id);
+		Member member = mm.getMember(id);
 		
-		Member member = mm.getMember(id, pw);
+		if(member == null) {
+			return;
+		}
 		
 		if(!mm.checkRent(member)) {
 			System.out.println("[대여 중인 도서가 있는 회원은 삭제할 수 없습니다.]");
+			return;
+		}
+		
+		if(member.getCanRentDate() != null || member.getNoRent() > 0) {
+			System.out.println("[연체 기록이 있는 회원은 삭제 할 수 없습니다.]");
+			
 			return;
 		}
 		
@@ -461,12 +471,20 @@ public class LibraryProgram implements ConsoleProgram {
 		
 		Member member = mm.getMember(id, pw);
 		
-		if(!mm.checkRent(member)) {
+		Member dbMem = mm.getMember(member);
+		
+		if(dbMem == null) {
+			return;
+		}
+		
+		if(!mm.checkRent(dbMem)) {
 			System.out.println("[대여 중인 도서가 있습니다.]\n[대여 중인 도서를 반납 후 다시 시도해주세요.]");
 			return;
 		}
 		
-		if(mm.delete(member)) {
+		
+		
+		if(mm.delete(dbMem)) {
 			System.out.println("[회원 탈퇴 완료]");
 			user = null;
 		} else {
@@ -547,27 +565,23 @@ public class LibraryProgram implements ConsoleProgram {
 	}
 	
 	private void rentBook() {
-		
 		if(mm.countRent(user) >= 3) {
 			mm.setCantRent(user);
 			System.out.println("[1인 당 최대 3권까지 대여가능합니다.]\n[대여 중인 도서를 반납 후 이용해주세요.]");
 			return;
 		}
 		
-		//checkDueDate : true 연체X / false 연체O (
-		if(!mm.checkDueDate(user)) {
-			System.out.println("[연체된 이력이 있어 대여가 불가합니다.]");
-			return;
-		}
-		
-		if(!mm.checkCanRentDate(user) && !mm.checkCanRent(user)) {
+		if(!mm.checkCanRentDate(user) && !mm.checkDueDate(user)) {
 			String date = mm.getCanRentDate(user);
 			System.out.println("[" + date + "부터 대여가 가능합니다.]");
+			return;
+		} else if(!mm.checkDueDate(user)) {
+			System.out.println("[연체된 이력이 있어 대여가 불가합니다.]");
 			return;
 		} else {
 			mm.clearCanRentDate(user);
 		}
-				
+		
 		System.out.print("대여할 도서의 도서코드 : ");
 		String code = scan.nextLine();
 		

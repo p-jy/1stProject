@@ -36,7 +36,7 @@
 		select * from rent
 		join book on re_bo_code = bo_code
 		where
-			re_me_id = #{id}
+			re_me_id = #{id} 
 	</select>
 	
 	<delete id="returnBook">

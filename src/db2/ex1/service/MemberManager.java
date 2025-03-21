@@ -154,11 +154,11 @@ public class MemberManager {
 			return null;
 		}
 		
-		if(!contains(member)) {
+		Member user = memberDao.selectMember(member);
+		
+		if(user == null) {
 			return null;
 		}
-		
-		Member user = member;
 		
 		return user;
 	}
@@ -318,11 +318,13 @@ public class MemberManager {
 		
 	}
 
-	public String getPw(String id) {
+	public Member getMember(String id) {
 		
-		Member member = memberDao.selectMemberByID(id);
-		String pw = member.getPw();
-		return pw;
+		Member dbMem = memberDao.selectMemberByID(id);
+		if(dbMem == null) {
+			return null;
+		}
+		return dbMem;
 	}
 
 	public boolean checkRent(Member member) {
@@ -330,10 +332,10 @@ public class MemberManager {
 		List<Rent> list = rentDao.selectRentList(member.getId());
 		
 		if(list == null) {
-			return true;
+			return false;
 		}
 		
-		return false;
+		return true;
 	}
 
 	public void setCanRentDate(Member member) {
@@ -366,11 +368,7 @@ public class MemberManager {
 		
 		boolean res = member.getCanRentDate().before(now);
 		
-		if(member.getCanRentDate().before(now)) {
-			return true;
-		}
-		
-		return false;
+		return res;
 	}
 
 	public void clearCanRentDate(Member member) {

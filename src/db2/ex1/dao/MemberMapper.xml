@@ -52,7 +52,7 @@
 			me_num = null,
 			me_del = #{member.del},
 			me_can_rent = #{member.canRent},
-			me_last_return = null
+			me_can_rent_date = null
 		where me_id = #{member.id} and me_id != "admin"
 	</update>
 	

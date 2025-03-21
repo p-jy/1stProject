@@ -177,7 +177,11 @@ public class BookManager {
 	public Book getBook(String code) {
 		Book book = new Book(code, "", "", "");
 		
-		return book;
+		Book dbBook = bookDao.selectBook(book);
+		if(dbBook == null) {
+			return null;
+		}
+		return dbBook;
 	}
 	
 	
