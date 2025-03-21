@@ -367,7 +367,6 @@ public class MemberManager {
 		boolean res = member.getCanRentDate().before(now);
 		
 		if(member.getCanRentDate().before(now)) {
-			System.out.println(member.getCanRentDate().before(now));
 			return true;
 		}
 		
@@ -398,9 +397,5 @@ public class MemberManager {
 		}
 		return dbMem.getCanRent().equals("Y");
 	}
-
-	
-
-	
 	
 }
