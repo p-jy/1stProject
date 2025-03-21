@@ -49,7 +49,7 @@ public class Member implements Serializable{
 	
 	@Override
 	public String toString() {
-		return "ID : " + id + " 이름 : " + name + " 번호 : " + num;
+		return "ID : " + id + "\t이름 : " + name + (name.length()<2? "  " : "") + "\t번호 : " + num;
 	}
 
 	
